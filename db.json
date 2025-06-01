@@ -9,7 +9,7 @@
       "color_card": "#f4c2c2"
     },
     {
-      "id": 2,
+      "id": "2",
       "candidate_name": "Polar2",
       "candidate_image": "src/assets/Candidate.jpg",
       "party_image": "",
@@ -17,7 +17,7 @@
       "color_card": "red"
     },
     {
-      "id": 3,
+      "id": "3",
       "candidate_name": "Polar3",
       "candidate_image": "src/assets/Candidate.jpg",
       "party_image": "",
@@ -25,7 +25,7 @@
       "color_card": "purple"
     },
     {
-      "id": 4,
+      "id": "4",
       "candidate_name": "Polar4",
       "candidate_image": "src/assets/Candidate.jpg",
       "party_image": "",
@@ -41,93 +41,120 @@
       "role": "admin",
       "password": "admin123",
       "hasVoted": true,
-      "vote": "Polar2"
+      "placeId": 2,
+      "token": "admin-token-12345"
     },
     {
       "id": "2",
       "ci": "7654321",
       "birthDate": "2002-05-15",
       "role": "user",
-      "hasVoted": false,
-      "vote": "Polar2"
+      "name": "John",
+      "lastName": "Doe",
+      "hasVoted": true,
+      "placeId": 1,
+      "token": "user-token-67890"
     },
     {
-      "id": 3,
-      "ci": "1234567",
+      "id": "3",
+      "ci": "13131313",
       "role": "user",
-      "birthDate": "2003-09-09"
+      "birthDate": "2004-08-25",
+      "name": "Luis",
+      "lastName": "Callapa",
+      "placeId": 7,
+      "hasVoted": true,
+      "token": "user-token-12345"
+    }
+  ],
+  "vote": [
+    {
+      "id": "1",
+      "candidate_id": 1,
+      "user_id": 2,
+      "vote_date": "2023-10-01T12:00:00Z"
     },
     {
-      "id": 4,
-      "ci": "1234567",
-      "role": "user",
-      "birthDate": "2003-09-09"
+      "id": "2",
+      "candidate_id": 2,
+      "user_id": 1,
+      "vote_date": "2023-10-02T14:30:00Z"
     },
     {
-      "id": 5,
-      "ci": "1234567",
-      "role": "user",
-      "birthDate": "2003-09-09"
+      "id": "3",
+      "candidate_id": 4,
+      "user_id": 3,
+      "vote_date": "2025-06-01T22:10:05.025Z"
+    },
+    {
+      "id": "4",
+      "candidate_id": 4,
+      "user_id": 3,
+      "vote_date": "2025-06-01T22:10:29.465Z"
+    },
+    {
+      "id": "5",
+      "candidate_id": 4,
+      "user_id": 3,
+      "vote_date": "2025-06-01T22:12:06.513Z"
     },
     {
       "id": 6,
-      "ci": "1234567",
-      "role": "user",
-      "birthDate": "2003-09-09"
+      "candidate_id": "4",
+      "user_id": "3",
+      "vote_date": "2025-06-01T22:15:32.055Z"
+    }
+  ],
+  "places": [
+    {
+      "id": "1",
+      "name": "U.E Instituto Americano",
+      "address": "Av. 20 de Octubre N° 3540, Zona San Pedro"
     },
     {
-      "id": 7,
-      "ci": "1234567",
-      "role": "user",
-      "birthDate": "2003-09-09"
+      "id": "2",
+      "name": "U.E María Auxiliadora",
+      "address": "Av. 6 de Agosto N° 456, Zona Sopocachi"
     },
     {
-      "id": 8,
-      "ci": "1234567",
-      "role": "user",
-      "birthDate": "2003-09-09"
+      "id": "3",
+      "name": "U.E Don Bosco",
+      "address": "Calle Illampu N° 987, Zona El Rosario"
     },
     {
-      "id": 9,
-      "ci": "1234567",
-      "role": "user",
-      "birthDate": "2003-09-09"
+      "id": "4",
+      "name": "U.E La Salle",
+      "address": "Av. Arce N° 1500, Zona San Jorge"
     },
     {
-      "id": 10,
-      "ci": "1234567",
-      "role": "user",
-      "birthDate": "2003-09-09"
+      "id": "5",
+      "name": "U.E Cristo Rey",
+      "address": "Calle 21 de Calacoto N° 321, Zona Sur"
     },
     {
-      "id": 10,
-      "ci": "1234567",
-      "role": "user",
-      "birthDate": "2003-09-09"
+      "id": "6",
+      "name": "U.E San Ignacio",
+      "address": "Calle Sagárnaga N° 132, Zona Central"
     },
     {
-      "id": 11,
-      "ci": "1234567",
-      "role": "user",
-      "birthDate": "2003-09-09"
+      "id": "7",
+      "name": "U.E Alemán",
+      "address": "Av. Ballivián N° 2020, Zona Calacoto"
     },
     {
-      "id": 12,
-      "ci": "1234567",
-      "role": "user",
-      "birthDate": "2003-09-09"
+      "id": "8",
+      "name": "U.E Liceo Venezuela",
+      "address": "Av. Mariscal Santa Cruz N° 7645, Zona Central"
     },
     {
-      "id": 13,
-      "ci": "1234567",
-      "role": "user",
-      "birthDate": "2003-09-09"
+      "id": "9",
+      "name": "U.E Cumbre",
+      "address": "Calle 18 Obrajes N° 58, Zona Obrajes"
     },
     {
-      "id": 14,
-      "ci": "1234567",
-      "role": "user",
-      "birthDate": "2003-09-09"
+      "id": "10",
+      "name": "U.E Saint Andrew’s",
+      "address": "Calle 13 N° 1000, Zona Achumani"
     }
   ]
 }

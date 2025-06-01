@@ -14,7 +14,7 @@ import HowToVoteIcon from "@mui/icons-material/HowToVote";
 import PollIcon from '@mui/icons-material/Poll';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import { Link, useLocation } from "react-router-dom";
-import { getStorage } from "../helpers/LocalStorage";
+import { getStorage, clearStorage } from "../helpers/LocalStorage";
 
 const drawerWidth = 240;
 
@@ -95,8 +95,8 @@ const Sidebar = ({
           <ListItemButton
             component={Link}
             to="/"
-            selected={location.pathname === "/"
-            }
+            selected={location.pathname === "/"}
+            onClick={clearStorage}
           >
             <ListItemIcon>
               <MeetingRoomIcon />

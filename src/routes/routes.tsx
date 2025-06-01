@@ -6,28 +6,28 @@ import { Layout } from "../layout/Layout";
 import Dashboard from "../pages/Dashboard";
 import UserManagement from "../pages/UserManagement";
 import VotingManagement from "../pages/VotingManagement";
+import ProtectedRoutes from "../guards/ProtectedRoutes";
 
 const RoutesApp = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterUsers/>} />
+        <Route path="/register" element={<RegisterUsers />} />
         <Route path="/" element={<Navigate to="/login" />} />
         <Route
           path="/"
-          element={<Layout />}
+          element={
+            <ProtectedRoutes>
+              <Layout />
+            </ProtectedRoutes>}
         >
           <Route path="dashboard" element={<Dashboard />} />
-        </Route>
-        <Route
-          path="/"
-          element={<Layout />}
-        >
           <Route path="vote-page" element={<VotePage />} />
           <Route path="user-management" element={<UserManagement />} />
           <Route path="voting-management" element={<VotingManagement />} />
         </Route>
+        
       </Routes>
     </BrowserRouter>
   );

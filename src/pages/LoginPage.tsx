@@ -66,10 +66,15 @@ function LoginPage() {
         const user = await getUser(values.ci, values.birthDate);
         if (user.length > 0) {
           setStorage("user", user[0]);
+          setStorage("token", user[0].token);
+          console.log("Token guardado");
           if (user[0].role === "admin") {
-            if(isAdmin){
+            if (isAdmin) {
               const admin = await getAdmin(values.ci, values.adminPassword);
               if (admin.length > 0) {
+                setStorage("user", admin[0]);
+                setStorage("token", admin[0].token);
+                console.log("Token guardado");
                 setStorage("isAdmin", true);
                 setOpenCameraModal(true)
                 console.log("Usuario administrador autenticado");
@@ -80,9 +85,9 @@ function LoginPage() {
             }
             setIsAdmin(true);
           } else {
-            if(user[0].hasVoted)
+            if (user[0].hasVoted)
               setSnackBarVoted(true)
-            else{
+            else {
               setOpenCameraModal(true);
               setIsAdmin(false);
               setStorage("isAdmin", false);
@@ -90,7 +95,6 @@ function LoginPage() {
           }
         } else {
           setOpenSnackBar(true);
-          console.log("No hay admins");
         }
       } catch (error) {
         console.error("Error al buscar el usuario:", error);

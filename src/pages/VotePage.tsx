@@ -3,7 +3,7 @@ import CandidateCard from "../components/CandidateCard";
 import { useEffect, useState } from "react";
 import { getCandidateService } from "../services/CandidateService";
 import { ConfirmActionDialog } from "../components/ConfirmActionDialog";
-import { getStorage, setStorage } from "../helpers/LocalStorage";
+import { getStorage } from "../helpers/LocalStorage";
 import { useNavigate } from "react-router-dom";
 import { postVote } from "../services/VotingService";
 
@@ -24,14 +24,23 @@ function VotePage() {
   };
 
   const vote = async () => {
-    try {
-        const user = getStorage('user');
-        await postVote(user.id, selectedCandidate, user)
-    } catch (error) {
-        console.log("Error al emitir el voto", error)
-        throw error
+  try {
+    const user = getStorage("user");
+
+    const candidate: any = candidates.find(
+      (c: any) => c.candidate_name === selectedCandidate
+    );
+
+    if (!candidate) {
+      console.error("Candidato no encontrado");
+      return;
     }
-  };
+
+    await postVote(user.id, candidate.id, user);
+  } catch (error) {
+    console.error("Error al emitir el voto", error);
+  }
+};
 
   const voteSuccess = () => {
     navigate('/login')
