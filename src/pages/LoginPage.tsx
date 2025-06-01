@@ -77,6 +77,7 @@ function LoginPage() {
       <CameraModal open={openCameraModal} onClose={closeModal} />
       <Box
         sx={{
+          height: "350px",
           marginTop: 8,
           boxShadow: 3,
         }}
@@ -107,6 +108,7 @@ function LoginPage() {
               helperText={formik.touched.ci && formik.errors.ci}
               error={formik.touched.ci && Boolean(formik.errors.ci)}
               fullWidth
+              sx={{ marginTop: 2 }}
               onChange={formik.handleChange}
               value={formik.values.ci}
               slotProps={{
@@ -126,6 +128,7 @@ function LoginPage() {
               type="date"
               name="birthDate"
               fullWidth
+              sx={{ marginTop: 4 }}
               onChange={formik.handleChange}
               value={formik.values.birthDate}
               helperText={formik.touched.birthDate && formik.errors.birthDate}
@@ -164,7 +167,7 @@ function LoginPage() {
             )}
             <Button
               sx={{
-                marginTop: 2,
+                marginTop: 4,
                 width: "100%",
               }}
               variant="contained"
