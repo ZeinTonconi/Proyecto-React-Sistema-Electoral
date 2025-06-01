@@ -1,10 +1,10 @@
-import LoginPage from './pages/LoginPage'
+import RoutesApp from './routes/routes'
 
 function App() {
 
   return (
     <>
-      <LoginPage/>
+      <RoutesApp/>
     </>
   )
 }
