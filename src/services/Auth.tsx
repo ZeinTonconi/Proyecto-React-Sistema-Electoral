@@ -14,6 +14,8 @@ export const getUser = async (ci: string, birthDate: string) => {
 
 export const getAdmin = async (ci: string, password: string) => {
   try{
+    if(password.length === 0)
+        return []
     const response = await jsonServerInstance.get(USERS_URL + "?ci=" + ci + "&password=" + password);
     return response.data;
   }
