@@ -4,6 +4,8 @@ import RegisterUsers from "../components/RegisterUsersForm";
 import VotePage from "../pages/VotePage";
 import { Layout } from "../layout/Layout";
 import Dashboard from "../pages/Dashboard";
+import UserManagement from "../pages/UserManagement";
+import VotingManagement from "../pages/VotingManagement";
 import ProtectedRoutes from "../guards/ProtectedRoutes";
 
 const RoutesApp = () => {
@@ -22,6 +24,8 @@ const RoutesApp = () => {
         >
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="vote-page" element={<VotePage />} />
+          <Route path="user-management" element={<UserManagement />} />
+          <Route path="voting-management" element={<VotingManagement />} />
         </Route>
         
       </Routes>

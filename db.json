@@ -1,12 +1,12 @@
 {
   "candidates": [
     {
-      "id": "1",
-      "candidate_name": "Polar",
-      "candidate_image": "src/assets/Candidate.jpg",
+      "id": 1,
+      "candidate_name": "Rebeca Navarro",
+      "candidate_image": "src/assets/WreBeca.jpeg",
       "party_image": "",
-      "political_party": "Polar para presidente",
-      "color_card": "cyan"
+      "political_party": "WreBeca para presidente",
+      "color_card": "#f4c2c2"
     },
     {
       "id": "2",
