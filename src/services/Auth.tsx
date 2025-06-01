@@ -25,7 +25,7 @@ export const getAdmin = async (ci: string, password: string) => {
   }
 }
 
-export const registerUser = async (ci: string, birthDate: string,  name: string, lastName: string) => {
+export const registerUser = async (ci: string, birthDate: string,  name: string, lastName: string, place: number) => {
   try {
     const allUsers = await jsonServerInstance.get(USERS_URL);
     const ids = allUsers.data.map((user: any) => user.id);
@@ -37,7 +37,8 @@ export const registerUser = async (ci: string, birthDate: string,  name: string,
       birthDate,
       name,
       lastName,
-      vote: false,
+      placeId: place,
+      hasVoted: false,
     });
 
     return response.data;

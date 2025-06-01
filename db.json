@@ -1,7 +1,7 @@
 {
   "candidates": [
     {
-      "id": 1,
+      "id": "1",
       "candidate_name": "Polar",
       "candidate_image": "src/assets/Candidate.jpg",
       "party_image": "",
@@ -9,7 +9,7 @@
       "color_card": "cyan"
     },
     {
-      "id": 2,
+      "id": "2",
       "candidate_name": "Polar2",
       "candidate_image": "src/assets/Candidate.jpg",
       "party_image": "",
@@ -17,7 +17,7 @@
       "color_card": "red"
     },
     {
-      "id": 3,
+      "id": "3",
       "candidate_name": "Polar3",
       "candidate_image": "src/assets/Candidate.jpg",
       "party_image": "",
@@ -25,7 +25,7 @@
       "color_card": "purple"
     },
     {
-      "id": 4,
+      "id": "4",
       "candidate_name": "Polar4",
       "candidate_image": "src/assets/Candidate.jpg",
       "party_image": "",
@@ -35,96 +35,121 @@
   ],
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "ci": "1234567",
       "birthDate": "1990-01-01",
       "role": "admin",
       "password": "admin123",
-      "hasVoted": true
+      "hasVoted": true,
+      "placeId": 2
     },
     {
-      "id": 2,
+      "id": "2",
       "ci": "7654321",
       "birthDate": "2002-05-15",
       "role": "user",
-      "name": "Juan",
-      "lastName": "Perez",
-      "hasVoted": true
+      "name": "John",
+      "lastName": "Doe",
+      "hasVoted": true,
+      "placeId": 1
     },
     {
-      "id": 3,
+      "id": "3",
       "ci": "13131313",
       "role": "user",
       "birthDate": "2004-08-25",
       "name": "Luis",
       "lastName": "Callapa",
-      "hasVoted": false
+      "placeId": 7,
+      "hasVoted": true
     }
   ],
   "vote": [
     {
-      "id": 1,
-      "userId": 1,
-      "placeId": 1,
-      "voteDate": "2023-10-01T10:00:00Z",
-      "candidateId": 2
+      "id": "1",
+      "candidate_id": 1,
+      "user_id": 2,
+      "vote_date": "2023-10-01T12:00:00Z"
     },
     {
-      "id": 1,
-      "userId": 2,
-      "placeId": 1,
-      "voteDate": "2023-10-01T10:00:00Z",
-      "candidateId": 2
+      "id": "2",
+      "candidate_id": 2,
+      "user_id": 1,
+      "vote_date": "2023-10-02T14:30:00Z"
+    },
+    {
+      "id": "3",
+      "candidate_id": 4,
+      "user_id": 3,
+      "vote_date": "2025-06-01T22:10:05.025Z"
+    },
+    {
+      "id": "4",
+      "candidate_id": 4,
+      "user_id": 3,
+      "vote_date": "2025-06-01T22:10:29.465Z"
+    },
+    {
+      "id": "5",
+      "candidate_id": 4,
+      "user_id": 3,
+      "vote_date": "2025-06-01T22:12:06.513Z"
+    },
+    {
+      "id": 6,
+      "candidate_id": "4",
+      "user_id": "3",
+      "vote_date": "2025-06-01T22:15:32.055Z"
     }
   ],
   "places": [
     {
-      "id": 1,
+      "id": "1",
       "name": "U.E Instituto Americano",
       "address": "Av. 20 de Octubre N° 3540, Zona San Pedro"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "U.E María Auxiliadora",
       "address": "Av. 6 de Agosto N° 456, Zona Sopocachi"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "U.E Don Bosco",
       "address": "Calle Illampu N° 987, Zona El Rosario"
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "U.E La Salle",
       "address": "Av. Arce N° 1500, Zona San Jorge"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "U.E Cristo Rey",
       "address": "Calle 21 de Calacoto N° 321, Zona Sur"
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "U.E San Ignacio",
       "address": "Calle Sagárnaga N° 132, Zona Central"
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "U.E Alemán",
       "address": "Av. Ballivián N° 2020, Zona Calacoto"
     },
     {
-      "id": 8,
+      "id": "8",
       "name": "U.E Liceo Venezuela",
       "address": "Av. Mariscal Santa Cruz N° 7645, Zona Central"
     },
     {
-      "id": 9,
+      "id": "9",
       "name": "U.E Cumbre",
       "address": "Calle 18 Obrajes N° 58, Zona Obrajes"
     },
     {
-      "id": 10,
+      "id": "10",
       "name": "U.E Saint Andrew’s",
       "address": "Calle 13 N° 1000, Zona Achumani"
     }

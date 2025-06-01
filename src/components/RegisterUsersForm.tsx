@@ -77,7 +77,8 @@ const RegisterUsers = () => {
     validationSchema: userSchema,
     onSubmit: async (values) => {
       try {
-        const user = await registerUser(values.ci, values.birthDate, values.name, values.lastName);
+        const idPlace = parseInt(values.place, 10);
+        const user = await registerUser(values.ci, values.birthDate, values.name, values.lastName, idPlace);
         console.log("Usuario registrado:", user);
       } catch (error) {
         console.error("Error al registrar el usuario:", error);

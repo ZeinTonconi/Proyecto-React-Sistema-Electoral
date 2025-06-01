@@ -1,17 +1,36 @@
 import jsonServerInstance from "../api/jsonServerInstance";
 
-const USER_URL = 'users'
+const VOTE_URL = 'vote';
+const USER_URL = 'users';
 
-export const postVote = async (id: number, candidate: string | null, user: any) => {
-    try{
-        const res = await jsonServerInstance.put(`${USER_URL}/${id}`, {
-            ...user,
-            hasVoted: true,
-            vote: candidate
-        })
-        return res;
-    } catch(error) {
-        console.error("Error posting the vote", error);
-        throw error;
-    }
-}
+export const postVote = async (userId: number, candidateId: number, user: any) => {
+  try {
+    const allVotesResponse = await jsonServerInstance.get(VOTE_URL);
+    const allVotes = allVotesResponse.data;
+
+    const newId = allVotes.length > 0
+      ? Math.max(...allVotes.map((v: any) => v.id)) + 1
+      : 1;
+
+    const newVote = {
+      id: newId,
+      candidate_id: candidateId,
+      user_id: userId,
+      vote_date: new Date().toISOString(),
+    };
+    await jsonServerInstance.post(VOTE_URL, newVote);
+
+    const updatedUser = {
+      ...user,
+      hasVoted: true,
+    };
+
+    await jsonServerInstance.put(`${USER_URL}/${userId}`, updatedUser);
+    
+    return newVote;
+
+  } catch (error) {
+    console.error("Error al registrar el voto", error);
+    throw error;
+  }
+};
