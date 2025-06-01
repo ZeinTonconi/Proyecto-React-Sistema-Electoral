@@ -23,15 +23,7 @@ const RoutesApp = () => {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="vote-page" element={<VotePage />} />
         </Route>
-        {/* <Route
-          path="/"
-          element={
-            <ProtectedRoutes>
-              <Layout />
-            </ProtectedRoutes>}
-        >
-          <Route path="vote-page" element={<VotePage />} />
-        </Route> */}
+        
       </Routes>
     </BrowserRouter>
   );
