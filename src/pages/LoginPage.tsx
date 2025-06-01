@@ -28,11 +28,12 @@ function LoginPage() {
   const navigate = useNavigate();
 
   const goToDashboard = () => {
-    navigate('/dashboard')
-  }
+    navigate("/dashboard");
+  };
 
   const closeModal = () => {
     setOpenCameraModal(false);
+    goToDashboard()
   };
   const today = new Date();
   const eighteenYearsAgo = new Date(
@@ -55,10 +56,9 @@ function LoginPage() {
       birthDate: Yup.date()
         .required("La fecha de nacimiento es requerida")
         .max(eighteenYearsAgo, "Debes ser mayor de 18 años para votar"),
-      adminPassword: Yup.string().min(
-        6,
-        "La contraseña debe tener al menos 6 caracteres"
-      ).required("La contraseña es requerida"),
+      adminPassword: isAdmin
+        ? Yup.string().min(6, "La contraseña debe tener al menos 6 caracteres").required("La contraseña es requerida")
+        : Yup.string()
     }),
     onSubmit: async (values) => {
       try {
@@ -66,28 +66,30 @@ function LoginPage() {
         if (user.length > 0) {
           setStorage("user", user[0]);
           if (user[0].role === "admin") {
-            const admin = await getAdmin(values.ci, values.adminPassword);
-            if (admin.length > 0) {
-              setIsAdmin(true);
-              setStorage("isAdmin", true);
-              goToDashboard();
-              console.log("Usuario administrador autenticado");
-            } else {        
-              setOpenSnackBar(true);
-              console.log("Contraseña de administrador incorrecta");
+            if(isAdmin){
+              const admin = await getAdmin(values.ci, values.adminPassword);
+              if (admin.length > 0) {
+                setStorage("isAdmin", true);
+                setOpenCameraModal(true)
+                console.log("Usuario administrador autenticado");
+              } else {
+                setOpenSnackBar(true);
+                console.log("Contraseña de administrador incorrecta");
+              }
             }
+            setIsAdmin(true);
           } else {
             setOpenCameraModal(true);
             setIsAdmin(false);
             setStorage("isAdmin", false);
-            goToDashboard();
           }
         } else {
           setOpenSnackBar(true);
-          console.log("No hay admins")
+          console.log("No hay admins");
         }
       } catch (error) {
         console.error("Error al buscar el usuario:", error);
+        setOpenSnackBar(true)
       }
     },
   });
