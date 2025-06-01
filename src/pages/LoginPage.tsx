@@ -85,7 +85,6 @@ function LoginPage() {
           }
         } else {
           setOpenSnackBar(true);
-          console.log("No hay admins");
         }
       } catch (error) {
         console.error("Error al buscar el usuario:", error);

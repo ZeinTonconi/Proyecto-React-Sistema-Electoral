@@ -25,7 +25,7 @@ export const getAdmin = async (ci: string, password: string) => {
   }
 }
 
-export const registerUser = async (ci: string, birthDate: string) => {
+export const registerUser = async (ci: string, birthDate: string,  name: string, lastName: string) => {
   try {
     const allUsers = await jsonServerInstance.get(USERS_URL);
     const ids = allUsers.data.map((user: any) => user.id);
@@ -35,6 +35,9 @@ export const registerUser = async (ci: string, birthDate: string) => {
       ci,
       role: "user",
       birthDate,
+      name,
+      lastName,
+      vote: false,
     });
 
     return response.data;
