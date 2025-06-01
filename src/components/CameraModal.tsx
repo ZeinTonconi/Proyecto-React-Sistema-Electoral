@@ -8,25 +8,34 @@ interface CameraModalProps {
 export const CameraModal = ({ open, onClose }: CameraModalProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
 
   useEffect(() => {
     if (open) {
       navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+        streamRef.current = stream
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
           videoRef.current.play();
         }
       });
     } else {
-      // Apagar cámara
-      const stream = videoRef.current?.srcObject;
-      if (stream && (stream instanceof MediaStream)) {
-        stream.getTracks().forEach(track => track.stop());
-      }
+      stopCamera();
     }
   }, [open]);
 
+    const stopCamera = () => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop());
+      streamRef.current = null;
+    }
+    if (videoRef.current) {
+      videoRef.current.srcObject = null;
+    }
+  };
+
   const handleCapture = () => {
+    stopCamera();
     onClose();
   };
 

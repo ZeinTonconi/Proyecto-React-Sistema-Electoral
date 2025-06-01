@@ -14,7 +14,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { useState } from "react";
 import { CameraModal } from "../components/CameraModal";
 import { getUser } from "../services/Auth";
-import { clearStorage, setStorage } from "../helpers/LocalStorage";
+import { setStorage } from "../helpers/LocalStorage";
 
 function LoginPage() {
   const [isAdmin, setIsAdmin] = useState(false);
