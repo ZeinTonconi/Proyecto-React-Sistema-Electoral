@@ -12,7 +12,7 @@ import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import HomeFilledIcon from "@mui/icons-material/HomeFilled";
 import HowToVoteIcon from "@mui/icons-material/HowToVote";
 import { Link, useLocation } from "react-router-dom";
-import { getStorage } from "../helpers/LocalStorage";
+import { getStorage, clearStorage } from "../helpers/LocalStorage";
 
 const drawerWidth = 240;
 
@@ -68,6 +68,7 @@ const Sidebar = ({
             component={Link}
             to="/"
             selected={location.pathname === "/"}
+            onClick={clearStorage}
           >
             <ListItemIcon>
               <MeetingRoomIcon />
