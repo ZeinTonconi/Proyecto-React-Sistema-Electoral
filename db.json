@@ -1,0 +1,17 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "ci": "1234567",
+      "birthDate": "1990-01-01",
+      "role": "admin",
+      "password": "admin123"
+    },
+    {
+      "id": 2,
+      "ci": "7654321",
+      "birthDate": "2002-05-15",
+      "role": "user"
+    }
+  ]
+}
