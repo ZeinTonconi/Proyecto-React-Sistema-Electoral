@@ -11,14 +11,26 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import BadgeIcon from "@mui/icons-material/Badge";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import KeyIcon from "@mui/icons-material/Key";
 import { useState } from "react";
 import { CameraModal } from "../components/CameraModal";
-import { getUser } from "../services/Auth";
+import { getAdmin, getUser } from "../services/Auth";
 import { setStorage } from "../helpers/LocalStorage";
+import { SnackBarWithAlert } from "../components/SnackBarWithAlert";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [openCameraModal, setOpenCameraModal] = useState(false);
+
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+
+  const navigate = useNavigate();
+
+  const goToDashboard = () => {
+    navigate('/dashboard')
+  }
+
   const closeModal = () => {
     setOpenCameraModal(false);
   };
@@ -46,7 +58,7 @@ function LoginPage() {
       adminPassword: Yup.string().min(
         6,
         "La contraseña debe tener al menos 6 caracteres"
-      ),
+      ).required("La contraseña es requerida"),
     }),
     onSubmit: async (values) => {
       try {
@@ -54,17 +66,25 @@ function LoginPage() {
         if (user.length > 0) {
           setStorage("user", user[0]);
           if (user[0].role === "admin") {
-            const admin = await getUser(values.ci, values.adminPassword);
+            const admin = await getAdmin(values.ci, values.adminPassword);
             if (admin.length > 0) {
-            setIsAdmin(true);
-            setStorage("isAdmin", true);
-            console.log("Usuario administrador autenticado");
-            }else {console.log("Contraseña de administrador incorrecta");}
+              setIsAdmin(true);
+              setStorage("isAdmin", true);
+              goToDashboard();
+              console.log("Usuario administrador autenticado");
+            } else {        
+              setOpenSnackBar(true);
+              console.log("Contraseña de administrador incorrecta");
+            }
           } else {
             setOpenCameraModal(true);
             setIsAdmin(false);
             setStorage("isAdmin", false);
+            goToDashboard();
           }
+        } else {
+          setOpenSnackBar(true);
+          console.log("No hay admins")
         }
       } catch (error) {
         console.error("Error al buscar el usuario:", error);
@@ -77,14 +97,13 @@ function LoginPage() {
       <CameraModal open={openCameraModal} onClose={closeModal} />
       <Box
         sx={{
-          height: "350px",
-          marginTop: 8,
+          marginY: 8,
           boxShadow: 3,
         }}
       >
         <CardContent
           sx={{
-            marginTop: 25,
+            marginTop: "35%",
             padding: 4,
             textAlign: "center",
           }}
@@ -108,7 +127,7 @@ function LoginPage() {
               helperText={formik.touched.ci && formik.errors.ci}
               error={formik.touched.ci && Boolean(formik.errors.ci)}
               fullWidth
-              sx={{ marginTop: 2 }}
+              sx={{ marginY: 1 }}
               onChange={formik.handleChange}
               value={formik.values.ci}
               slotProps={{
@@ -128,7 +147,7 @@ function LoginPage() {
               type="date"
               name="birthDate"
               fullWidth
-              sx={{ marginTop: 4 }}
+              sx={{ marginY: 1 }}
               onChange={formik.handleChange}
               value={formik.values.birthDate}
               helperText={formik.touched.birthDate && formik.errors.birthDate}
@@ -163,11 +182,23 @@ function LoginPage() {
                   formik.touched.adminPassword &&
                   Boolean(formik.errors.adminPassword)
                 }
+                slotProps={{
+                  input: {
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <KeyIcon />
+                      </InputAdornment>
+                    ),
+                  },
+                }}
+                sx={{
+                  marginY: 1,
+                }}
               />
             )}
             <Button
               sx={{
-                marginTop: 4,
+                marginTop: 2,
                 width: "100%",
               }}
               variant="contained"
@@ -178,6 +209,14 @@ function LoginPage() {
           </form>
         </CardContent>
       </Box>
+      <SnackBarWithAlert
+        open={openSnackBar}
+        handleClose={() => {
+          setOpenSnackBar(false);
+        }}
+        message="Datos incorrectos. Vuelve a intentarlo mas tarde"
+        severity="error"
+      />
     </Container>
   );
 }
