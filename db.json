@@ -1,11 +1,46 @@
 {
+  "candidates": [
+    {
+      "id": 1,
+      "candidate_name": "Polar",
+      "candidate_image": "src/assets/Candidate.jpg",
+      "party_image": "",
+      "political_party": "Polar para presidente",
+      "color_card": "cyan"
+    },
+    {
+      "id": 2,
+      "candidate_name": "Polar2",
+      "candidate_image": "src/assets/Candidate.jpg",
+      "party_image": "",
+      "political_party": "Polar para presidente",
+      "color_card": "red"
+    },
+    {
+      "id": 3,
+      "candidate_name": "Polar3",
+      "candidate_image": "src/assets/Candidate.jpg",
+      "party_image": "",
+      "political_party": "Polar para presidente",
+      "color_card": "purple"
+    },
+    {
+      "id": 4,
+      "candidate_name": "Polar4",
+      "candidate_image": "src/assets/Candidate.jpg",
+      "party_image": "",
+      "political_party": "Polar para presidente",
+      "color_card": "green"
+    }
+  ],
   "users": [
     {
       "id": 1,
       "ci": "1234567",
       "birthDate": "1990-01-01",
       "role": "admin",
-      "password": "admin123"
+      "password": "admin123",
+      "hasVoted": true
     },
     {
       "id": 2,
@@ -13,8 +48,8 @@
       "birthDate": "2002-05-15",
       "role": "user",
       "name": "Juan",
-      "lastName": "Pérez",
-      "vote": true
+      "lastName": "Perez",
+      "hasVoted": true
     },
     {
       "id": 3,
@@ -23,16 +58,23 @@
       "birthDate": "2004-08-25",
       "name": "Luis",
       "lastName": "Callapa",
-      "vote": false
+      "hasVoted": false
     }
   ],
   "vote": [
     {
       "id": 1,
+      "userId": 1,
+      "placeId": 1,
+      "voteDate": "2023-10-01T10:00:00Z",
+      "candidateId": 2
+    },
+    {
+      "id": 1,
       "userId": 2,
       "placeId": 1,
       "voteDate": "2023-10-01T10:00:00Z",
-      "candidateId": 1
+      "candidateId": 2
     }
   ],
   "places": [

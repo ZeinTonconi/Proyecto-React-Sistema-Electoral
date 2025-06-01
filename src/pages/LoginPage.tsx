@@ -24,6 +24,7 @@ function LoginPage() {
   const [openCameraModal, setOpenCameraModal] = useState(false);
 
   const [openSnackBar, setOpenSnackBar] = useState(false);
+  const [snackBarVoted, setSnackBarVoted] = useState(false)
 
   const navigate = useNavigate();
 
@@ -79,9 +80,13 @@ function LoginPage() {
             }
             setIsAdmin(true);
           } else {
-            setOpenCameraModal(true);
-            setIsAdmin(false);
-            setStorage("isAdmin", false);
+            if(user[0].hasVoted)
+              setSnackBarVoted(true)
+            else{
+              setOpenCameraModal(true);
+              setIsAdmin(false);
+              setStorage("isAdmin", false);
+            }
           }
         } else {
           setOpenSnackBar(true);
@@ -217,6 +222,14 @@ function LoginPage() {
         }}
         message="Datos incorrectos. Vuelve a intentarlo mas tarde"
         severity="error"
+      />
+      <SnackBarWithAlert
+        open={snackBarVoted}
+        handleClose={() => {
+          setSnackBarVoted(false)
+        }}
+        message="Usted ya voto!!!"
+        severity="info"
       />
     </Container>
   );

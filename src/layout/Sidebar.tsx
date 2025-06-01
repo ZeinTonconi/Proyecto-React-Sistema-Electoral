@@ -6,12 +6,13 @@ import {
   ListItemIcon,
   ListItemText,
   Toolbar,
-  Divider
+  Divider,
 } from "@mui/material";
-import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
-import HomeFilledIcon from '@mui/icons-material/HomeFilled';
-import HowToVoteIcon from '@mui/icons-material/HowToVote';
+import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
+import HomeFilledIcon from "@mui/icons-material/HomeFilled";
+import HowToVoteIcon from "@mui/icons-material/HowToVote";
 import { Link, useLocation } from "react-router-dom";
+import { getStorage } from "../helpers/LocalStorage";
 
 const drawerWidth = 240;
 
@@ -26,6 +27,8 @@ const Sidebar = ({
   handleDrawerToggle,
   isMobile,
 }: SidebarProps) => {
+
+  const user = getStorage('user')
 
   const location = useLocation();
 
@@ -47,7 +50,7 @@ const Sidebar = ({
           </ListItemButton>
         </ListItem>
 
-        <ListItem disablePadding>
+        {!user.hasVoted && <ListItem disablePadding>
           <ListItemButton
             component={Link}
             to="/vote-page"
@@ -58,7 +61,7 @@ const Sidebar = ({
             </ListItemIcon>
             <ListItemText primary="Ir a votar" />
           </ListItemButton>
-        </ListItem>
+        </ListItem>}
 
         <ListItem disablePadding>
           <ListItemButton
@@ -72,7 +75,6 @@ const Sidebar = ({
             <ListItemText primary="Cerrar Sesión" />
           </ListItemButton>
         </ListItem>
-
       </List>
     </div>
   );
@@ -102,7 +104,7 @@ const Sidebar = ({
             flexShrink: 0,
             [`& .MuiDrawer-paper`]: {
               width: drawerWidth,
-              boxSizing: "border-box"
+              boxSizing: "border-box",
             },
           }}
           open
