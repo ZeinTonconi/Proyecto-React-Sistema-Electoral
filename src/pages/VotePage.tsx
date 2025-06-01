@@ -1,55 +1,95 @@
-import { Container, Grid } from "@mui/material";
+import { Box, Button, Container, Grid } from "@mui/material";
 import CandidateCard from "../components/CandidateCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getCandidateService } from "../services/CandidateService";
+import { ConfirmActionDialog } from "../components/ConfirmActionDialog";
+import { getStorage, setStorage } from "../helpers/LocalStorage";
+import { useNavigate } from "react-router-dom";
+import { postVote } from "../services/VotingService";
 
 function VotePage() {
+  const [selectedCandidate, setSelectedCandidate] = useState<string | null>(
+    null
+  );
 
-    const [selectedCandidate, setSelectedCandidate] = useState<string | null>(null);
+  const [candidates, setCandidates] = useState([]);
 
-    const handleCandidateSelect = (candidateName: string) => {
-        setSelectedCandidate(prev => 
-            prev === candidateName ? null : candidateName
-        );
-    };
+  const [openDialog, setOpenDialog] = useState(false);
+  const navigate= useNavigate();
 
-    return (
-        <Container maxWidth="lg">
-            <Grid container spacing={4} sx={{ marginTop: 2 }}>
-                <Grid size={{ xs: 12, sm: 12, md: 6, lg: 4 }}>
-                    <CandidateCard
-                        candidate_name="Candidate 1"
-                        image="src/assets/Candidate.jpg"
-                        political_party="Party 1"
-                        color_card="lightblue"
-                        isSelected={selectedCandidate === "Candidate 1"}
-                        onClick={() => handleCandidateSelect("Candidate 1")}
-                        
-                    />
-                </Grid>
-                <Grid size={{ xs: 12, sm: 12, md: 6, lg: 4 }}>
-                    <CandidateCard
-                        candidate_name="Candidate 2"
-                        image="src/assets/Candidate.jpg"
-                        political_party="Party 2"
-                        color_card="red"
-                        isSelected={selectedCandidate === "Candidate 2"}
-                        onClick={() => handleCandidateSelect("Candidate 2")}
-                    />
-                </Grid>
-                <Grid size={{ xs: 12, sm: 12, md: 6, lg: 4 }}>
-                    <CandidateCard
-                        candidate_name="Candidate 3"
-                        image="src/assets/Candidate.jpg"
-                        political_party="Party 3"
-                        color_card="purple"
-                        isSelected={selectedCandidate === "Candidate 3"}
-                        onClick={() => handleCandidateSelect("Candidate 3")}
-                    />
-                </Grid>
-               
-            </Grid>
-        </Container>
+  const handleCandidateSelect = (candidateName: string) => {
+    setSelectedCandidate((prev) =>
+      prev === candidateName ? null : candidateName
     );
+  };
+
+  const vote = async () => {
+    try {
+        const user = getStorage('user');
+        await postVote(user.id, selectedCandidate, user)
+    } catch (error) {
+        console.log("Error al emitir el voto", error)
+        throw error
+    }
+  };
+
+  const voteSuccess = () => {
+    navigate('/login')
+  }
+
+  const getAllCandidates = async () => {
+    const res = await getCandidateService();
+    setCandidates(res);
+  };
+
+  const getCandidateCard = (candidate: any) => {
+    const { candidate_name, candidate_image, political_party, color_card } =
+      candidate;
+    return (
+      <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+        <CandidateCard
+          candidate_name={candidate_name}
+          candidate_image={candidate_image}
+          political_party={political_party}
+          color_card={color_card}
+          isSelected={selectedCandidate === candidate_name}
+          onClick={() => handleCandidateSelect(candidate_name)}
+        />
+      </Grid>
+    );
+  };
+
+  useEffect(() => {
+    getAllCandidates();
+  }, []);
+
+  return (
+    <Container maxWidth="lg">
+      <Grid container spacing={4} sx={{ marginTop: 2 }}>
+        {candidates.map((candidate) => getCandidateCard(candidate))}
+      </Grid>
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: "black" }}
+          onClick={() => {
+            setOpenDialog(true);
+          }}
+        >
+          Confirmar
+        </Button>
+      </Box>
+      <ConfirmActionDialog
+        confirmAction={vote}
+        handleClose={() => {
+          setOpenDialog(false);
+        }}
+        handleCloseSuccess={voteSuccess}
+        open={openDialog}
+        message="Presiona el boton de confirmar para emitir tu voto. No se podra cambiar posteriormente."
+      />
+    </Container>
+  );
 }
 
 export default VotePage;

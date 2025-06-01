@@ -1,17 +1,55 @@
 {
+  "candidates": [
+    {
+      "id": 1,
+      "candidate_name": "Polar",
+      "candidate_image": "src/assets/Candidate.jpg",
+      "party_image": "",
+      "political_party": "Polar para presidente",
+      "color_card": "cyan"
+    },
+    {
+      "id": 2,
+      "candidate_name": "Polar2",
+      "candidate_image": "src/assets/Candidate.jpg",
+      "party_image": "",
+      "political_party": "Polar para presidente",
+      "color_card": "red"
+    },
+    {
+      "id": 3,
+      "candidate_name": "Polar3",
+      "candidate_image": "src/assets/Candidate.jpg",
+      "party_image": "",
+      "political_party": "Polar para presidente",
+      "color_card": "purple"
+    },
+    {
+      "id": 4,
+      "candidate_name": "Polar4",
+      "candidate_image": "src/assets/Candidate.jpg",
+      "party_image": "",
+      "political_party": "Polar para presidente",
+      "color_card": "green"
+    }
+  ],
   "users": [
     {
       "id": "1",
       "ci": "1234567",
       "birthDate": "1990-01-01",
       "role": "admin",
-      "password": "admin123"
+      "password": "admin123",
+      "hasVoted": true,
+      "vote": "Polar2"
     },
     {
       "id": "2",
       "ci": "7654321",
       "birthDate": "2002-05-15",
-      "role": "user"
+      "role": "user",
+      "hasVoted": true,
+      "vote": "Polar2"
     },
     {
       "id": 3,
