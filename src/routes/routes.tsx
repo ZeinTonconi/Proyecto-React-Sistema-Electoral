@@ -4,6 +4,8 @@ import RegisterUsers from "../components/RegisterUsersForm";
 import VotePage from "../pages/VotePage";
 import { Layout } from "../layout/Layout";
 import Dashboard from "../pages/Dashboard";
+import UserManagement from "../pages/UserManagement";
+import VotingManagement from "../pages/VotingManagement";
 
 const RoutesApp = () => {
   return (
@@ -23,6 +25,8 @@ const RoutesApp = () => {
           element={<Layout />}
         >
           <Route path="vote-page" element={<VotePage />} />
+          <Route path="user-management" element={<UserManagement />} />
+          <Route path="voting-management" element={<VotingManagement />} />
         </Route>
       </Routes>
     </BrowserRouter>

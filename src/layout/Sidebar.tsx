@@ -11,6 +11,8 @@ import {
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import HomeFilledIcon from "@mui/icons-material/HomeFilled";
 import HowToVoteIcon from "@mui/icons-material/HowToVote";
+import PollIcon from '@mui/icons-material/Poll';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import { Link, useLocation } from "react-router-dom";
 import { getStorage } from "../helpers/LocalStorage";
 
@@ -29,7 +31,7 @@ const Sidebar = ({
 }: SidebarProps) => {
 
   const user = getStorage('user')
-
+  const admin = getStorage('isAdmin')
   const location = useLocation();
 
   const drawer = (
@@ -63,11 +65,38 @@ const Sidebar = ({
           </ListItemButton>
         </ListItem>}
 
+        {admin && <ListItem disablePadding>
+          <ListItemButton
+            component={Link}
+            to="/user-management"
+            selected={location.pathname === "/user-management"}
+          >
+            <ListItemIcon>
+              <ManageAccountsIcon />
+            </ListItemIcon>
+            <ListItemText primary="Administración de usuarios" />
+          </ListItemButton>
+        </ListItem>}
+
+        {admin && <ListItem disablePadding>
+          <ListItemButton
+            component={Link}
+            to="/voting-management"
+            selected={location.pathname === "/voting-management"}
+          >
+            <ListItemIcon>
+              <PollIcon />
+            </ListItemIcon>
+            <ListItemText primary="Resultados de la votación" />
+          </ListItemButton>
+        </ListItem>}
+
         <ListItem disablePadding>
           <ListItemButton
             component={Link}
             to="/"
-            selected={location.pathname === "/"}
+            selected={location.pathname === "/"
+            }
           >
             <ListItemIcon>
               <MeetingRoomIcon />
