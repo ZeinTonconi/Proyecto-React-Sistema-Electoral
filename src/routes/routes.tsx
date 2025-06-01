@@ -1,6 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "../pages/LoginPage";
 import RegisterUsers from "../components/RegisterUsersForm";
+import VotePage from "../pages/VotePage";
+import { Layout } from "../layout/Layout";
+import Dashboard from "../pages/Dashboard";
 
 const RoutesApp = () => {
   return (
@@ -9,6 +12,18 @@ const RoutesApp = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterUsers/>} />
         <Route path="/" element={<Navigate to="/login" />} />
+        <Route
+          path="/"
+          element={<Layout />}
+        >
+          <Route path="dashboard" element={<Dashboard />} />
+        </Route>
+        <Route
+          path="/"
+          element={<Layout />}
+        >
+          <Route path="vote-page" element={<VotePage />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
