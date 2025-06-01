@@ -41,7 +41,8 @@
       "role": "admin",
       "password": "admin123",
       "hasVoted": true,
-      "vote": "Polar2"
+      "vote": "Polar2",
+      "token": "admin-token-12345"
     },
     {
       "id": "2",
@@ -49,85 +50,76 @@
       "birthDate": "2002-05-15",
       "role": "user",
       "hasVoted": true,
-      "vote": "Polar2"
+      "vote": "Polar2",
+      "token": "user-token-12345"
     },
     {
       "id": 3,
       "ci": "1234567",
       "role": "user",
-      "birthDate": "2003-09-09"
+      "birthDate": "2003-09-09",
+      "token": "user-token-67890"
     },
     {
-      "id": 4,
-      "ci": "1234567",
-      "role": "user",
-      "birthDate": "2003-09-09"
+      "id": "4",
+      "ci": "8642097",
+      "birthDate": "1995-03-10",
+      "role": "admin",
+      "password": "securePass",
+      "hasVoted": false,
+      "token": "admin-token-54321"
     },
     {
-      "id": 5,
-      "ci": "1234567",
+      "id": "5",
+      "ci": "5554443",
+      "birthDate": "2001-12-05",
       "role": "user",
-      "birthDate": "2003-09-09"
+      "hasVoted": true,
+      "vote": "Esfera1",
+      "token": "user-token-98765"
     },
     {
-      "id": 6,
-      "ci": "1234567",
+      "id": "6",
+      "ci": "9876543",
+      "birthDate": "1998-07-22",
       "role": "user",
-      "birthDate": "2003-09-09"
+      "hasVoted": false,
+      "token": "user-token-13579"
     },
     {
-      "id": 7,
-      "ci": "1234567",
+      "id": "7",
+      "ci": "1122334",
+      "birthDate": "2003-04-18",
       "role": "user",
-      "birthDate": "2003-09-09"
+      "hasVoted": false,
+      "token": "user-token-11223"
     },
     {
-      "id": 8,
-      "ci": "1234567",
-      "role": "user",
-      "birthDate": "2003-09-09"
+      "id": "8",
+      "ci": "9988776",
+      "birthDate": "1993-11-30",
+      "role": "admin",
+      "password": "superAdmin",
+      "hasVoted": true,
+      "vote": "Esfera1",
+      "token": "admin-token-99887"
     },
     {
-      "id": 9,
-      "ci": "1234567",
+      "id": "9",
+      "ci": "1231231",
+      "birthDate": "2004-02-14",
       "role": "user",
-      "birthDate": "2003-09-09"
+      "hasVoted": false,
+      "token": "user-token-45678"
     },
     {
-      "id": 10,
-      "ci": "1234567",
+      "id": "10",
+      "ci": "4564564",
+      "birthDate": "1997-09-08",
       "role": "user",
-      "birthDate": "2003-09-09"
-    },
-    {
-      "id": 10,
-      "ci": "1234567",
-      "role": "user",
-      "birthDate": "2003-09-09"
-    },
-    {
-      "id": 11,
-      "ci": "1234567",
-      "role": "user",
-      "birthDate": "2003-09-09"
-    },
-    {
-      "id": 12,
-      "ci": "1234567",
-      "role": "user",
-      "birthDate": "2003-09-09"
-    },
-    {
-      "id": 13,
-      "ci": "1234567",
-      "role": "user",
-      "birthDate": "2003-09-09"
-    },
-    {
-      "id": 14,
-      "ci": "1234567",
-      "role": "user",
-      "birthDate": "2003-09-09"
+      "hasVoted": true,
+      "vote": "Polar2",
+      "token": "user-token-33445"
     }
   ]
 }
