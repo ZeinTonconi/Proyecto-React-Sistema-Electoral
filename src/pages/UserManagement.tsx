@@ -36,17 +36,18 @@ function UserManagement() {
 
   return (
     <Container>
-      <Button
-        variant="contained"
-        color="primary"
-        sx={{ mt: 2, borderRadius: 2 }}
-        onClick={handleOpenRegisterUser}
-      >
-        Agregar Usuario
-      </Button>
-
+      <Box display="flex" justifyContent="end">
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{ mt: 2, borderRadius: 2 }}
+          onClick={handleOpenRegisterUser}
+        >
+          Agregar Usuario
+        </Button>
+      </Box>
       <RegisterUsers open={openRegisterUser} onClose={handleCloseRegisterUser} />
-      <Typography variant="h5" gutterBottom>
+      <Typography variant="h5" gutterBottom >
         Usuarios
       </Typography>
       <UsersList users={users} />
