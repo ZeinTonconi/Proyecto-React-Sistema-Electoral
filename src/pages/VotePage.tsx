@@ -39,6 +39,7 @@ function VotePage() {
     await postVote(user.id, candidate.id, user);
   } catch (error) {
     console.error("Error al emitir el voto", error);
+    throw new Error("Error al emitir el voto")
   }
 };
 

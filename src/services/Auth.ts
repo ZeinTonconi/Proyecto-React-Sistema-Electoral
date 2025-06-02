@@ -50,7 +50,7 @@ export const registerUser = async (
     const token = `user-token-${nextId+1234}`;
 
     const response = await jsonServerInstance.post(USERS_URL, {
-      id: nextId,
+      id: nextId.toString(),
       ci,
       role: "user",
       birthDate,
