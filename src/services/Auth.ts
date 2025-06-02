@@ -12,6 +12,16 @@ export const getUser = async (ci: string, birthDate: string) => {
   }
 };
 
+export const getUsers = async () => {
+  try {
+    const response = await jsonServerInstance.get(USERS_URL);
+    return response.data;
+  } catch (error) {
+    console.error("Error getting users", error);
+    throw error;
+  }
+};
+
 export const getAdmin = async (ci: string, password: string) => {
   try{
     if(password.length === 0)
