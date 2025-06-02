@@ -18,19 +18,19 @@
     },
     {
       "id": "3",
-      "candidate_name": "Polar3",
-      "candidate_image": "src/assets/Candidate.jpg",
+      "candidate_name": "Zein Tonconi",
+      "candidate_image": "src/assets/ZeinEsICPC.jpg",
       "party_image": "",
-      "political_party": "Polar para presidente",
-      "color_card": "purple"
+      "political_party": "Zein es ICPC",
+      "color_card": "lightblue"
     },
     {
       "id": "4",
-      "candidate_name": "Polar4",
-      "candidate_image": "src/assets/Candidate.jpg",
+      "candidate_name": "Luis Callapa",
+      "candidate_image": "src/assets/LuisPorUnMejorPais.jpg",
       "party_image": "",
-      "political_party": "Polar para presidente",
-      "color_card": "green"
+      "political_party": "Luis por un mejor país",
+      "color_card": "lightgreen"
     }
   ],
   "users": [
@@ -54,7 +54,7 @@
       "role": "user",
       "name": "John",
       "lastName": "Doe",
-      "hasVoted": false,
+      "hasVoted": true,
       "placeId": 1,
       "token": "user-token-67890",
       "numberPlace": 4
@@ -130,6 +130,18 @@
       "hasVoted": false,
       "token": "user-token-1242",
       "numberPlace": 7
+    },
+    {
+      "id": "9",
+      "ci": "8428124",
+      "role": "user",
+      "birthDate": "2003-06-17",
+      "name": "Valeria",
+      "lastName": "Zerain",
+      "placeId": 10,
+      "hasVoted": false,
+      "token": "user-token-1243",
+      "numberPlace": 1
     }
   ],
   "vote": [
@@ -204,6 +216,18 @@
       "candidate_id": "3",
       "user_id": "8",
       "vote_date": "2025-06-02T03:32:40.009Z"
+    },
+    {
+      "id": "13",
+      "candidate_id": "1",
+      "user_id": "2",
+      "vote_date": "2025-06-02T16:27:34.847Z"
+    },
+    {
+      "id": "14",
+      "candidate_id": "2",
+      "user_id": "1",
+      "vote_date": "2025-06-02T16:40:25.789Z"
     }
   ],
   "places": [
@@ -262,16 +286,16 @@
       "numberOfTable": 26
     },
     {
-      "id": "10",
       "name": "U.E Saint Andrew’s",
       "address": "Calle 13 N° 1000, Zona Achumani",
-      "numberOfTable": 26
+      "numberOfTable": 25,
+      "id": "10"
     },
     {
-      "id": "11",
-      "name": "prueba2",
-      "address": "Quilca 27, Arequipa",
-      "numberOfTable": 10
+      "id": "12",
+      "name": "U.E. Achumani",
+      "address": "Achumani muy muy lejano",
+      "numberOfTable": 26
     }
   ]
 }
