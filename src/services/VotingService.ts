@@ -35,3 +35,15 @@ export const postVote = async (userId: number, candidateId: number, user: any) =
     throw error;
   }
 };
+
+export const getVotesByCandidate = async (candidateId: number) => {
+  try {
+    const response = await jsonServerInstance.get(VOTE_URL, {
+      params: { candidate_id: candidateId },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener los votos por candidato", error);
+    throw error;
+  }
+};  
