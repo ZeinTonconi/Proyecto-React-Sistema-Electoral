@@ -30,10 +30,12 @@ export const ConfirmActionDialog = ({
   const doAction = async () => {
     try {
       await confirmAction();
-      setShowSuccess(true);
     } catch (error) {
       setShowError(true);
+      return
     }
+    
+      setShowSuccess(true);
   };
 
   const closeDialog = () => {
@@ -42,6 +44,13 @@ export const ConfirmActionDialog = ({
 
     handleClose();
   };
+  const closeDialogSuccess = () => {
+    
+    setShowSuccess(false);
+    setShowError(false);
+
+    handleCloseSuccess();
+  }
 
   return (
     <>
@@ -125,7 +134,7 @@ export const ConfirmActionDialog = ({
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleCloseSuccess} autoFocus>
+              <Button onClick={closeDialogSuccess} autoFocus>
                 Cerrar
               </Button>
             </DialogActions>

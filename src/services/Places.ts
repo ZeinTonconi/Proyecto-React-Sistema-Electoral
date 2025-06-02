@@ -30,7 +30,7 @@ export const registerPlace = async (name: string, address: string, numberOfTable
     const newId = maxId + 1;
 
     const response = await jsonServerInstance.post(PLACES_URL, {
-      id: newId,
+      id: newId.toString(),
       name,
       address,
       numberOfTable,
@@ -41,3 +41,22 @@ export const registerPlace = async (name: string, address: string, numberOfTable
     throw error;
   }
 };
+
+
+export const deletePlace = async (id: string) => {
+  try{
+    const res = await jsonServerInstance.delete(`${PLACES_URL}/${id}`)
+    return res.data
+  } catch(error) {
+    console.log("Error deleting place", error)
+    throw error
+  }
+}
+
+export const updatePlace = async(id: string, newPlace: any) => {
+  try {
+    const res = await jsonServerInstance.put(`${PLACES_URL}/${id}`, {...newPlace})
+  } catch (error) {
+    console.log("Error updating place")
+  }
+}

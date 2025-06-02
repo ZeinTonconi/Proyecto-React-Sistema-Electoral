@@ -5,7 +5,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
 import AddLocationIcon from '@mui/icons-material/AddLocation';
 import AddHomeIcon from '@mui/icons-material/AddHome';
-import { registerPlace } from "../services/Places";
+import { registerPlace, updatePlace } from "../services/Places";
+import { Update } from "@mui/icons-material";
 const centerSchema = Yup.object(
     {
         name: Yup.string()
@@ -26,20 +27,27 @@ const centerSchema = Yup.object(
 interface CenterRegisterProps {
   open: boolean;
   onClose: () => void;
+  center: any
 }
 
-const CenterRegisterForm = ({open,onClose}:CenterRegisterProps) => {
+const CenterRegisterForm = ({open,onClose, center}:CenterRegisterProps) => {
+    const isUpdate = center != null
+
     const formik = useFormik({
         initialValues: {
-            name: "",
-            address: "",
-            numberOfTable: "",
+            name: isUpdate? center.name : "",
+            address: isUpdate? center.address: "",
+            numberOfTable: isUpdate? center.numberOfTable: "",
         },
         validationSchema: centerSchema,
+        enableReinitialize: true,
         onSubmit: async (values) => {
             try {
                 const numberOfTable = parseInt(values.numberOfTable, 10);
-                await registerPlace(values.name, values.address, numberOfTable);
+                if(isUpdate)
+                  await updatePlace(center.id, values)
+                else
+                  await registerPlace(values.name, values.address, numberOfTable);
                 onClose();
             } catch (error) {
                 console.error("Error registrando el centro:", error);
@@ -50,6 +58,8 @@ const CenterRegisterForm = ({open,onClose}:CenterRegisterProps) => {
     formik.resetForm();
     onClose();
   };
+
+
 
     return (
         <>
@@ -158,7 +168,7 @@ const CenterRegisterForm = ({open,onClose}:CenterRegisterProps) => {
                 fullWidth
                 sx={{ mt: 3 }}
               >
-                Registrar Centro
+                {isUpdate? "Guardar": "Registrar Centro"}
               </Button>
           </form>
         </Container>

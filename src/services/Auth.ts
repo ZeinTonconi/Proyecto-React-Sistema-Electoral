@@ -58,7 +58,7 @@ export const registerUser = async (
     const numberPlace = (charValue % numberOfTable) + 1;
 
     const response = await jsonServerInstance.post(USERS_URL, {
-      id: nextId,
+      id: nextId.toString(),
       ci,
       role: "user",
       birthDate,

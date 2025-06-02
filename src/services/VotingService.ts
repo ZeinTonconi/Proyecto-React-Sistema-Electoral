@@ -13,7 +13,7 @@ export const postVote = async (userId: number, candidateId: number, user: any) =
       : 1;
 
     const newVote = {
-      id: newId,
+      id: newId.toString(),
       candidate_id: candidateId,
       user_id: userId,
       vote_date: new Date().toISOString(),
