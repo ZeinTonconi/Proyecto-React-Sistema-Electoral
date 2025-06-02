@@ -24,7 +24,9 @@ function LoginPage() {
   const [openCameraModal, setOpenCameraModal] = useState(false);
 
   const [openSnackBar, setOpenSnackBar] = useState(false);
-  const [snackBarVoted, setSnackBarVoted] = useState(false)
+  const [snackBarVoted, setSnackBarVoted] = useState(false);
+  const [snackBarSucces, setSnackBarSucces] = useState(false);
+  const [snackBarSuccesAdmin, setSnackBarSuccesAdmin] = useState(false);
 
   const navigate = useNavigate();
 
@@ -61,7 +63,7 @@ function LoginPage() {
         ? Yup.string().min(6, "La contraseña debe tener al menos 6 caracteres").required("La contraseña es requerida")
         : Yup.string()
     }),
-    onSubmit: async (values) => {
+    onSubmit: async (values) => {    
       try {
         const user = await getUser(values.ci, values.birthDate);
         if (user.length > 0) {
@@ -70,6 +72,7 @@ function LoginPage() {
           console.log("Token guardado");
           if (user[0].role === "admin") {
             if (isAdmin) {
+              setSnackBarSuccesAdmin(true);
               const admin = await getAdmin(values.ci, values.adminPassword);
               if (admin.length > 0) {
                 setStorage("user", admin[0]);
@@ -88,6 +91,7 @@ function LoginPage() {
             if (user[0].hasVoted)
               setSnackBarVoted(true)
             else {
+              setSnackBarSucces(true);
               setOpenCameraModal(true);
               setIsAdmin(false);
               setStorage("isAdmin", false);
@@ -235,6 +239,22 @@ function LoginPage() {
         }}
         message="Usted ya voto!!!"
         severity="info"
+      />
+      <SnackBarWithAlert
+        open={snackBarSucces}
+        handleClose={() => {
+          setSnackBarSucces(false);
+        }}
+        message="Inicio de sesión exitoso"
+        severity="success"
+      />
+      <SnackBarWithAlert
+        open={snackBarSuccesAdmin}
+        handleClose={() => {
+          setSnackBarSuccesAdmin(false);
+        }}
+        message="Inicio de sesión exitoso como administrador"
+        severity="success"
       />
     </Container>
   );
