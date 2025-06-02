@@ -44,7 +44,8 @@
       "placeId": 2,
       "token": "admin-token-12345",
       "name": "Admin",
-      "lastName": "User"
+      "lastName": "User",
+      "numberPlace": 21
     },
     {
       "id": "2",
@@ -55,7 +56,8 @@
       "lastName": "Doe",
       "hasVoted": false,
       "placeId": 1,
-      "token": "user-token-67890"
+      "token": "user-token-67890",
+      "numberPlace": 4
     },
     {
       "id": "3",
@@ -66,7 +68,8 @@
       "lastName": "Callapa",
       "placeId": 7,
       "hasVoted": false,
-      "token": "user-token-12345"
+      "token": "user-token-12345",
+      "numberPlace": 3
     },
     {
       "id": "4",
@@ -77,7 +80,8 @@
       "lastName": "Callapa Quilla",
       "placeId": 2,
       "hasVoted": true,
-      "token": "user-token-1238"
+      "token": "user-token-1238",
+      "numberPlace": 3
     },
     {
       "id": "5",
@@ -88,7 +92,8 @@
       "lastName": "Navarro",
       "placeId": 4,
       "hasVoted": false,
-      "token": "user-token-54321"
+      "token": "user-token-54321",
+      "numberPlace": 14
     },
     {
       "id": "6",
@@ -99,7 +104,8 @@
       "lastName": "Zerain",
       "placeId": 6,
       "hasVoted": false,
-      "token": "user-token-98765"
+      "token": "user-token-98765",
+      "numberPlace": 26
     },
     {
       "id": "7",
@@ -110,18 +116,20 @@
       "lastName": "Tonconi",
       "placeId": 5,
       "hasVoted": false,
-      "token": "user-token-53211"
+      "token": "user-token-53211",
+      "numberPlace": 20
     },
     {
-      "id": "8",
-      "ci": "9876543",
+      "id": 8,
+      "ci": "11111111",
       "role": "user",
-      "birthDate": "2003-05-16",
-      "name": "Hade",
-      "lastName": "Villegas",
-      "placeId": 3,
-      "hasVoted": true,
-      "token": "user-token-1242"
+      "birthDate": "2004-10-09",
+      "name": "Luis",
+      "lastName": "Gonzales",
+      "placeId": 8,
+      "hasVoted": false,
+      "token": "user-token-1242",
+      "numberPlace": 7
     }
   ],
   "vote": [

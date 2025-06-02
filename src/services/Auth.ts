@@ -48,9 +48,11 @@ export const registerUser = async (
     const nextId = (ids.length > 0 ? Math.max(...ids) + 1 : 1);
     
     const token = `user-token-${nextId+1234}`;
+    const char = lastName[0].toUpperCase();
+    const numberPlace = char.charCodeAt(0) - 64;
 
     const response = await jsonServerInstance.post(USERS_URL, {
-      id: nextId.toString(),
+      id: nextId,
       ci,
       role: "user",
       birthDate,
@@ -59,6 +61,7 @@ export const registerUser = async (
       placeId: place,
       hasVoted: false,
       token,
+      numberPlace,
     });
 
     return response.data;
