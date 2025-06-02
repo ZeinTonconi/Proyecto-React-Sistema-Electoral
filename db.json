@@ -42,7 +42,9 @@
       "password": "admin123",
       "hasVoted": true,
       "placeId": 2,
-      "token": "admin-token-12345"
+      "token": "admin-token-12345",
+      "name": "Admin",
+      "lastName": "User"
     },
     {
       "id": "2",
@@ -51,7 +53,7 @@
       "role": "user",
       "name": "John",
       "lastName": "Doe",
-      "hasVoted": true,
+      "hasVoted": false,
       "placeId": 1,
       "token": "user-token-67890"
     },
