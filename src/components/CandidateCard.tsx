@@ -9,17 +9,15 @@ import {
 interface CandidateCardProps {
   candidate_name: string;
   candidate_image?: string;
-  party_image?: string;
   political_party: string;
   color_card: string;
   isSelected: boolean;
   onClick: () => void;
 }
 
-export default function ActionAreaCard({
+export default function CandidateCard({
   candidate_name,
   candidate_image,
-  party_image,
   political_party,
   color_card,
   isSelected,
@@ -28,59 +26,63 @@ export default function ActionAreaCard({
   return (
     <Card
       sx={{
+        height: "100%",
         backgroundColor: color_card,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        borderRadius: "10px",
-        margin: 2,
-        paddingTop: 4,
+        borderRadius: 2,
+        marginTop: 2,
+        paddingTop: 3,
+        boxShadow: 3,
+        cursor: "pointer",
+        transition: "transform 0.2s ease-in-out",
+        "&:hover": {
+          transform: "scale(1.03)",
+          boxShadow: 6,
+        },
       }}
+      onClick={onClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+  if (e.key === "Enter" || e.key === " ") onClick();
+}}
     >
       {candidate_image && (
         <CardMedia
           component="img"
           image={candidate_image}
-          alt="Candidate Image"
+          alt={`Foto del candidato ${candidate_name}`}
           sx={{
-            borderRadius: 15,
-            alignItems: "center",
+            borderRadius: 2,
             width: "100%",
             height: "auto",
-            padding: 3,
+            padding: 2,
             aspectRatio: "1 / 1",
+            objectFit: "cover",
           }}
         />
       )}
-      {party_image && (
-        <CardMedia
-          component="img"
-          image={party_image}
-          alt="Partido Politico"
-          sx={{
-            borderRadius: 15,
-            alignItems: "center",
-            width: "100%",
-            height: "auto",
-            padding: 3,
-            aspectRatio: "1 / 1",
-          }}
-        />
-      )}
-      <CardContent>
-        <Typography variant="h5" sx={{ textAlign: "center" }}>
+
+      <CardContent sx={{ textAlign: "center", flexGrow: 1 }}>
+        <Typography variant="h6" fontWeight="bold">
           {candidate_name}
         </Typography>
-        <Typography sx={{ textAlign: "center" }}>{political_party}</Typography>
+        <Typography variant="body2" color="text.secondary" gutterBottom>
+          {political_party}
+        </Typography>
 
-        <Checkbox
+        
+      </CardContent>
+      <Checkbox
           checked={isSelected}
           onChange={onClick}
           onClick={(e) => e.stopPropagation()}
-          sx={{ display: "flex", justifyContent: "center" }}
+          sx={{ marginBottom: 5 }}
+          slotProps={{ input: { "aria-label": `Seleccionar a ${candidate_name}` } }}
         />
-      </CardContent>
     </Card>
   );
 }

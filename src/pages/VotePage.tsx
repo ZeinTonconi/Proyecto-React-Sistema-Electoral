@@ -8,44 +8,37 @@ import { useNavigate } from "react-router-dom";
 import { postVote } from "../services/VotingService";
 
 function VotePage() {
-  const [selectedCandidate, setSelectedCandidate] = useState<string | null>(
-    null
-  );
-
+  const [selectedCandidate, setSelectedCandidate] = useState<string | null>(null);
   const [candidates, setCandidates] = useState([]);
-
   const [openDialog, setOpenDialog] = useState(false);
-  const navigate= useNavigate();
+  const navigate = useNavigate();
 
   const handleCandidateSelect = (candidateName: string) => {
-    setSelectedCandidate((prev) =>
-      prev === candidateName ? null : candidateName
-    );
+    setSelectedCandidate((prev) => (prev === candidateName ? null : candidateName));
   };
 
   const vote = async () => {
-  try {
-    const user = getStorage("user");
+    try {
+      const user = getStorage("user");
+      const candidate: any = candidates.find(
+        (c: any) => c.candidate_name === selectedCandidate
+      );
 
-    const candidate: any = candidates.find(
-      (c: any) => c.candidate_name === selectedCandidate
-    );
+      if (!candidate) {
+        console.error("Candidato no encontrado");
+        return;
+      }
 
-    if (!candidate) {
-      console.error("Candidato no encontrado");
-      return;
+      await postVote(user.id, candidate.id, user);
+    } catch (error) {
+      console.error("Error al emitir el voto", error);
+      throw new Error("Error al emitir el voto");
     }
-
-    await postVote(user.id, candidate.id, user);
-  } catch (error) {
-    console.error("Error al emitir el voto", error);
-    throw new Error("Error al emitir el voto")
-  }
-};
+  };
 
   const voteSuccess = () => {
-    navigate('/login')
-  }
+    navigate("/login");
+  };
 
   const getAllCandidates = async () => {
     const res = await getCandidateService();
@@ -53,10 +46,9 @@ function VotePage() {
   };
 
   const getCandidateCard = (candidate: any) => {
-    const { candidate_name, candidate_image, political_party, color_card } =
-      candidate;
+    const { candidate_name, candidate_image, political_party, color_card } = candidate;
     return (
-      <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+      <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={candidate_name}>
         <CandidateCard
           candidate_name={candidate_name}
           candidate_image={candidate_image}
@@ -74,29 +66,39 @@ function VotePage() {
   }, []);
 
   return (
-    <Container maxWidth="lg">
-      <Grid container spacing={4} sx={{ marginTop: 2 }}>
+    <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Grid container spacing={3}>
         {candidates.map((candidate) => getCandidateCard(candidate))}
       </Grid>
-      <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }} alignItems="stretch">
         <Button
           variant="contained"
-          sx={{ backgroundColor: "black" }}
-          onClick={() => {
-            setOpenDialog(true);
+          sx={{
+            backgroundColor: "#1976d2",
+            color: "white",
+            padding: "12px 24px",
+            fontSize: "1rem",
+            fontWeight: "bold",
+            borderRadius: "8px",
+            marginTop: 2,
+            "&:hover": {
+              backgroundColor: "#115293",
+              transform: "scale(1.05)",
+              transition: "all 0.2s ease-in-out",
+            },
           }}
+          onClick={() => setOpenDialog(true)}
+          disabled={!selectedCandidate}
         >
-          Confirmar
+          Confirmar Voto
         </Button>
       </Box>
       <ConfirmActionDialog
         confirmAction={vote}
-        handleClose={() => {
-          setOpenDialog(false);
-        }}
+        handleClose={() => setOpenDialog(false)}
         handleCloseSuccess={voteSuccess}
         open={openDialog}
-        message="Presiona el boton de confirmar para emitir tu voto. No se podra cambiar posteriormente."
+        message="Presiona el botón de confirmar para emitir tu voto. No se podrá cambiar posteriormente."
       />
     </Container>
   );
