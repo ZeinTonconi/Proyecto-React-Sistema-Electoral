@@ -1,12 +1,14 @@
 import {
-  Box,
   Button,
   Container,
   InputAdornment,
   MenuItem,
+  Modal,
   TextField,
   Typography,
+  IconButton,
 } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import BadgeIcon from "@mui/icons-material/Badge";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import * as Yup from "yup";
@@ -42,7 +44,12 @@ const userSchema = Yup.object({
   place: Yup.string().required("Lugar de votación requerido"),
 });
 
-const RegisterUsers = () => {
+interface RegisterUsersProps {
+  open: boolean;
+  onClose: () => void;
+}
+
+export const RegisterUsers = ({ open, onClose }: RegisterUsersProps) => {
   const [openCameraModal, setOpenCameraModal] = useState(false);
   const [isPhotoTaken, setIsPhotoTaken] = useState(false);
   const [places, setPlaces] = useState<string[]>([]);
@@ -60,12 +67,6 @@ const RegisterUsers = () => {
     fetchPlaces();
   }, []);
 
-  const openCamera = () => setOpenCameraModal(true);
-  const closeModal = () => {
-    setOpenCameraModal(false);
-    setIsPhotoTaken(true);
-  };
-
   const formik = useFormik({
     initialValues: {
       ci: "",
@@ -78,31 +79,65 @@ const RegisterUsers = () => {
     onSubmit: async (values) => {
       try {
         const idPlace = parseInt(values.place, 10);
-        const user = await registerUser(values.ci, values.birthDate, values.name, values.lastName, idPlace);
+        const user = await registerUser(
+          values.ci,
+          values.birthDate,
+          values.name,
+          values.lastName,
+          idPlace
+        );
         console.log("Usuario registrado:", user);
+        handleClose();
       } catch (error) {
         console.error("Error al registrar el usuario:", error);
       }
     },
   });
 
+  const openCamera = () => setOpenCameraModal(true);
+
+  const closeModalCamera = () => {
+    setOpenCameraModal(false);
+    setIsPhotoTaken(true);
+  };
+
+  const handleClose = () => {
+    formik.resetForm();
+    setIsPhotoTaken(false);
+    onClose();
+  };
+
   return (
     <>
-      <Container maxWidth="xs" sx={{ marginTop: 4 }}>
-        <CameraModal open={openCameraModal} onClose={closeModal} />
-        <Box
+      <CameraModal open={openCameraModal} onClose={closeModalCamera} />
+
+      <Modal open={open} onClose={() => {}} disableEscapeKeyDown>
+        <Container
+          maxWidth="xs"
           sx={{
-            textAlign: "center",
-            marginBottom: 4,
-            border: "1px solid #ccc",
+            marginTop: 8,
+            backgroundColor: "#fff",
+            borderRadius: 2,
+            boxShadow: 24,
+            position: "relative",
             padding: 4,
-            borderRadius: 1,
-            boxShadow: 3,
           }}
         >
+          <IconButton
+            aria-label="close"
+            onClick={handleClose}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+
           <Typography
             variant="h6"
-            component="h6"
             sx={{ textAlign: "center", marginBottom: 2, fontWeight: "bold" }}
           >
             Registro de Votantes
@@ -110,15 +145,14 @@ const RegisterUsers = () => {
 
           <form onSubmit={formik.handleSubmit}>
             <TextField
-              id="input-ci-textfield"
               label="Carnet de Identidad"
-              type="text"
               name="ci"
-              helperText={formik.touched.ci && formik.errors.ci}
-              error={formik.touched.ci && Boolean(formik.errors.ci)}
               fullWidth
+              variant="standard"
               onChange={formik.handleChange}
               value={formik.values.ci}
+              helperText={formik.touched.ci && formik.errors.ci}
+              error={formik.touched.ci && Boolean(formik.errors.ci)}
               slotProps={{
                 input: {
                   startAdornment: (
@@ -128,14 +162,15 @@ const RegisterUsers = () => {
                   ),
                 },
               }}
-              variant="standard"
             />
+
             <TextField
-              id="input-birthDate-textfield"
               label="Fecha de Nacimiento"
-              type="date"
               name="birthDate"
+              type="date"
               fullWidth
+              variant="standard"
+              sx={{ mt: 2 }}
               onChange={formik.handleChange}
               value={formik.values.birthDate}
               helperText={formik.touched.birthDate && formik.errors.birthDate}
@@ -151,19 +186,18 @@ const RegisterUsers = () => {
                   ),
                 },
               }}
+            />
+
+            <TextField
+              label="Nombre"
+              name="name"
+              fullWidth
               variant="standard"
               sx={{ mt: 2 }}
-            />
-            <TextField
-              id="input-name-textfield"
-              label="Nombre"
-              type="text"
-              name="name"
-              helperText={formik.touched.name && formik.errors.name}
-              error={formik.touched.name && Boolean(formik.errors.name)}
-              fullWidth
               onChange={formik.handleChange}
               value={formik.values.name}
+              helperText={formik.touched.name && formik.errors.name}
+              error={formik.touched.name && Boolean(formik.errors.name)}
               slotProps={{
                 input: {
                   startAdornment: (
@@ -173,20 +207,18 @@ const RegisterUsers = () => {
                   ),
                 },
               }}
-              variant="standard"
-              sx={{ mt: 2 }}
             />
 
             <TextField
-              id="input-lastName-textfield"
               label="Apellido"
-              type="text"
               name="lastName"
-              helperText={formik.touched.lastName && formik.errors.lastName}
-              error={formik.touched.lastName && Boolean(formik.errors.lastName)}
               fullWidth
+              variant="standard"
+              sx={{ mt: 2 }}
               onChange={formik.handleChange}
               value={formik.values.lastName}
+              helperText={formik.touched.lastName && formik.errors.lastName}
+              error={formik.touched.lastName && Boolean(formik.errors.lastName)}
               slotProps={{
                 input: {
                   startAdornment: (
@@ -196,20 +228,19 @@ const RegisterUsers = () => {
                   ),
                 },
               }}
-              variant="standard"
-              sx={{ mt: 2 }}
             />
 
             <TextField
-              id="input-place-select"
               select
               label="Lugar de Votación"
               name="place"
-              value={formik.values.place}
+              fullWidth
+              variant="standard"
+              sx={{ mt: 2 }}
               onChange={formik.handleChange}
+              value={formik.values.place}
               helperText={formik.touched.place && formik.errors.place}
               error={formik.touched.place && Boolean(formik.errors.place)}
-              fullWidth
               slotProps={{
                 input: {
                   startAdornment: (
@@ -221,42 +252,32 @@ const RegisterUsers = () => {
                 select: {
                   MenuProps: {
                     PaperProps: {
-                      style: {
+                      sx: {
                         maxHeight: 40 * 5,
                         overflowY: "auto",
                       },
                     },
-                    anchorOrigin: {
-                      vertical: "bottom",
-                      horizontal: "left",
-                    },
-                    transformOrigin: {
-                      vertical: "top",
-                      horizontal: "left",
-                    },
                   },
                 },
               }}
-              variant="standard"
-              sx={{ mt: 2 }}
             >
-              {places.map((place) => (
+              {places.map((place: any) => (
                 <MenuItem key={place.id} value={place.id}>
                   {place.name}
                 </MenuItem>
               ))}
             </TextField>
-            {!isPhotoTaken && (
+
+            {!isPhotoTaken ? (
               <Button
                 variant="contained"
-                onClick={openCamera}
                 fullWidth
-                sx={{ mt: 2 }}
+                sx={{ mt: 3 }}
+                onClick={openCamera}
               >
                 Sacar Foto
               </Button>
-            )}
-            {isPhotoTaken && (
+            ) : (
               <Button
                 type="submit"
                 variant="contained"
@@ -268,8 +289,8 @@ const RegisterUsers = () => {
               </Button>
             )}
           </form>
-        </Box>
-      </Container>
+        </Container>
+      </Modal>
     </>
   );
 };
