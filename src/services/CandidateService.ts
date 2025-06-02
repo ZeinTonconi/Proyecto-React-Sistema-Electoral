@@ -11,5 +11,3 @@ export const getCandidateService = async () => {
     throw error;
   }
 };
-
-
