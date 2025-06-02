@@ -3,7 +3,7 @@ import CandidateCard from "../components/CandidateCard";
 import { useEffect, useState } from "react";
 import { getCandidateService } from "../services/CandidateService";
 import { ConfirmActionDialog } from "../components/ConfirmActionDialog";
-import { getStorage } from "../helpers/LocalStorage";
+import { clearStorage, getStorage } from "../helpers/LocalStorage";
 import { useNavigate } from "react-router-dom";
 import { postVote } from "../services/VotingService";
 
@@ -40,8 +40,10 @@ function VotePage() {
     const isAdmin = getStorage("isAdmin");
     if (isAdmin) 
       navigate('/dashboard');
-    else
-    navigate("/login");
+    else{
+      clearStorage();
+      navigate("/login");
+    }
   };
 
   const getAllCandidates = async () => {

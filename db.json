@@ -40,7 +40,7 @@
       "birthDate": "1990-01-01",
       "role": "admin",
       "password": "admin123",
-      "hasVoted": false,
+      "hasVoted": true,
       "placeId": 2,
       "token": "admin-token-12345",
       "name": "Admin",
@@ -228,6 +228,12 @@
       "candidate_id": "2",
       "user_id": "1",
       "vote_date": "2025-06-02T16:40:25.789Z"
+    },
+    {
+      "id": "15",
+      "candidate_id": "3",
+      "user_id": "2",
+      "vote_date": "2025-06-02T21:37:12.973Z"
     }
   ],
   "places": [
