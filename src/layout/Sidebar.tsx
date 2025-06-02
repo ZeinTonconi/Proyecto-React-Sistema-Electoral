@@ -68,8 +68,8 @@ const Sidebar = ({
         {admin && <ListItem disablePadding>
           <ListItemButton
             component={Link}
-            to="/user-management"
-            selected={location.pathname === "/user-management"}
+            to="/admin/user-management"
+            selected={location.pathname === "/admin/user-management"}
           >
             <ListItemIcon>
               <ManageAccountsIcon />
@@ -81,8 +81,8 @@ const Sidebar = ({
         {admin && <ListItem disablePadding>
           <ListItemButton
             component={Link}
-            to="/voting-management"
-            selected={location.pathname === "/voting-management"}
+            to="/admin/voting-management"
+            selected={location.pathname === "/admin/voting-management"}
           >
             <ListItemIcon>
               <PollIcon />

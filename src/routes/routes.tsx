@@ -18,14 +18,37 @@ const RoutesApp = () => {
           element={
             <ProtectedRoutes>
               <Layout />
-            </ProtectedRoutes>}
+            </ProtectedRoutes>
+          }
         >
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="vote-page" element={<VotePage />} />
-          <Route path="user-management" element={<UserManagement />} />
-          <Route path="voting-management" element={<VotingManagement />} />
         </Route>
-        
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoutes>
+              <Layout />
+            </ProtectedRoutes>
+          }
+        >
+          <Route
+            path="user-management"
+            element={
+              localStorage.getItem("isAdmin") === "true"
+                ? <UserManagement />
+                : <Navigate to="/dashboard" />
+            }
+          />
+          <Route
+            path="voting-management"
+            element={
+              localStorage.getItem("isAdmin") === "true"
+                ? <VotingManagement />
+                : <Navigate to="/dashboard" />
+            }
+          />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

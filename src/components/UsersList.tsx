@@ -1,0 +1,99 @@
+import * as React from 'react';
+import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+
+interface Column {
+    id: 'nombre' | 'apellido' | 'ci' | 'rol' | 'centroVotacion' | 'voto';
+    label: string;
+    minWidth?: number;
+    align?: 'right' | 'left' | 'center';
+}
+
+const columns: Column[] = [
+    { id: 'nombre', label: 'Nombre', minWidth: 150, align: 'left' },
+    { id: 'apellido', label: 'Apellido', minWidth: 150, align: 'left' },
+    { id: 'ci', label: 'C.I.', minWidth: 120, align: 'center' },
+    { id: 'rol', label: 'Rol', minWidth: 100, align: 'center' },
+    { id: 'centroVotacion', label: 'Centro de Votación', minWidth: 200, align: 'left' },
+    { id: 'voto', label: 'Votó', minWidth: 80, align: 'center' },
+];
+
+interface User {
+    id: string;
+    nombre: string;
+    apellido: string;
+    ci: string;
+    rol: string;
+    centroVotacion: string;
+    voto: boolean;
+}
+
+interface UsersListProps {
+    users: User[];
+}
+
+export default function UsersList({ users }: UsersListProps) {
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+    const handleChangePage = (event: unknown, newPage: number) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
+
+    return (
+        <Paper sx={{ width: '100%', overflow: 'hidden', marginTop: 5, paddingX: 5, paddingY: 2 }}>
+            <TableContainer sx={{ maxHeight: 440 }}>
+                <Table stickyHeader aria-label="sticky table">
+                    <TableHead>
+                        <TableRow>
+                            {columns.map((column) => (
+                                <TableCell
+                                    key={column.id}
+                                    align={column.align}
+                                    style={{ minWidth: column.minWidth }}
+                                >
+                                    {column.label}
+                                </TableCell>
+                            ))}
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {users
+                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                            .map((user) => (
+                                <TableRow hover role="checkbox" tabIndex={-1} key={user.id}>
+                                    <TableCell align="left">{user.nombre}</TableCell>
+                                    <TableCell align="left">{user.apellido}</TableCell>
+                                    <TableCell align="center">{user.ci}</TableCell>
+                                    <TableCell align="center">{user.rol}</TableCell>
+                                    <TableCell align="left">{user.centroVotacion}</TableCell>
+                                    <TableCell align="center">{user.voto ? 'Sí' : 'No'}</TableCell>
+                                </TableRow>
+                            ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <TablePagination
+                rowsPerPageOptions={[10, 25, 100]}
+                component="div"
+                count={users.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                sx={{ marginTop: 3 }}
+            />
+        </Paper>
+    );
+}
