@@ -1,4 +1,5 @@
 import jsonServerInstance from "../api/jsonServerInstance";
+import { getPlaceById } from "./Places";
 
 const USERS_URL = "users";
 
@@ -48,8 +49,13 @@ export const registerUser = async (
     const nextId = (ids.length > 0 ? Math.max(...ids) + 1 : 1);
     
     const token = `user-token-${nextId+1234}`;
+    const placeResponse = await getPlaceById(place);
+    const numberOfTable = placeResponse[0].numberOfTable;
+
     const char = lastName[0].toUpperCase();
-    const numberPlace = char.charCodeAt(0) - 64;
+    const charValue = char.charCodeAt(0) - 64;
+
+    const numberPlace = (charValue % numberOfTable) + 1;
 
     const response = await jsonServerInstance.post(USERS_URL, {
       id: nextId,
