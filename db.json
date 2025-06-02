@@ -1,7 +1,7 @@
 {
   "candidates": [
     {
-      "id": 1,
+      "id": "1",
       "candidate_name": "Rebeca Navarro",
       "candidate_image": "src/assets/WreBeca.jpeg",
       "party_image": "",
@@ -65,6 +65,17 @@
       "placeId": 7,
       "hasVoted": false,
       "token": "user-token-12345"
+    },
+    {
+      "id": "4",
+      "ci": "13119680",
+      "role": "user",
+      "birthDate": "2004-12-12",
+      "name": "prueba2",
+      "lastName": "Callapa Quilla",
+      "placeId": 2,
+      "hasVoted": true,
+      "token": "user-token-1238"
     }
   ],
   "vote": [
