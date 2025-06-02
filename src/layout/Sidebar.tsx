@@ -13,6 +13,7 @@ import HomeFilledIcon from "@mui/icons-material/HomeFilled";
 import HowToVoteIcon from "@mui/icons-material/HowToVote";
 import PollIcon from '@mui/icons-material/Poll';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { Link, useLocation } from "react-router-dom";
 import { getStorage, clearStorage } from "../helpers/LocalStorage";
 
@@ -101,6 +102,19 @@ const Sidebar = ({
               <PollIcon />
             </ListItemIcon>
             <ListItemText primary="Gestión de Centros de Votación" />
+          </ListItemButton>
+        </ListItem>}
+
+        {admin && <ListItem disablePadding>
+          <ListItemButton
+            component={Link}
+            to="/admin/register-candidate"
+            selected={location.pathname === "/admin/register-candidate"}
+          >
+            <ListItemIcon>
+              <PersonAddIcon />
+            </ListItemIcon>
+            <ListItemText primary="Registrar Candidato" />
           </ListItemButton>
         </ListItem>}
 

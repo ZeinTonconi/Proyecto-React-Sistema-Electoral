@@ -47,8 +47,8 @@ export default function CandidateCard({
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
-  if (e.key === "Enter" || e.key === " ") onClick();
-}}
+        if (e.key === "Enter" || e.key === " ") onClick();
+      }}
     >
       {candidate_image && (
         <CardMedia
@@ -73,16 +73,16 @@ export default function CandidateCard({
         <Typography variant="body2" color="text.secondary" gutterBottom>
           {political_party}
         </Typography>
-
-        
       </CardContent>
       <Checkbox
-          checked={isSelected}
-          onChange={onClick}
-          onClick={(e) => e.stopPropagation()}
-          sx={{ marginBottom: 5 }}
-          slotProps={{ input: { "aria-label": `Seleccionar a ${candidate_name}` } }}
-        />
+        checked={isSelected}
+        onChange={onClick}
+        onClick={(e) => e.stopPropagation()}
+        sx={{ marginBottom: 5 }}
+        slotProps={{
+          input: { "aria-label": `Seleccionar a ${candidate_name}` },
+        }}
+      />
     </Card>
   );
 }

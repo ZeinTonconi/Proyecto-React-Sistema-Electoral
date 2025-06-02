@@ -11,3 +11,13 @@ export const getCandidateService = async () => {
     throw error;
   }
 };
+
+export const postCandidateService = async (candidate: any) => {
+  try {
+    const resp = await jsonServerInstance.post(CANDIDATE_URL, candidate)
+    return resp.data;
+  } catch (error) {
+    console.error("Error creating candidate", error);
+    throw error;
+  }
+};
