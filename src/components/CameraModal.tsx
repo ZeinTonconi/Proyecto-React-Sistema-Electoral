@@ -2,8 +2,8 @@ import { useRef, useEffect } from 'react';
 import { Modal, Box, Button, Typography } from '@mui/material';
 
 interface CameraModalProps {
-    open: boolean;
-    onClose: () => void;
+  open: boolean;
+  onClose: () => void;
 }
 export const CameraModal = ({ open, onClose }: CameraModalProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -24,7 +24,7 @@ export const CameraModal = ({ open, onClose }: CameraModalProps) => {
     }
   }, [open]);
 
-    const stopCamera = () => {
+  const stopCamera = () => {
     if (streamRef.current) {
       streamRef.current.getTracks().forEach(track => track.stop());
       streamRef.current = null;
@@ -40,15 +40,25 @@ export const CameraModal = ({ open, onClose }: CameraModalProps) => {
   };
 
   return (
-    <Modal open={open} onClose={onClose}>
-      <Box sx={{ backgroundColor: 'white', padding: 3, margin: 'auto', mt: '10%', width: 340 }}>
-        <Typography variant="h6">Verificación facial</Typography>
-        <video ref={videoRef} width="300" height="200" />
-        <canvas ref={canvasRef} width="300" height="200" style={{ display: 'none' }} />
-        <Button variant="contained" fullWidth sx={{ mt: 2 }} onClick={handleCapture}>
-          Tomar Foto
-        </Button>
-      </Box>
-    </Modal>
+      <Modal open={open} onClose={onClose}>
+        <Box sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 380,
+          bgcolor: 'white',
+          p: 3,
+          borderRadius: 2,
+          textAlign: 'center'
+        }}>
+          <Typography variant="h6">Verificación facial</Typography>
+          <video ref={videoRef} width="300" height="200" />
+          <canvas ref={canvasRef} width="300" height="200" style={{ display: 'none' }} />
+          <Button variant="contained" fullWidth sx={{ mt: 2 }} onClick={handleCapture}>
+            Tomar Foto
+          </Button>
+        </Box>
+      </Modal>
   );
 };
