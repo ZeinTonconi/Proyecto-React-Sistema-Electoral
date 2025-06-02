@@ -90,6 +90,19 @@ const Sidebar = ({
             <ListItemText primary="Resultados de la votación" />
           </ListItemButton>
         </ListItem>}
+      
+      {admin && <ListItem disablePadding>
+          <ListItemButton
+            component={Link}
+            to="/admin/center-management"
+            selected={location.pathname === "/admin/center-management"}
+          >
+            <ListItemIcon>
+              <PollIcon />
+            </ListItemIcon>
+            <ListItemText primary="Gestión de Centros de Votación" />
+          </ListItemButton>
+        </ListItem>}
 
         <ListItem disablePadding>
           <ListItemButton

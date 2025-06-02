@@ -6,6 +6,7 @@ import Dashboard from "../pages/Dashboard";
 import UserManagement from "../pages/UserManagement";
 import VotingManagement from "../pages/VotingManagement";
 import ProtectedRoutes from "../guards/ProtectedRoutes";
+import CenterManagement from "../pages/CenterManagement";
 
 const RoutesApp = () => {
   return (
@@ -48,6 +49,12 @@ const RoutesApp = () => {
                 : <Navigate to="/dashboard" />
             }
           />
+          <Route path="center-management"
+          element={
+            localStorage.getItem("isAdmin") === "true"
+              ? <CenterManagement />
+              : <Navigate to="/dashboard" />
+          }/>
         </Route>
       </Routes>
     </BrowserRouter>
