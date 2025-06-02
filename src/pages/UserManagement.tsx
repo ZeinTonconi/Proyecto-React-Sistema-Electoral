@@ -35,12 +35,12 @@ function UserManagement() {
   }, []);
 
   return (
-    <Container>
+    <Container sx={{ml:0, mr:0}}>
       <Box display="flex" justifyContent="end">
         <Button
           variant="contained"
           color="primary"
-          sx={{ mt: 2, borderRadius: 2 }}
+          sx={{ borderRadius: 2 }}
           onClick={handleOpenRegisterUser}
         >
           Agregar Usuario

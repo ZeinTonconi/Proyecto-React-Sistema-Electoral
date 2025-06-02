@@ -16,12 +16,12 @@ interface Column {
 }
 
 const columns: Column[] = [
-    { id: 'nombre', label: 'Nombre', minWidth: 150, align: 'left' },
-    { id: 'apellido', label: 'Apellido', minWidth: 150, align: 'left' },
-    { id: 'ci', label: 'C.I.', minWidth: 120, align: 'center' },
-    { id: 'rol', label: 'Rol', minWidth: 100, align: 'center' },
-    { id: 'centroVotacion', label: 'Centro de Votación', minWidth: 200, align: 'left' },
-    { id: 'voto', label: 'Votó', minWidth: 80, align: 'center' },
+    { id: 'nombre', label: 'Nombre', minWidth: 120, align: 'left' },
+    { id: 'apellido', label: 'Apellido', minWidth: 120, align: 'left' },
+    { id: 'ci', label: 'C.I.', minWidth: 120, align: 'left' },
+    { id: 'rol', label: 'Rol', minWidth: 100, align: 'left' },
+    { id: 'centroVotacion', label: 'Centro de Votación', minWidth: 100, align: 'left' },
+    { id: 'voto', label: 'Votó', minWidth: 100, align: 'left' },
 ];
 
 interface User {
@@ -52,48 +52,51 @@ export default function UsersList({ users }: UsersListProps) {
     };
 
     return (
-        <Paper sx={{ width: '100%', overflow: 'hidden', marginTop: 5, paddingX: 5, paddingY: 2 }}>
-            <TableContainer sx={{ maxHeight: 440 }}>
-                <Table stickyHeader aria-label="sticky table">
-                    <TableHead>
-                        <TableRow>
-                            {columns.map((column) => (
-                                <TableCell
-                                    key={column.id}
-                                    align={column.align}
-                                    style={{ minWidth: column.minWidth }}
-                                >
-                                    {column.label}
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {users
-                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((user) => (
-                                <TableRow hover role="checkbox" tabIndex={-1} key={user.id}>
-                                    <TableCell align="left">{user.nombre}</TableCell>
-                                    <TableCell align="left">{user.apellido}</TableCell>
-                                    <TableCell align="center">{user.ci}</TableCell>
-                                    <TableCell align="center">{user.rol}</TableCell>
-                                    <TableCell align="left">{user.centroVotacion}</TableCell>
-                                    <TableCell align="center">{user.voto ? 'Sí' : 'No'}</TableCell>
-                                </TableRow>
-                            ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <TablePagination
-                rowsPerPageOptions={[10, 25, 100]}
-                component="div"
-                count={users.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                sx={{ marginTop: 3 }}
-            />
-        </Paper>
+        <>
+            <Paper sx={{ width: '100%', overflow: 'visible', marginTop: 2 }}>
+                <TableContainer sx={{ maxHeight: 440, width: '100%', overflowX: 'auto' , maxWidth: { xs: 450, sm: 550, md: 600, lg: 1000, xl: 1400 } }}>
+                    <Table stickyHeader aria-label="sticky table"
+                    >
+                        <TableHead>
+                            <TableRow>
+                                {columns.map((column) => (
+                                    <TableCell
+                                        key={column.id}
+                                        align={column.align}
+                                        style={{ minWidth: column.minWidth }}
+                                    >
+                                        {column.label}
+                                    </TableCell>
+                                ))}
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {users
+                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                .map((user) => (
+                                    <TableRow key={user.id}>
+                                        <TableCell align="left">{user.nombre}</TableCell>
+                                        <TableCell align="left">{user.apellido}</TableCell>
+                                        <TableCell align="left">{user.ci}</TableCell>
+                                        <TableCell align="left">{user.rol}</TableCell>
+                                        <TableCell align="left">{user.centroVotacion}</TableCell>
+                                        <TableCell align="left">{user.voto ? 'Sí' : 'No'}</TableCell>
+                                    </TableRow>
+                                ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <TablePagination
+                    rowsPerPageOptions={[10, 25, 100]}
+                    component="div"
+                    count={users.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    sx={{ marginTop: 3 }}
+                />
+            </Paper>
+        </>
     );
 }
