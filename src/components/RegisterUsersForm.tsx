@@ -86,7 +86,6 @@ export const RegisterUsers = ({ open, onClose }: RegisterUsersProps) => {
           values.lastName,
           idPlace
         );
-        console.log("Usuario registrado:", user);
         handleClose();
       } catch (error) {
         console.error("Error al registrar el usuario:", error);

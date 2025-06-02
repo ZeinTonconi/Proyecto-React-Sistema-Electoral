@@ -11,6 +11,7 @@ import {
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import HomeFilledIcon from "@mui/icons-material/HomeFilled";
 import HowToVoteIcon from "@mui/icons-material/HowToVote";
+import DomainIcon from '@mui/icons-material/Domain';
 import PollIcon from '@mui/icons-material/Poll';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
@@ -99,7 +100,7 @@ const Sidebar = ({
             selected={location.pathname === "/admin/center-management"}
           >
             <ListItemIcon>
-              <PollIcon />
+              <DomainIcon />
             </ListItemIcon>
             <ListItemText primary="Gestión de Centros de Votación" />
           </ListItemButton>

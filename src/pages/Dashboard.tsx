@@ -11,7 +11,6 @@
       const fetchPlace = async () => {
           try {
             const data = await getPlaceById(user.placeId);
-            console.log("Recinto:", user);
             setPlaceName(data[0]?.name || ""); 
           } catch (error) {
             console.error("Error al cargar el recinto", error);

@@ -24,7 +24,6 @@ export const postVote = async (userId: number, candidateId: number, user: any) =
       ...user,
       hasVoted: true,
     };
-    console.log("Actualizando usuario con ID:", userId, "con el nuevo estado de voto:", updatedUser);
 
     await jsonServerInstance.put(`${USER_URL}/${userId}`, updatedUser);
     

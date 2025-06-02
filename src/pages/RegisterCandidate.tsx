@@ -61,10 +61,7 @@ function RegisterCandidate() {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.currentTarget.files?.[0];
       if (!file) return;
-
-      console.log(file.name);
       formik.setFieldValue(field, `/src/assets/${file.name}`);
-      console.log(formik.values);
     };
   return (
     <Container maxWidth="sm" sx={{ mt: 4, mb: 4 }}>

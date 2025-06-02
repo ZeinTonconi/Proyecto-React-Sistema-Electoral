@@ -69,7 +69,6 @@ function LoginPage() {
         if (user.length > 0) {
           setStorage("user", user[0]);
           setStorage("token", user[0].token);
-          console.log("Token guardado");
           if (user[0].role === "admin") {
             if (isAdmin) {
               setSnackBarSuccesAdmin(true);
@@ -77,13 +76,10 @@ function LoginPage() {
               if (admin.length > 0) {
                 setStorage("user", admin[0]);
                 setStorage("token", admin[0].token);
-                console.log("Token guardado");
                 setStorage("isAdmin", true);
                 setOpenCameraModal(true)
-                console.log("Usuario administrador autenticado");
               } else {
                 setOpenSnackBar(true);
-                console.log("Contraseña de administrador incorrecta");
               }
             }
             setIsAdmin(true);

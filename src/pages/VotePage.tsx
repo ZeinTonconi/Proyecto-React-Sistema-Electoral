@@ -37,6 +37,10 @@ function VotePage() {
   };
 
   const voteSuccess = () => {
+    const isAdmin = getStorage("isAdmin");
+    if (isAdmin) 
+      navigate('/dashboard');
+    else
     navigate("/login");
   };
 
@@ -88,7 +92,6 @@ function VotePage() {
             },
           }}
           onClick={() => setOpenDialog(true)}
-          disabled={!selectedCandidate}
         >
           Confirmar Voto
         </Button>
