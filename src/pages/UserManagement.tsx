@@ -1,9 +1,15 @@
+import { Button, Container, Box, Typography  } from "@mui/material";
+import RegisterUsers from "../components/RegisterUsersForm";
 import { useEffect, useState } from "react";
 import UsersList from "../components/UsersList";
-import { Box, Typography } from "@mui/material";
 import { getUsers } from "../services/Auth";
 
 function UserManagement() {
+  const [openRegisterUser, setOpenRegisterUser] = useState(false);
+
+  const handleOpenRegisterUser = () => setOpenRegisterUser(true);
+  const handleCloseRegisterUser = () => setOpenRegisterUser(false);
+
 
   const [users, setUsers] = useState([]);
 
@@ -29,12 +35,22 @@ function UserManagement() {
   }, []);
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Container>
+      <Button
+        variant="contained"
+        color="primary"
+        sx={{ mt: 2, borderRadius: 2 }}
+        onClick={handleOpenRegisterUser}
+      >
+        Agregar Usuario
+      </Button>
+
+      <RegisterUsers open={openRegisterUser} onClose={handleCloseRegisterUser} />
       <Typography variant="h5" gutterBottom>
         Usuarios
       </Typography>
       <UsersList users={users} />
-    </Box>
+    </Container>
   );
 }
 

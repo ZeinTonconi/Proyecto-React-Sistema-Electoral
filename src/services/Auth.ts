@@ -35,11 +35,20 @@ export const getAdmin = async (ci: string, password: string) => {
   }
 }
 
-export const registerUser = async (ci: string, birthDate: string,  name: string, lastName: string, place: number) => {
+export const registerUser = async (
+  ci: string,
+  birthDate: string,
+  name: string,
+  lastName: string,
+  place: number
+) => {
   try {
     const allUsers = await jsonServerInstance.get(USERS_URL);
     const ids = allUsers.data.map((user: any) => user.id);
-    const nextId = ids.length > 0 ? Math.max(...ids) + 1 : 1;
+    const nextId = (ids.length > 0 ? Math.max(...ids) + 1 : 1);
+    
+    const token = `user-token-${nextId+1234}`;
+
     const response = await jsonServerInstance.post(USERS_URL, {
       id: nextId,
       ci,
@@ -49,6 +58,7 @@ export const registerUser = async (ci: string, birthDate: string,  name: string,
       lastName,
       placeId: place,
       hasVoted: false,
+      token,
     });
 
     return response.data;
