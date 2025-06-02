@@ -48,7 +48,7 @@ function VotePage() {
   const getCandidateCard = (candidate: any) => {
     const { candidate_name, candidate_image, political_party, color_card } = candidate;
     return (
-      <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={candidate_name}>
+      <Grid size={{ xs: 12, sm: 6, lg: 2 }} key={candidate_name}>
         <CandidateCard
           candidate_name={candidate_name}
           candidate_image={candidate_image}
