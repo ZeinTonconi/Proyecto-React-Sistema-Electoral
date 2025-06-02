@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,6 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import { useState, type ChangeEvent } from 'react';
 
 interface Column {
     id: 'nombre' | 'apellido' | 'ci' | 'rol' | 'centroVotacion' | 'voto';
@@ -24,7 +24,7 @@ const columns: Column[] = [
     { id: 'voto', label: 'Votó', minWidth: 80, align: 'center' },
 ];
 
-interface User {
+export interface User {
     id: string;
     nombre: string;
     apellido: string;
@@ -39,14 +39,14 @@ interface UsersListProps {
 }
 
 export default function UsersList({ users }: UsersListProps) {
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
     };
 
-    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };

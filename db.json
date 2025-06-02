@@ -111,6 +111,28 @@
       "placeId": 5,
       "hasVoted": false,
       "token": "user-token-53211"
+    },
+    {
+      "id": 8,
+      "ci": "7654321",
+      "role": "user",
+      "birthDate": "2003-12-31",
+      "name": "Suvi",
+      "lastName": "Checa",
+      "placeId": 1,
+      "hasVoted": false,
+      "token": "user-token-1242"
+    },
+    {
+      "id": 9,
+      "ci": "987654",
+      "role": "user",
+      "birthDate": "2004-12-05",
+      "name": "Hade",
+      "lastName": "Villegas",
+      "placeId": 2,
+      "hasVoted": false,
+      "token": "user-token-1243"
     }
   ],
   "vote": [
@@ -145,13 +167,13 @@
       "vote_date": "2025-06-01T22:12:06.513Z"
     },
     {
-      "id": 6,
+      "id": "6",
       "candidate_id": "4",
       "user_id": "3",
       "vote_date": "2025-06-01T22:15:32.055Z"
     },
     {
-      "id": 7,
+      "id": "7",
       "candidate_id": 1,
       "user_id": "3",
       "vote_date": "2025-06-01T23:02:40.093Z"
