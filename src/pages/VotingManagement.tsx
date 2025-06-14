@@ -11,16 +11,16 @@ function VotingManagement() {
       try {
         const candidates = await getCandidateService();
 
-        const votesData = await Promise.all(
-          candidates.map(async (candidate: any) => {
-            const votes = await getVotesByCandidate(candidate.id);
-            return {
-              name: candidate.candidate_name,
-              votes: votes.length,
-              color: candidate.color_card
-            };
-          })
-        );
+        const votesData = [];
+// TODO: investigar reduce, map o foreach
+for (const candidate of candidates) {
+  const votes = await getVotesByCandidate(candidate.id);
+  votesData.push({
+    name: candidate.candidate_name,
+    votes: votes.length,
+    color: candidate.color_card
+  });
+}
         setData(votesData);        
       } catch (error) {
         console.error('Error loading chart data', error);
