@@ -5,7 +5,9 @@ const USERS_URL = "users";
 
 export const getUser = async (ci: string, birthDate: string) => {
   try {
-    const response = await jsonServerInstance.get(USERS_URL + "?ci=" + ci + "&birthDate=" + birthDate);
+    const response = await jsonServerInstance.get(
+      USERS_URL + "?ci=" + ci + "&birthDate=" + birthDate
+    );
     return response.data;
   } catch (error) {
     console.error("Error searching user by id", error);
@@ -24,31 +26,32 @@ export const getUsers = async () => {
 };
 
 export const getAdmin = async (ci: string, password: string) => {
-  try{
-    if(password.length === 0)
-        return []
-    const response = await jsonServerInstance.get(USERS_URL + "?ci=" + ci + "&password=" + password);
+  try {
+    if (password.length === 0) return [];
+    const response = await jsonServerInstance.get(
+      USERS_URL + "?ci=" + ci + "&password=" + password
+    );
     return response.data;
-  }
-  catch(error){
+  } catch (error) {
     console.error("Error searching admin by id", error);
     throw error;
   }
-}
+};
 
 export const registerUser = async (
   ci: string,
   birthDate: string,
   name: string,
   lastName: string,
+  userPhoto: string,
   place: number
 ) => {
   try {
     const allUsers = await jsonServerInstance.get(USERS_URL);
     const ids = allUsers.data.map((user: any) => user.id);
-    const nextId = (ids.length > 0 ? Math.max(...ids) + 1 : 1);
-    
-    const token = `user-token-${nextId+1234}`;
+    const nextId = ids.length > 0 ? Math.max(...ids) + 1 : 1;
+
+    const token = `user-token-${nextId + 1234}`;
     const placeResponse = await getPlaceById(place);
     const numberOfTable = placeResponse[0].numberOfTable;
 
@@ -67,6 +70,7 @@ export const registerUser = async (
       placeId: place,
       hasVoted: false,
       token,
+      userPhoto,
       numberPlace,
     });
 

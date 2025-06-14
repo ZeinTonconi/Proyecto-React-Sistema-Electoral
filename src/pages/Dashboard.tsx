@@ -2,6 +2,7 @@
   import UserCard from "../components/UserCard";
   import { getStorage } from "../helpers/LocalStorage";
   import { getPlaceById } from "../services/Places";
+import { data } from "react-router-dom";
 
   export default function Dashboard() {
     const user = getStorage("user");
@@ -31,7 +32,7 @@
     return (
       <>
         <h1 style={{ marginBlock: 0 }}>Inicio</h1>
-        <UserCard labelAndData={labelAndData} addPhoto = {true}/>
+        <UserCard labelAndData={labelAndData} addPhoto = {true} photoUrl={user.userPhoto}/>
       </>
     );
   }
