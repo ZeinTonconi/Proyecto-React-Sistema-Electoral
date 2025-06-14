@@ -25,6 +25,7 @@ const RoutesApp = () => {
         >
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="vote-page" element={<VotePage />} />
+          <Route path="voting-management" element={<VotingManagement />} />
         </Route>
         <Route
           path="/admin"
@@ -37,34 +38,36 @@ const RoutesApp = () => {
           <Route
             path="user-management"
             element={
-              localStorage.getItem("isAdmin") === "true"
-                ? <UserManagement />
-                : <Navigate to="/dashboard" />
+              localStorage.getItem("isAdmin") === "true" ? (
+                <UserManagement />
+              ) : (
+                <Navigate to="/dashboard" />
+              )
             }
           />
           <Route
-            path="voting-management"
+            path="center-management"
             element={
-              localStorage.getItem("isAdmin") === "true"
-                ? <VotingManagement />
-                : <Navigate to="/dashboard" />
+              localStorage.getItem("isAdmin") === "true" ? (
+                <CenterManagement />
+              ) : (
+                <Navigate to="/dashboard" />
+              )
             }
           />
-          <Route path="center-management"
-          element={
-            localStorage.getItem("isAdmin") === "true"
-              ? <CenterManagement />
-              : <Navigate to="/dashboard" />
-          }/>
-          <Route path="register-candidate"
-          element={
-            localStorage.getItem("isAdmin") === "true"
-              ? <RegisterCandidate />
-              : <Navigate to="/dashboard" />
-          }/>
+          <Route
+            path="register-candidate"
+            element={
+              localStorage.getItem("isAdmin") === "true" ? (
+                <RegisterCandidate />
+              ) : (
+                <Navigate to="/dashboard" />
+              )
+            }
+          />
         </Route>
       </Routes>
     </BrowserRouter>
   );
-}
+};
 export default RoutesApp;

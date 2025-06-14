@@ -148,91 +148,76 @@
     {
       "id": "1",
       "candidate_id": 1,
-      "user_id": 2,
       "vote_date": "2023-10-01T12:00:00Z"
     },
     {
       "id": "2",
       "candidate_id": 2,
-      "user_id": 1,
-      "vote_date": "2023-10-02T14:30:00Z"
+       "vote_date": "2023-10-02T14:30:00Z"
     },
     {
       "id": "3",
       "candidate_id": 4,
-      "user_id": 3,
       "vote_date": "2025-06-01T22:10:05.025Z"
     },
     {
       "id": "4",
       "candidate_id": 4,
-      "user_id": 3,
       "vote_date": "2025-06-01T22:10:29.465Z"
     },
     {
       "id": "5",
       "candidate_id": 4,
-      "user_id": 3,
       "vote_date": "2025-06-01T22:12:06.513Z"
     },
     {
       "id": "6",
       "candidate_id": "4",
-      "user_id": "3",
       "vote_date": "2025-06-01T22:15:32.055Z"
     },
     {
       "id": "7",
       "candidate_id": 1,
-      "user_id": "3",
       "vote_date": "2025-06-01T23:02:40.093Z"
     },
     {
       "id": "8",
       "candidate_id": "3",
-      "user_id": 6,
       "vote_date": "2025-06-02T03:20:53.692Z"
     },
     {
       "id": "9",
       "candidate_id": "3",
-      "user_id": 6,
       "vote_date": "2025-06-02T03:21:53.226Z"
     },
     {
       "id": "10",
       "candidate_id": "3",
-      "user_id": 9,
       "vote_date": "2025-06-02T03:23:58.587Z"
     },
     {
       "id": "11",
       "candidate_id": "3",
-      "user_id": 9,
       "vote_date": "2025-06-02T03:24:03.688Z"
     },
     {
       "id": "12",
       "candidate_id": "3",
-      "user_id": "8",
       "vote_date": "2025-06-02T03:32:40.009Z"
     },
     {
       "id": "13",
       "candidate_id": "1",
-      "user_id": "2",
       "vote_date": "2025-06-02T16:27:34.847Z"
     },
     {
       "id": "14",
       "candidate_id": "2",
-      "user_id": "1",
       "vote_date": "2025-06-02T16:40:25.789Z"
     },
     {
       "id": "15",
       "candidate_id": "3",
-      "user_id": "2",
       "vote_date": "2025-06-02T21:37:12.973Z"
     }
   ],

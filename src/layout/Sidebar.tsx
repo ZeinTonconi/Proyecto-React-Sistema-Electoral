@@ -17,6 +17,8 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { Link, useLocation } from "react-router-dom";
 import { getStorage, clearStorage } from "../helpers/LocalStorage";
+import { useAuthStore } from "../store/authStore";
+import type { User } from "../interfaces/userInterface";
 
 const drawerWidth = 240;
 
@@ -35,6 +37,7 @@ const Sidebar = ({
   const user = getStorage('user')
   const admin = getStorage('isAdmin')
   const location = useLocation();
+  const {setUser, setToken, setIsAdmin } = useAuthStore((state) => state)
 
   const drawer = (
     <div>
@@ -80,18 +83,18 @@ const Sidebar = ({
           </ListItemButton>
         </ListItem>}
 
-        {admin && <ListItem disablePadding>
+        <ListItem disablePadding>
           <ListItemButton
             component={Link}
-            to="/admin/voting-management"
-            selected={location.pathname === "/admin/voting-management"}
+            to="/voting-management"
+            selected={location.pathname === "/voting-management"}
           >
             <ListItemIcon>
               <PollIcon />
             </ListItemIcon>
             <ListItemText primary="Resultados de la votación" />
           </ListItemButton>
-        </ListItem>}
+        </ListItem>
       
       {admin && <ListItem disablePadding>
           <ListItemButton
@@ -124,7 +127,7 @@ const Sidebar = ({
             component={Link}
             to="/"
             selected={location.pathname === "/"}
-            onClick={clearStorage}
+            onClick={()=>{clearStorage(); setUser({} as User); setIsAdmin(false); setToken("");}}
           >
             <ListItemIcon>
               <MeetingRoomIcon />
@@ -135,6 +138,8 @@ const Sidebar = ({
       </List>
     </div>
   );
+
+  
 
   return (
     <>

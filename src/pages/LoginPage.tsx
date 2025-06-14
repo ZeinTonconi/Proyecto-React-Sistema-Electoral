@@ -18,15 +18,17 @@ import { getAdmin, getUser } from "../services/Auth";
 import { setStorage } from "../helpers/LocalStorage";
 import { SnackBarWithAlert } from "../components/SnackBarWithAlert";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/authStore";
 
 function LoginPage() {
-  const [isAdmin, setIsAdmin] = useState(false);
   const [openCameraModal, setOpenCameraModal] = useState(false);
 
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const [snackBarVoted, setSnackBarVoted] = useState(false);
   const [snackBarSucces, setSnackBarSucces] = useState(false);
   const [snackBarSuccesAdmin, setSnackBarSuccesAdmin] = useState(false);
+
+  const {setUser, setToken, setIsAdmin, isAdmin } = useAuthStore((state) => state)
 
   const navigate = useNavigate();
 
@@ -67,8 +69,6 @@ function LoginPage() {
       try {
         const user = await getUser(values.ci, values.birthDate);
         if (user.length > 0) {
-          setStorage("user", user[0]);
-          setStorage("token", user[0].token);
           if (user[0].role === "admin") {
             if (isAdmin) {
               setSnackBarSuccesAdmin(true);
@@ -77,6 +77,8 @@ function LoginPage() {
                 setStorage("user", admin[0]);
                 setStorage("token", admin[0].token);
                 setStorage("isAdmin", true);
+                setUser(admin[0]);
+                setToken(admin[0].token);
                 setOpenCameraModal(true)
               } else {
                 setOpenSnackBar(true);
@@ -84,6 +86,10 @@ function LoginPage() {
             }
             setIsAdmin(true);
           } else {
+              setStorage("user", user[0]);
+              setStorage("token", user[0].token);
+              setUser(user[0]);
+              setToken(user[0].token);
             if (user[0].hasVoted)
               setSnackBarVoted(true)
             else {
