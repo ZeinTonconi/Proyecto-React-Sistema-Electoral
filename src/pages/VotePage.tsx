@@ -15,6 +15,8 @@ function VotePage() {
 
   const handleCandidateSelect = (candidateName: string) => {
     setSelectedCandidate((prev) => (prev === candidateName ? null : candidateName));
+    // Cuando se selecciona un candidato, se deselecciona si ya estaba seleccionado otro
+    // ve si el candidato seleccionado es el mismo, si es así lo deselecciona
   };
 
   const vote = async () => {

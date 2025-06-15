@@ -15,7 +15,9 @@ import DomainIcon from '@mui/icons-material/Domain';
 import PollIcon from '@mui/icons-material/Poll';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 import { Link, useLocation } from "react-router-dom";
+
 import { getStorage, clearStorage } from "../helpers/LocalStorage";
 import { useAuthStore } from "../store/authStore";
 import type { User } from "../interfaces/userInterface";
@@ -119,6 +121,19 @@ const Sidebar = ({
               <PersonAddIcon />
             </ListItemIcon>
             <ListItemText primary="Registrar Candidato" />
+          </ListItemButton>
+        </ListItem>}
+
+        {admin && <ListItem disablePadding>
+          <ListItemButton
+            component={Link}
+            to="/admin/candidate-management"
+            selected={location.pathname === "/admin/candidate-management"}
+          >
+            <ListItemIcon>
+              <ListAltIcon />
+            </ListItemIcon>
+            <ListItemText primary="Administración de Candidatos" />
           </ListItemButton>
         </ListItem>}
 
