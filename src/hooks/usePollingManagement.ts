@@ -28,6 +28,13 @@ export const usePollingManagement = () => {
 
   const handleSubmit = async (values: { start: string; end: string }) => {
     const { start, end } = values;
+    if (start > end) {
+        formik.setFieldError(
+          "start-greater-than-end",
+          `Rango Invalido, ${end} viene antes que ${start}`
+        );
+        return;
+      }
     if (selectedTable) {
       const updatedTable = {
         ...selectedTable,
@@ -40,13 +47,7 @@ export const usePollingManagement = () => {
       setSelectedPlace((prev) => ({ ...prev, votingTables: newTables }));
       setSelectedTable(null);
     } else {
-      if (start > end) {
-        formik.setFieldError(
-          "start-greater-than-end",
-          `Rango Invalido, ${end} viene antes que ${start}`
-        );
-        return;
-      }
+      
       const newTables = await addTableToPlaceService(selectedPlace!.id, {
         start,
         end,
