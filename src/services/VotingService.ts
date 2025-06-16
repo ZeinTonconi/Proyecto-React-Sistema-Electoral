@@ -3,7 +3,7 @@ import jsonServerInstance from "../api/jsonServerInstance";
 const VOTE_URL = 'vote';
 const USER_URL = 'users';
 
-export const postVote = async (userId: number, candidateId: number, user: any) => {
+export const postVote = async (userId: string, candidateId: number, user: any) => {
   try {
     const allVotesResponse = await jsonServerInstance.get(VOTE_URL);
     const allVotes = allVotesResponse.data;
@@ -30,6 +30,16 @@ export const postVote = async (userId: number, candidateId: number, user: any) =
 
   } catch (error) {
     console.error("Error al registrar el voto", error);
+    throw error;
+  }
+};
+
+export const getVotes = async () => {
+  try {
+    const response = await jsonServerInstance.get(VOTE_URL);
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener todos los votos", error);
     throw error;
   }
 };

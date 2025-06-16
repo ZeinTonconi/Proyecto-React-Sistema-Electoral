@@ -1,25 +1,27 @@
-import { Box, Button, Container, Grid } from "@mui/material";
+import { Container, Grid } from "@mui/material";
 import CandidateCard from "../components/CandidateCard";
 import { useEffect, useState } from "react";
 import { getCandidateService } from "../services/CandidateService";
 import { ConfirmActionDialog } from "../components/ConfirmActionDialog";
-import { clearStorage, getStorage } from "../helpers/LocalStorage";
-import { useNavigate } from "react-router-dom";
-import { postVote } from "../services/VotingService";
+import { useAuthStore } from "../store/authStore";
+import { useVoteStore } from "../store/useVoteStore";
 
 function VotePage() {
   const [selectedCandidate, setSelectedCandidate] = useState<string | null>(null);
   const [candidates, setCandidates] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
-  const navigate = useNavigate();
+  const {user} = useAuthStore((state)=>state);
+  const { registerVote } = useVoteStore((state)=>state);
 
   const handleCandidateSelect = (candidateName: string) => {
-    setSelectedCandidate((prev) => (prev === candidateName ? null : candidateName));
+    setSelectedCandidate(candidateName);
+    setOpenDialog(true);
   };
 
-  const vote = async () => {
+  const handleConfirmVote = async () => {
     try {
-      const user = getStorage("user");
+      //const user = getStorage("user");
+
       const candidate: any = candidates.find(
         (c: any) => c.candidate_name === selectedCandidate
       );
@@ -29,21 +31,17 @@ function VotePage() {
         return;
       }
 
-      await postVote(user.id, candidate.id, user);
+      await registerVote(user.id, candidate.id, user);
     } catch (error) {
       console.error("Error al emitir el voto", error);
-      throw new Error("Error al emitir el voto");
+    } finally {
+      setOpenDialog(false);
     }
   };
 
-  const voteSuccess = () => {
-    const isAdmin = getStorage("isAdmin");
-    if (isAdmin) 
-      navigate('/dashboard');
-    else{
-      clearStorage();
-      navigate("/login");
-    }
+  const handleCancelVote = () => {
+    setSelectedCandidate(null);
+    setOpenDialog(false);
   };
 
   const getAllCandidates = async () => {
@@ -76,34 +74,13 @@ function VotePage() {
       <Grid container spacing={3}>
         {candidates.map((candidate) => getCandidateCard(candidate))}
       </Grid>
-      <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }} alignItems="stretch">
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: "#1976d2",
-            color: "white",
-            padding: "12px 24px",
-            fontSize: "1rem",
-            fontWeight: "bold",
-            borderRadius: "8px",
-            marginTop: 2,
-            "&:hover": {
-              backgroundColor: "#115293",
-              transform: "scale(1.05)",
-              transition: "all 0.2s ease-in-out",
-            },
-          }}
-          onClick={() => setOpenDialog(true)}
-        >
-          Confirmar Voto
-        </Button>
-      </Box>
+
       <ConfirmActionDialog
-        confirmAction={vote}
-        handleClose={() => setOpenDialog(false)}
-        handleCloseSuccess={voteSuccess}
+        confirmAction={handleConfirmVote}
+        handleClose={handleCancelVote}
+        handleCloseSuccess={() => {}}
         open={openDialog}
-        message="Presiona el botón de confirmar para emitir tu voto. No se podrá cambiar posteriormente."
+        message={`¿Estás seguro de votar por "${selectedCandidate}"? Esta acción no se podrá cambiar.`}
       />
     </Container>
   );

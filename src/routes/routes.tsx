@@ -8,8 +8,11 @@ import VotingManagement from "../pages/VotingManagement";
 import ProtectedRoutes from "../guards/ProtectedRoutes";
 import CenterManagement from "../pages/CenterManagement";
 import RegisterCandidate from "../pages/RegisterCandidate";
+import VoteConfirmationPage from "../pages/VoteConfirmationPage";
+import { useAuthStore } from "../store/authStore";
 
 const RoutesApp = () => {
+  const { user } = useAuthStore((state) => state);
   return (
     <BrowserRouter>
       <Routes>
@@ -24,8 +27,28 @@ const RoutesApp = () => {
           }
         >
           <Route path="dashboard" element={<Dashboard />} />
-          <Route path="vote-page" element={<VotePage />} />
+          <Route
+            path="vote-page"
+            element={
+              user.hasVoted ? (
+                <Navigate to="/vote-confirmation" />
+              ) : (
+                <VotePage />
+              )
+            }
+          />
+
           <Route path="voting-management" element={<VotingManagement />} />
+          <Route
+            path="vote-confirmation"
+            element={
+              user.hasVoted ? (
+                <VoteConfirmationPage />
+              ) : (
+                <Navigate to="/vote-page" replace />
+              )
+            }
+          />
         </Route>
         <Route
           path="/admin"
