@@ -90,7 +90,7 @@ export const useLogin = () => {
           } else {
             if (
               !isAtLeast65YearsOld(user.birthDate) &&
-              (user < votingTable.start || user > votingTable.end)
+              (user.lastName < votingTable.start || user.lastName > votingTable.end)
             ) {
               setSnackBarWrongTable(true);
               return

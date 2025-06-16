@@ -142,6 +142,18 @@
       "hasVoted": false,
       "token": "user-token-1243",
       "numberPlace": 1
+    },
+    {
+      "id": "10",
+      "ci": "2345678",
+      "role": "user",
+      "birthDate": "2003-08-12",
+      "name": "Zein",
+      "lastName": "Mendoza",
+      "placeId": 1,
+      "hasVoted": false,
+      "token": "user-token-1244",
+      "numberPlace": 14
     }
   ],
   "vote": [
