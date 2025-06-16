@@ -56,7 +56,6 @@ export const usePollingManagement = () => {
       setTables(newTables);
       setSelectedPlace((prev) => ({ ...prev, votingTables: newTables }));
     }
-    console.log("Limpio");
     formik.resetForm();
     setOpenDialog(false);
   };
@@ -86,7 +85,6 @@ export const usePollingManagement = () => {
 
   const handlePlaceSelect = async (zoneId: string, placeId: string) => {
     const [place] = await getPlaceById(placeId);
-    console.log(place);
     setSelectedPlace({ zoneId, ...place });
     setTables(place.votingTables || []);
   };

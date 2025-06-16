@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { Zone } from "../components/ZonesAndPlacesTreeView";
+import { type Zone } from "../components/ZonesAndPlacesTreeView";
 import { getZonesService } from "../services/ZoneService";
 import { getPlacesByZoneId } from "../services/Places";
 
@@ -21,5 +21,5 @@ export const votingCentersStore = create<votingCentersStoreInterface>()((set) =>
       })
     );
     set({ zones: zoneRes });
-  },
+  }
 }));

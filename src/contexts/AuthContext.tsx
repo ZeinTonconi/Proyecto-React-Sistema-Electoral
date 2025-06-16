@@ -20,8 +20,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const {user} = useAuthStore( state => state)
 
   useEffect(() => {
-    if(user)
+    if(user && user.role)
       login(user.role === "admin")
+    
   }, [])
 
   const login = (loginIsAdmin: boolean) => {
