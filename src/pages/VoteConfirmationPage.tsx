@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { clearStorage } from "../helpers/LocalStorage";
 import { useAuthStore } from "../store/authStore";
 import type { User } from "../interfaces/userInterface";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function VoteConfirmationPage() {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ export default function VoteConfirmationPage() {
     dateStyle: "full",
     timeStyle: "short",
   });
-
+  const {logout} = useAuth()
   const {setUser, setToken, setIsAdmin } = useAuthStore((state) => state)
   const receiptId = Math.random().toString(36).substring(2, 10).toUpperCase();
 
@@ -20,6 +21,7 @@ export default function VoteConfirmationPage() {
     setUser({} as User);
     setIsAdmin(false); 
     setToken("");
+    logout();
     navigate("/login");
   };
 
