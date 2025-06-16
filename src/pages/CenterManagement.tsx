@@ -6,39 +6,44 @@ import { ConfirmActionDialog } from "../components/ConfirmActionDialog";
 import CenterRegisterForm from "../components/CenterRegisterForm";
 
 const CenterManagement = () => {
-    const [openCenterRegister, setOpenCenterRegister] = useState(false);
+  const [openCenterRegister, setOpenCenterRegister] = useState(false);
 
-    const handleOpenRegisterUser = () => setOpenCenterRegister(true);
-    const handleCloseRegisterUser = () => {
-        setOpenCenterRegister(false);
-        fetchPlaces()
-    }
+  const handleOpenRegisterUser = () => setOpenCenterRegister(true);
+  const handleCloseRegisterUser = () => {
+    setOpenCenterRegister(false);
+    fetchPlaces();
+  };
   const [places, setPlaces] = useState<any[]>([]);
 
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
 
   const [selectedCenter, setSelectedCenter] = useState("");
 
-  const [selectedEdit, setSelectedEdit] = useState(null)
+  const [selectedEdit, setSelectedEdit] = useState(null);
 
   const deleteCenter = async () => {
-      await deletePlace(selectedCenter);
-  }
+    await deletePlace(selectedCenter);
+  };
 
   const openDeleteDialog = (id: string) => {
-    setSelectedCenter(id)
-    setOpenConfirmDialog(true)
-  }
+    setSelectedCenter(id);
+    setOpenConfirmDialog(true);
+  };
 
   const openEditForm = (center: any) => {
-    setSelectedEdit(center)
-    setOpenCenterRegister(true)
-  }
+    setSelectedEdit(center);
+    setOpenCenterRegister(true);
+  };
 
   const fetchPlaces = async () => {
     try {
       const response = await getPlaces();
-      setPlaces(response);
+      const placeRes = response.map((p) => 
+        ({
+          ...p,
+          numberOfTable: p.votingTables ? p.votingTables.length : 0,
+        }));
+      setPlaces(placeRes);
     } catch (error) {
       console.error("Error fetching places:", error);
     }
@@ -52,10 +57,12 @@ const CenterManagement = () => {
         <Typography variant="h5" gutterBottom sx={{ marginTop: 0 }}>
           Gestión de Centros de Votación
         </Typography>
-        <CenterRegisterForm open={openCenterRegister} onClose={handleCloseRegisterUser} 
+        <CenterRegisterForm
+          open={openCenterRegister}
+          onClose={handleCloseRegisterUser}
           center={selectedEdit}
         />
-      <Button
+        <Button
           variant="contained"
           color="primary"
           sx={{
@@ -63,20 +70,26 @@ const CenterManagement = () => {
             borderRadius: "8px",
           }}
           onClick={handleOpenRegisterUser}
-      >
+        >
           Agregar Centro de Votación
         </Button>
       </div>
-      <CenterList centers={places} deleteAction={openDeleteDialog} editAction={openEditForm}/>
+      <CenterList
+        centers={places}
+        deleteAction={openDeleteDialog}
+        editAction={openEditForm}
+      />
       <ConfirmActionDialog
         confirmAction={deleteCenter}
-        handleClose={() => {setOpenConfirmDialog(false)}}
+        handleClose={() => {
+          setOpenConfirmDialog(false);
+        }}
         handleCloseSuccess={() => {
           fetchPlaces();
-          setOpenConfirmDialog(false)
+          setOpenConfirmDialog(false);
         }}
         message="Una vez borrado el centro de votacion no se podra recuperarlo despues"
-        open={openConfirmDialog}      
+        open={openConfirmDialog}
       />
     </>
   );
