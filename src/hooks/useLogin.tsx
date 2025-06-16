@@ -103,13 +103,13 @@ export const useLogin = () => {
               setSnackBarWrongTable(true);
               return;
             }
-            setIsAdmin(false)
-            setUser(user[0]);
-            setToken(user[0].token);
             if (user[0].hasVoted) {
               setSnackBarVoted(true);
               logout();
             } else {
+              setIsAdmin(false)
+              setUser(user[0]);
+              setToken(user[0].token);
               setSnackBarSucces(true);
               setOpenCameraModal(true);
             }

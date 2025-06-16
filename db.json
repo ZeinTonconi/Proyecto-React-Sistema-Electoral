@@ -139,7 +139,7 @@
       "name": "Valeria",
       "lastName": "Zerain",
       "placeId": 10,
-      "hasVoted": false,
+      "hasVoted": true,
       "token": "user-token-1243",
       "numberPlace": 1
     },
@@ -231,6 +231,11 @@
       "id": "16",
       "candidate_id": "1",
       "vote_date": "2025-06-16T05:59:56.543Z"
+    },
+    {
+      "id": "17",
+      "candidate_id": "2",
+      "vote_date": "2025-06-16T19:56:18.490Z"
     }
   ],
   "places": [
