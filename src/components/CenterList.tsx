@@ -52,6 +52,7 @@ const columns: Column[] = [
 ];
 
 const CenterList = ({ centers, deleteAction, editAction }: CenterListProps) => {
+  
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
