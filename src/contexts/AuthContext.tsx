@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 import type { User } from "../interfaces/userInterface";
-import { clearStorage, getStorage, setStorage } from "../helpers/LocalStorage";
+import { clearStorage, setStorage } from "../helpers/LocalStorage";
 
 interface AuthContextType {
   user: User;
