@@ -4,9 +4,10 @@ import { deepPurple } from "@mui/material/colors";
 interface UserCardProps {
   labelAndData?: { label: string; data: string }[];
   addPhoto: boolean;
+  photoUrl?: string;
 }
 
-const UserCard = ({ labelAndData, addPhoto }: UserCardProps) => {
+const UserCard = ({ labelAndData, addPhoto, photoUrl }: UserCardProps) => {
   const initials =
     (labelAndData?.[0]?.data?.charAt(0) || "") +
     (labelAndData?.[1]?.data?.charAt(0) || "");
@@ -29,6 +30,7 @@ const UserCard = ({ labelAndData, addPhoto }: UserCardProps) => {
     >
       {addPhoto && (
         <Avatar
+        src={photoUrl}
           sx={{
             bgcolor: deepPurple[500],
             width: 120,
@@ -39,7 +41,7 @@ const UserCard = ({ labelAndData, addPhoto }: UserCardProps) => {
             boxShadow: "0 0 8px rgba(0,0,0,0.15)",
           }}
         >
-          {initials}
+          {!photoUrl && initials}
         </Avatar>
       )}
 

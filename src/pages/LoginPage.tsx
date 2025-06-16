@@ -17,6 +17,8 @@ import { CameraModal } from "../components/CameraModal";
 import { SnackBarWithAlert } from "../components/SnackBarWithAlert";
 import { useLogin } from "../hooks/useLogin";
 
+import { VerificationModal } from "../components/VerificationModal";
+
 function LoginPage() {
   const {
     openCameraModal,
@@ -29,7 +31,9 @@ function LoginPage() {
     snackBarVoted,
     snackBarSuccesAdmin,
     votingTable,
-    snackBarWrongTable
+    snackBarWrongTable,
+    capturePhoto,
+    openVerificationModal,
   } = useLogin();
 
 
@@ -41,6 +45,7 @@ function LoginPage() {
         justifyContent: "center",
       }}
     >
+      <VerificationModal open={openVerificationModal}/>
       <Stack
         sx={{ paddingTop: 2, justifyContent: "center", alignItems: "center" }}
         spacing={2}
@@ -59,18 +64,11 @@ function LoginPage() {
             <Card sx={{ height: "100%", boxShadow: 3 }}>
               <CardContent sx={{ height: "100%" }}>
                 <Typography
-                  // sx={{
-                  //   fontSize: 20,
-                  //   fontWeight: 'bold'
-                  // }}
                   variant="h5"
                 >
                   Desde:
                 </Typography>
                 <Typography
-                  // sx={{
-                  //   fontSize: 20
-                  // }}
                   variant="h6"
                   color="text.secondary"
                 >
@@ -83,19 +81,11 @@ function LoginPage() {
             <Card sx={{ height: "100%", boxShadow: 3 }}>
               <CardContent sx={{ height: "100%" }}>
                 <Typography
-                  //  sx={{
-                  //   fontSize: 20,
-                  //   fontWeight: 'bold'
-                  // }}
                   variant="h5"
                 >
                   Hasta:
                 </Typography>
                 <Typography
-                  // sx={{
-                  //   fontSize: 20,
-                  // }}
-
                   variant="h6"
                   color="text.secondary"
                 >
@@ -225,7 +215,7 @@ function LoginPage() {
           </Card>
         </Box>
       </Stack>
-      <CameraModal open={openCameraModal} onClose={closeModal} />
+      <CameraModal open={openCameraModal} onClose={closeModal} onCapture={capturePhoto}/>
       <SnackBarWithAlert
         open={openSnackBar}
         handleClose={closeSnackBars}

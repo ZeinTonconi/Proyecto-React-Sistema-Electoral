@@ -21,6 +21,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
 import type { User } from "../interfaces/userInterface";
 import { useAuth } from "../contexts/AuthContext";
+import { t } from "i18next";
 
 const drawerWidth = 240;
 
@@ -54,7 +55,7 @@ const Sidebar = ({
             <ListItemIcon>
               <HomeFilledIcon />
             </ListItemIcon>
-            <ListItemText primary="Inicio" />
+            <ListItemText primary={t("sidebar.home")}/>
           </ListItemButton>
         </ListItem>
 
@@ -67,7 +68,7 @@ const Sidebar = ({
             <ListItemIcon>
               <HowToVoteIcon />
             </ListItemIcon>
-            <ListItemText primary="Ir a votar" />
+            <ListItemText primary={t("sidebar.go_to_vote")} />
           </ListItemButton>
         </ListItem>}
 
@@ -80,7 +81,7 @@ const Sidebar = ({
             <ListItemIcon>
               <ManageAccountsIcon />
             </ListItemIcon>
-            <ListItemText primary="Administración de usuarios" />
+            <ListItemText primary={t("sidebar.user_management")} />
           </ListItemButton>
         </ListItem>}
 
@@ -93,7 +94,7 @@ const Sidebar = ({
             <ListItemIcon>
               <PollIcon />
             </ListItemIcon>
-            <ListItemText primary="Resultados de la votación" />
+            <ListItemText primary={t("sidebar.voting_management")} />
           </ListItemButton>
         </ListItem>
       
@@ -106,7 +107,7 @@ const Sidebar = ({
             <ListItemIcon>
               <DomainIcon />
             </ListItemIcon>
-            <ListItemText primary="Gestión de Centros de Votación" />
+            <ListItemText primary={t("sidebar.center_management")} />
           </ListItemButton>
         </ListItem>}
 
@@ -119,7 +120,7 @@ const Sidebar = ({
             <ListItemIcon>
               <PersonAddIcon />
             </ListItemIcon>
-            <ListItemText primary="Registrar Candidato" />
+            <ListItemText primary={t("sidebar.register_candidate")} />
           </ListItemButton>
         </ListItem>}
         {admin && <ListItem disablePadding>
@@ -131,7 +132,7 @@ const Sidebar = ({
             <ListItemIcon>
               <ListAltIcon />
             </ListItemIcon>
-            <ListItemText primary="Administración de Candidatos" />
+            <ListItemText primary={t("sidebar.candidate_management")} />
           </ListItemButton>
         </ListItem>}
         {admin && <ListItem disablePadding>
@@ -143,7 +144,7 @@ const Sidebar = ({
             <ListItemIcon>
               <TableRestaurantIcon />
             </ListItemIcon>
-            <ListItemText primary="Administrar mesas" />
+            <ListItemText primary={t("sidebar.table_management")} />
           </ListItemButton>
         </ListItem>}
 
@@ -159,7 +160,7 @@ const Sidebar = ({
             <ListItemIcon>
               <MeetingRoomIcon />
             </ListItemIcon>
-            <ListItemText primary="Cerrar Sesión" />
+            <ListItemText primary={t("sidebar.logout")} />
           </ListItemButton>
         </ListItem>
       </List>

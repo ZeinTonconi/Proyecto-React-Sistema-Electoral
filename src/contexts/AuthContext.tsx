@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { useAuthStore } from "../store/authStore";
 
+
 interface AuthContextType {
   isAuth: boolean;
   login: (loginIsAdmin: boolean) => void;

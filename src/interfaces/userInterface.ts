@@ -10,4 +10,5 @@ export interface User {
   name: string;
   lastName: string;
   numberPlace: number;
+  userPhoto: string;
 }
