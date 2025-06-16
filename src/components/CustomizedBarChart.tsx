@@ -6,7 +6,7 @@ interface CustomizedBarChartProps {
 const CandidateBarChart = ({ data }: CustomizedBarChartProps) => {
   const colors = data.map((entry) => entry.color);
   return (
-    <ResponsiveContainer width="100%" height={400}>
+    <ResponsiveContainer width="50%" height={200}>
       <BarChart data={data}>
         <XAxis dataKey="name" />
         <YAxis allowDecimals={false} />
