@@ -15,9 +15,10 @@ export const useLogin = () => {
   const [snackBarVoted, setSnackBarVoted] = useState(false);
   const [snackBarSucces, setSnackBarSucces] = useState(false);
   const [snackBarSuccesAdmin, setSnackBarSuccesAdmin] = useState(false);
+  const [showAdminPass, setShowAdminPass] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
   const { login, logout } = useAuth();
-
-  const { setUser, setToken, setIsAdmin, isAdmin } = useAuthStore(
+  const { setUser, setToken } = useAuthStore(
     (state) => state
   );
 
@@ -28,6 +29,7 @@ export const useLogin = () => {
   };
 
   const closeModal = () => {
+    login(isAdmin);
     setOpenCameraModal(false);
     goToDashboard();
   };
@@ -70,7 +72,7 @@ export const useLogin = () => {
       birthDate: Yup.date()
         .required("La fecha de nacimiento es requerida")
         .max(eighteenYearsAgo, "Debes ser mayor de 18 años para votar"),
-      adminPassword: isAdmin
+      adminPassword: showAdminPass
         ? Yup.string()
           .required("La contraseña es requerida")
         : Yup.string(),
@@ -80,19 +82,19 @@ export const useLogin = () => {
         const user = await getUser(values.ci, values.birthDate);
         if (user.length > 0) {
           if (user[0].role === "admin") {
-            if (isAdmin) {
+            if (showAdminPass) {
               setSnackBarSuccesAdmin(true);
               const admin = await getAdmin(values.ci, values.adminPassword);
               if (admin.length > 0) {
-                login(admin[0], true);
-                setUser(admin[0]);
-                setToken(admin[0].token);
+                setIsAdmin(true)
+                setUser(user[0])
+                setToken(user[0].token)
                 setOpenCameraModal(true);
               } else {
                 setOpenSnackBar(true);
               }
             }
-            setIsAdmin(true);
+            setShowAdminPass(true);
           } else {
             if (
               !isAtLeast65YearsOld(user.birthDate) &&
@@ -101,7 +103,7 @@ export const useLogin = () => {
               setSnackBarWrongTable(true);
               return;
             }
-            login(user[0], false);
+            setIsAdmin(false)
             setUser(user[0]);
             setToken(user[0].token);
             if (user[0].hasVoted) {
@@ -110,7 +112,6 @@ export const useLogin = () => {
             } else {
               setSnackBarSucces(true);
               setOpenCameraModal(true);
-              setIsAdmin(false);
             }
           }
         } else {
@@ -146,7 +147,7 @@ export const useLogin = () => {
     openCameraModal,
     closeModal,
     formik,
-    isAdmin,
+    showAdminPass,
     openSnackBar,
     closeSnackBars,
     snackBarVoted,

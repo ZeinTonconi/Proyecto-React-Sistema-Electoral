@@ -16,6 +16,7 @@ import KeyIcon from "@mui/icons-material/Key";
 import { CameraModal } from "../components/CameraModal";
 import { SnackBarWithAlert } from "../components/SnackBarWithAlert";
 import { useLogin } from "../hooks/useLogin";
+
 import { VerificationModal } from "../components/VerificationModal";
 
 function LoginPage() {
@@ -23,7 +24,7 @@ function LoginPage() {
     openCameraModal,
     closeModal,
     formik,
-    isAdmin,
+    showAdminPass,
     openSnackBar,
     closeSnackBars,
     snackBarSucces,
@@ -167,7 +168,7 @@ function LoginPage() {
                   }}
                   variant="standard"
                 />
-                {isAdmin && (
+                {showAdminPass && (
                   <TextField
                     id="input-adminpassword-textfield"
                     label="Contraseña de Administrador"

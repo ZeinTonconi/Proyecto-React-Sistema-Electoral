@@ -37,9 +37,9 @@ const Sidebar = ({
   isMobile,
 }: SidebarProps) => {
 
-  const {user, isAdmin: admin, logout} = useAuth()
+  const { isAdmin: admin, logout} = useAuth()
   const location = useLocation();
-  const {setUser, setToken, setIsAdmin } = useAuthStore((state) => state)
+  const {setUser, setToken, setIsAdmin, user } = useAuthStore((state) => state)
 
   const drawer = (
     <div>

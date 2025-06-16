@@ -16,11 +16,14 @@ import { useAuthStore } from "../store/authStore";
 
 const RoutesApp = () => {
   const { user } = useAuthStore((state) => state);
-  const {isAdmin} = useAuth()
+  const { isAdmin, isAuth } = useAuth();
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/login"
+          element={!isAuth ? <LoginPage /> : <Navigate to="/dashboard" />}
+        />
         <Route path="/" element={<Navigate to="/login" />} />
         <Route
           path="/"
@@ -65,51 +68,31 @@ const RoutesApp = () => {
           <Route
             path="user-management"
             element={
-             isAdmin? (
-                <UserManagement />
-              ) : (
-                <Navigate to="/dashboard" />
-              )
+              isAdmin ? <UserManagement /> : <Navigate to="/dashboard" />
             }
           />
           <Route
             path="center-management"
             element={
-             isAdmin? (
-                <CenterManagement />
-              ) : (
-                <Navigate to="/dashboard" />
-              )
+              isAdmin ? <CenterManagement /> : <Navigate to="/dashboard" />
             }
           />
           <Route
             path="register-candidate"
             element={
-             isAdmin? (
-                <RegisterCandidate />
-              ) : (
-                <Navigate to="/dashboard" />
-              )
+              isAdmin ? <RegisterCandidate /> : <Navigate to="/dashboard" />
             }
           />
           <Route
             path="candidate-management"
             element={
-              isAdmin ? (
-                <CandidateManagement />
-              ) : (
-                <Navigate to="/dashboard" />
-              )
+              isAdmin ? <CandidateManagement /> : <Navigate to="/dashboard" />
             }
           />
           <Route
             path="tables-management"
             element={
-             isAdmin? (
-                <TablesManagment />
-              ) : (
-                <Navigate to="/dashboard" />
-              )
+              isAdmin ? <TablesManagment /> : <Navigate to="/dashboard" />
             }
           />
         </Route>
