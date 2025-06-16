@@ -26,7 +26,6 @@ export const useCandidateManagementStore = create<CandidateStore>((set) => ({
                 id: candidate.id,
                 candidate_name: candidate.candidate_name,
                 political_party: candidate.political_party,
-                color: candidate.color_card,
             }));
             set({ candidates: formattedCandidates });
         } catch (error) {

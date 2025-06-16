@@ -10,14 +10,12 @@ import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from '@mui/material';
 import { ModeEdit } from '@mui/icons-material';
 
-import { useState, type ChangeEvent } from 'react';
 import type { Candidate } from './../interfaces/candidateInterface';
 import { UpdateCandidate } from './UpdateCandidateForm';
-import { useCandidate } from '../hooks/useCandidate';
 import { useCandidateList } from '../hooks/useCandidateList';
 
 interface Column {
-    id: 'candidate_name' | 'political_party' | 'color' | 'manage';
+    id: 'candidate_name' | 'political_party' | 'manage';
     label: string;
     minWidth?: number;
     align?: 'right' | 'left' | 'center';
@@ -26,7 +24,6 @@ interface Column {
 const columns: Column[] = [
     { id: 'candidate_name', label: 'Nombre', minWidth: 150, align: 'left' },
     { id: 'political_party', label: 'Partido Político', minWidth: 120, align: 'left' },
-    { id: 'color', label: 'Color', minWidth: 120, align: 'left' },
     { id: 'manage', label: 'Gestionar', minWidth: 50, align: 'left' },
 ];
 
@@ -45,7 +42,7 @@ export default function CandidatesList({ candidates, deleteCandidate, editCandid
     return (
         <>
             <Paper sx={{ width: '100%', overflow: 'visible', marginTop: 2 }}>
-                <TableContainer sx={{ maxHeight: 440, width: '100%', overflowX: 'auto', maxWidth: { xs: 450, sm: 550, md: 600, lg: 1000, xl: 1400 } }}>
+                <TableContainer sx={{ maxHeight: 440, width: '100%', overflowX: 'auto', maxWidth: { xs: 450, sm: 550, md: 600, lg: 1000, xl: 1400 }, paddingX: 4, paddingY: 2}}>
                     <Table stickyHeader aria-label="sticky table"
                     >
                         <TableHead>
@@ -68,7 +65,6 @@ export default function CandidatesList({ candidates, deleteCandidate, editCandid
                                     <TableRow key={candidate.id}>
                                         <TableCell align="left">{candidate.candidate_name}</TableCell>
                                         <TableCell align="left">{candidate.political_party}</TableCell>
-                                        <TableCell align="left">{candidate.color_card}</TableCell>
                                         <TableCell align="left">
                                             <Button onClick={(event) => {
                                                 event.stopPropagation();
