@@ -151,11 +151,6 @@
       "vote_date": "2023-10-01T12:00:00Z"
     },
     {
-      "id": "2",
-      "candidate_id": 2,
-      "vote_date": "2023-10-02T14:30:00Z"
-    },
-    {
       "id": "3",
       "candidate_id": 4,
       "vote_date": "2025-06-01T22:10:05.025Z"
@@ -219,74 +214,122 @@
       "id": "15",
       "candidate_id": "3",
       "vote_date": "2025-06-02T21:37:12.973Z"
+    },
+    {
+      "id": "16",
+      "candidate_id": "1",
+      "vote_date": "2025-06-16T05:59:56.543Z"
     }
   ],
   "places": [
     {
+      "zoneId": "2",
       "name": "U.E Instituto Americano",
       "address": "Av. 20 de Octubre N° 3540, Zona San Pedro",
       "numberOfTable": 26,
-      "id": "1"
+      "id": "1",
+      "zone": "2",
+      "votingTables": [
+        {
+          "start": "Mendoza",
+          "end": "Mendoza",
+          "noTable": 1,
+          "id": 1
+        }
+      ]
     },
     {
+      "zoneId": "1",
       "id": "2",
       "name": "U.E María Auxiliadora",
       "address": "Av. 6 de Agosto N° 456, Zona Sopocachi",
-      "numberOfTable": 26
+      "numberOfTable": 26,
+      "zone": "1",
+      "votingTables": [
+        {
+          "start": "Mendoza",
+          "end": "Mendozax",
+          "noTable": 1,
+          "id": 2
+        }
+      ]
     },
     {
       "id": "3",
       "name": "U.E Don Bosco",
       "address": "Calle Illampu N° 987, Zona El Rosario",
-      "numberOfTable": 26
+      "numberOfTable": 26,
+      "zone": "2"
     },
     {
       "id": "4",
       "name": "U.E La Salle",
       "address": "Av. Arce N° 1500, Zona San Jorge",
-      "numberOfTable": 26
+      "numberOfTable": 26,
+      "zone": "1"
     },
     {
       "id": "5",
       "name": "U.E Cristo Rey",
       "address": "Calle 21 de Calacoto N° 321, Zona Sur",
-      "numberOfTable": 26
+      "numberOfTable": 26,
+      "zone": "3"
     },
     {
       "id": "6",
       "name": "U.E San Ignacio",
       "address": "Calle Sagárnaga N° 132, Zona Central",
-      "numberOfTable": 26
+      "numberOfTable": 26,
+      "zone": "2"
     },
     {
       "id": "7",
       "name": "U.E Alemán",
       "address": "Av. Ballivián N° 2020, Zona Calacoto",
-      "numberOfTable": 26
+      "numberOfTable": 26,
+      "zone": "3"
     },
     {
       "id": "8",
       "name": "U.E Liceo Venezuela",
       "address": "Av. Mariscal Santa Cruz N° 7645, Zona Central",
-      "numberOfTable": 26
+      "numberOfTable": 26,
+      "zone": "2"
     },
     {
       "id": "9",
       "name": "U.E Cumbre",
       "address": "Calle 18 Obrajes N° 58, Zona Obrajes",
-      "numberOfTable": 26
+      "numberOfTable": 26,
+      "zone": "3"
     },
     {
       "name": "U.E Saint Andrew’s",
       "address": "Calle 13 N° 1000, Zona Achumani",
       "numberOfTable": 25,
-      "id": "10"
+      "id": "10",
+      "zone": "3"
     },
     {
       "id": "12",
       "name": "U.E. Achumani",
       "address": "Achumani muy muy lejano",
-      "numberOfTable": 26
+      "numberOfTable": 26,
+      "zone": "4"
+    }
+  ],
+  "zones": [
+    {
+      "id": "1",
+      "zone": "Sopocachi"
+    },
+    {
+      "id": "2",
+      "zone": "Centro"
+    },
+    {
+      "id": "3",
+      "zone": "Zona Sur"
     }
   ]
 }

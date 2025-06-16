@@ -5,6 +5,8 @@ import { getCandidateService } from "../services/CandidateService";
 import { ConfirmActionDialog } from "../components/ConfirmActionDialog";
 import { useAuthStore } from "../store/authStore";
 import { useVoteStore } from "../store/useVoteStore";
+import { useAuth } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function VotePage() {
   const [selectedCandidate, setSelectedCandidate] = useState<string | null>(null);
@@ -12,16 +14,19 @@ function VotePage() {
   const [openDialog, setOpenDialog] = useState(false);
   const {user} = useAuthStore((state)=>state);
   const { registerVote } = useVoteStore((state)=>state);
+  const navigate = useNavigate();
 
   const handleCandidateSelect = (candidateName: string) => {
     setSelectedCandidate(candidateName);
     setOpenDialog(true);
   };
 
+  const { isAdmin, logout} = useAuth();
+
   const handleConfirmVote = async () => {
     try {
-      //const user = getStorage("user");
 
+      
       const candidate: any = candidates.find(
         (c: any) => c.candidate_name === selectedCandidate
       );
@@ -39,9 +44,18 @@ function VotePage() {
     }
   };
 
-  const handleCancelVote = () => {
+    const handleCancelVote = () => {
     setSelectedCandidate(null);
     setOpenDialog(false);
+    }
+
+  const voteSuccess = () => {
+    if (isAdmin) 
+      navigate('/dashboard');
+    else{
+      logout()
+      navigate("/login");
+    }
   };
 
   const getAllCandidates = async () => {
