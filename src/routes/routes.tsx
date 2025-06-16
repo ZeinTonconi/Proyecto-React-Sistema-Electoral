@@ -52,7 +52,7 @@ const RoutesApp = () => {
               user.hasVoted ? (
                 <VoteConfirmationPage />
               ) : (
-                <Navigate to="/vote-page" replace />
+                <Navigate to="/vote-page"/>
               )
             }
           />
