@@ -3,60 +3,18 @@ import CandidateCard from "../components/CandidateCard";
 import { useEffect, useState } from "react";
 import { getCandidateService } from "../services/CandidateService";
 import { ConfirmActionDialog } from "../components/ConfirmActionDialog";
-import { useAuthStore } from "../store/authStore";
-import { useVoteStore } from "../store/useVoteStore";
-import { useAuth } from "../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useVotingBallot } from "../hooks/useVotingBallot";
 
 function VotePage() {
-  const [selectedCandidate, setSelectedCandidate] = useState<string | null>(null);
-  const [candidates, setCandidates] = useState([]);
-  const [openDialog, setOpenDialog] = useState(false);
-  const {user} = useAuthStore((state)=>state);
-  const { registerVote } = useVoteStore((state)=>state);
-  const navigate = useNavigate();
+  const [candidates, setCandidates] = useState<any[]>([]);
 
-  const handleCandidateSelect = (candidateName: string) => {
-    setSelectedCandidate(candidateName);
-    setOpenDialog(true);
-  };
-
-  const { isAdmin, logout} = useAuth();
-
-  const handleConfirmVote = async () => {
-    try {
-
-      
-      const candidate: any = candidates.find(
-        (c: any) => c.candidate_name === selectedCandidate
-      );
-
-      if (!candidate) {
-        console.error("Candidato no encontrado");
-        return;
-      }
-
-      await registerVote(user.id, candidate.id, user);
-    } catch (error) {
-      console.error("Error al emitir el voto", error);
-    } finally {
-      setOpenDialog(false);
-    }
-  };
-
-    const handleCancelVote = () => {
-    setSelectedCandidate(null);
-    setOpenDialog(false);
-    }
-
-  const voteSuccess = () => {
-    if (isAdmin) 
-      navigate('/dashboard');
-    else{
-      logout()
-      navigate("/login");
-    }
-  };
+  const {
+    selectedCandidate,
+    openDialog,
+    handleCandidateSelect,
+    handleConfirmVote,
+    handleCancelVote,
+  } = useVotingBallot(candidates);
 
   const getAllCandidates = async () => {
     const res = await getCandidateService();
