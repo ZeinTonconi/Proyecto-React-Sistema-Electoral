@@ -11,8 +11,8 @@ export interface Vote {
 
 interface VoteStoreInterface {
   votes: Vote[];
-  fetchVotes: () => Promise<void>;
-  registerVote: (userId: string, candidateId: number, user: any) => Promise<void>;
+  fetchVotes: () => void;
+  registerVote: (userId: string, candidateId: number, user: any) => void;
 }
 
 export const useVoteStore = create<VoteStoreInterface>()(
