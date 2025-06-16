@@ -75,7 +75,7 @@ export const registerUser = async (
       hasVoted: false,
       token,
       userPhoto,
-      numberPlace,
+      numberPlace: import.meta.env.VITE_MESA
     });
 
     return response.data;
