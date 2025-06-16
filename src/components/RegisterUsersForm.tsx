@@ -7,6 +7,8 @@ import {
   TextField,
   Typography,
   IconButton,
+  Avatar,
+  Box,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import BadgeIcon from "@mui/icons-material/Badge";
@@ -16,8 +18,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import GroupIcon from "@mui/icons-material/Group";
 import PlaceIcon from "@mui/icons-material/Place";
 import { useCitizenRegistry } from "../hooks/useCitizenRegistry";
-
-
+import { SnackBarWithAlert } from "./SnackBarWithAlert";
 
 interface RegisterUsersProps {
   open: boolean;
@@ -25,20 +26,38 @@ interface RegisterUsersProps {
 }
 
 export const RegisterUsers = ({ open, onClose }: RegisterUsersProps) => {
-  const {openCameraModal, closeModalCamera, handleClose, formik, isPhotoTaken, places, openCamera, captureImageCamera} = useCitizenRegistry(onClose);
+  const {
+    openCameraModal,
+    closeModalCamera,
+    handleClose,
+    formik,
+    isPhotoTaken,
+    places,
+    openCamera,
+    captureImageCamera,
+    errorMessage,
+    showError,
+    closeSnackbar
+  } = useCitizenRegistry(onClose);
   return (
     <>
-      <CameraModal open={openCameraModal} onClose={closeModalCamera} onCapture={captureImageCamera} />
-
+      <CameraModal
+        open={openCameraModal}
+        onClose={closeModalCamera}
+        onCapture={captureImageCamera}
+      />
+      <SnackBarWithAlert open={showError} handleClose={closeSnackbar} message={errorMessage} severity="error" ></SnackBarWithAlert>
       <Modal open={open} onClose={() => {}} disableEscapeKeyDown>
         <Container
           maxWidth="xs"
           sx={{
-            marginTop: 8,
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
             backgroundColor: "#fff",
             borderRadius: 2,
             boxShadow: 24,
-            position: "relative",
             padding: 4,
           }}
         >
@@ -63,6 +82,12 @@ export const RegisterUsers = ({ open, onClose }: RegisterUsersProps) => {
           </Typography>
 
           <form onSubmit={formik.handleSubmit}>
+            <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
+              <Avatar
+                src={formik.values.userPhoto}
+                sx={{ width: 120, height: 120 }}
+              />
+            </Box>
             <TextField
               label="Carnet de Identidad"
               name="ci"

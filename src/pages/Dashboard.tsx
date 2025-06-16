@@ -1,38 +1,42 @@
-  import { useState, useEffect } from "react";
-  import UserCard from "../components/UserCard";
-  import { getStorage } from "../helpers/LocalStorage";
-  import { getPlaceById } from "../services/Places";
-import { data } from "react-router-dom";
+import { useState, useEffect } from "react";
+import UserCard from "../components/UserCard";
+import { getPlaceById } from "../services/Places";
+import { useAuthStore } from "../store/authStore";
 
-  export default function Dashboard() {
-    const user = getStorage("user");
-    const [placeName, setPlaceName] = useState("");
+export default function Dashboard() {
+  const user = useAuthStore((state) => state.user);
+  const [placeName, setPlaceName] = useState("");
 
-    useEffect(() => {
-      const fetchPlace = async () => {
-          try {
-            const data = await getPlaceById(user.placeId);
-            setPlaceName(data[0]?.name || ""); 
-          } catch (error) {
-            console.error("Error al cargar el recinto", error);
-          }
-      };
-      fetchPlace();
-    }, [user]);
+  useEffect(() => {
+    const fetchPlace = async () => {
+      try {
+        const data = await getPlaceById(user.placeId);
+        setPlaceName(data[0]?.name || "");
+      } catch (error) {
+        console.error("Error al cargar el recinto", error);
+      }
+    };
+    fetchPlace();
+  }, [user]);
 
-    const labelAndData = [
-      { label: "Nombre(s)", data: user?.name || "" },
-      { label: "Apellido(s)", data: user?.lastName || "" },
-      { label: "Carnet de Identidad", data: user?.ci || "" },
-      { label: "Recinto", data: placeName },
-      { label: "Mesa", data: user?.numberPlace || "" },
-      { label: "Fecha de Nacimiento", data: user?.birthDate || "" },
-      { label: "Estado de Voto", data: user?.hasVoted ? "Votó" : "No votó" }
-    ];
-    return (
-      <>
-        <h1 style={{ marginBlock: 0 }}>Inicio</h1>
-        <UserCard labelAndData={labelAndData} addPhoto = {true} photoUrl={user.userPhoto}/>
-      </>
-    );
-  }
+  const labelAndData = [
+    { label: "Nombre(s)", data: user?.name || "" },
+    { label: "Apellido(s)", data: user?.lastName || "" },
+    { label: "Carnet de Identidad", data: String(user?.ci || "") },
+    { label: "Recinto", data: placeName },
+    { label: "Mesa", data: String(user?.numberPlace || "") },
+    { label: "Fecha de Nacimiento", data: String(user?.birthDate || "") },
+    { label: "Estado de Voto", data: user?.hasVoted ? "Votó" : "No votó" },
+  ];
+
+  return (
+    <>
+      <h1 style={{ marginBlock: 0 }}>Inicio</h1>
+      <UserCard
+        labelAndData={labelAndData}
+        addPhoto={true}
+        photoUrl={user.userPhoto}
+      />
+    </>
+  );
+}

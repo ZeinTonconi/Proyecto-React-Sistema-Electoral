@@ -48,6 +48,10 @@ export const registerUser = async (
 ) => {
   try {
     const allUsers = await jsonServerInstance.get(USERS_URL);
+    const exists = allUsers.data.some((user: any) => user.ci === ci);
+    if (exists) {
+      throw new Error("El usuario con este CI ya está registrado.");
+    }
     const ids = allUsers.data.map((user: any) => user.id);
     const nextId = ids.length > 0 ? Math.max(...ids) + 1 : 1;
 

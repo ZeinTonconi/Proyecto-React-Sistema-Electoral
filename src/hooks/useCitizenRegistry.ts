@@ -32,6 +32,8 @@ export const useCitizenRegistry = (onClose: () => void) => {
   const [openCameraModal, setOpenCameraModal] = useState(false);
   const [isPhotoTaken, setIsPhotoTaken] = useState(false);
   const [places, setPlaces] = useState<string[]>([]);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showError, setShowError] = useState(false);
 
   const fetchPlaces = async () => {
     try {
@@ -59,7 +61,7 @@ export const useCitizenRegistry = (onClose: () => void) => {
     onSubmit: async (values) => {
       try {
         const idPlace = parseInt(values.place, 10);
-        const user = await registerUser(
+        await registerUser(
           values.ci,
           values.birthDate,
           values.name,
@@ -69,7 +71,10 @@ export const useCitizenRegistry = (onClose: () => void) => {
         );
         handleClose();
       } catch (error) {
-        console.error("Error al registrar el usuario:", error);
+        setErrorMessage(
+          "Error al registrar el usuario: " + (error as Error).message
+        );
+        setShowError(true);
       }
     },
   });
@@ -81,7 +86,12 @@ export const useCitizenRegistry = (onClose: () => void) => {
     setIsPhotoTaken(true);
   };
 
-    const captureImageCamera = (base64Image: string) => {
+  const closeSnackbar = () => {
+    setShowError(false);
+    setErrorMessage("");
+  }
+
+  const captureImageCamera = (base64Image: string) => {
     formik.setFieldValue("userPhoto", base64Image);
   };
 
@@ -100,5 +110,8 @@ export const useCitizenRegistry = (onClose: () => void) => {
     places,
     openCamera,
     captureImageCamera,
+    errorMessage,
+    showError,
+    closeSnackbar,
   };
 };
