@@ -28,7 +28,7 @@ export const getPlaceById = async (id: number) => {
 export const registerPlace = async (
   name: string,
   address: string,
-  numberOfTable: number
+  zone: number
 ) => {
   try {
     const places = await getPlaces();
@@ -41,7 +41,8 @@ export const registerPlace = async (
       id: newId.toString(),
       name,
       address,
-      numberOfTable,
+      zone,
+      votingPlace: []
     });
     return response.data;
   } catch (error) {
@@ -62,8 +63,12 @@ export const deletePlace = async (id: string) => {
 
 export const updatePlace = async (id: string, newPlace: any) => {
   try {
+    
+    const place = await getPlaceById(id)
+    const table = place.votingTables
     const res = await jsonServerInstance.put(`${PLACES_URL}/${id}`, {
       ...newPlace,
+      votingTables: table || []
     });
   } catch (error) {
     console.log("Error updating place");

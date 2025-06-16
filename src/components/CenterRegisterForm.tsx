@@ -1,69 +1,85 @@
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { Button, Container, IconButton, InputAdornment, Modal, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  Container,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  MenuItem,
+  Modal,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
-import AddLocationIcon from '@mui/icons-material/AddLocation';
-import AddHomeIcon from '@mui/icons-material/AddHome';
+import TableRestaurantIcon from "@mui/icons-material/TableRestaurant";
+import AddLocationIcon from "@mui/icons-material/AddLocation";
+import AddHomeIcon from "@mui/icons-material/AddHome";
 import { registerPlace, updatePlace } from "../services/Places";
 import { Update } from "@mui/icons-material";
-const centerSchema = Yup.object(
-    {
-        name: Yup.string()
-            .min(2, "El nombre del centro debe tener al menos 2 caracteres")
-            .max(50, "El nombre del centro no puede tener más de 50 caracteres")
-            .required("Nombre del centro requerido"),
-        address: Yup.string()
-            .min(5, "La dirección debe tener al menos 5 caracteres")
-            .max(100, "La dirección no puede tener más de 100 caracteres")
-            .required("Dirección requerida"),
-        numberOfTable: Yup.number()
-            .min(1, "El número de mesas debe ser al menos 1")
-            .max(26, "El número de mesas no puede ser más de 26")
-            .required("Número de mesas requerido"),
-    }
-)
+import { votingCentersStore } from "../store/votingCentersStore";
+import { useEffect } from "react";
+const centerSchema = Yup.object({
+  name: Yup.string()
+    .min(2, "El nombre del centro debe tener al menos 2 caracteres")
+    .max(50, "El nombre del centro no puede tener más de 50 caracteres")
+    .required("Nombre del centro requerido"),
+  address: Yup.string()
+    .min(5, "La dirección debe tener al menos 5 caracteres")
+    .max(100, "La dirección no puede tener más de 100 caracteres")
+    .required("Dirección requerida"),
+  zone: Yup.string().required("La zona es requerida"),
+});
 
 interface CenterRegisterProps {
   open: boolean;
   onClose: () => void;
-  center: any
+  center: any;
 }
 
-const CenterRegisterForm = ({open,onClose, center}:CenterRegisterProps) => {
-    const isUpdate = center != null
+const CenterRegisterForm = ({ open, onClose, center }: CenterRegisterProps) => {
+  const isUpdate = center != null;
 
-    const formik = useFormik({
-        initialValues: {
-            name: isUpdate? center.name : "",
-            address: isUpdate? center.address: "",
-            numberOfTable: isUpdate? center.numberOfTable: "",
-        },
-        validationSchema: centerSchema,
-        enableReinitialize: true,
-        onSubmit: async (values) => {
-            try {
-                const numberOfTable = parseInt(values.numberOfTable, 10);
-                if(isUpdate)
-                  await updatePlace(center.id, values)
-                else
-                  await registerPlace(values.name, values.address, numberOfTable);
-                onClose();
-            } catch (error) {
-                console.error("Error registrando el centro:", error);
-            }
-        },
-    });
-    const handleClose = () => {
+  const formik = useFormik({
+    initialValues: {
+      name: isUpdate ? center.name : "",
+      address: isUpdate ? center.address : "",
+      zone: isUpdate ? center.zone : "",
+    },
+    validationSchema: centerSchema,
+    enableReinitialize: true,
+    onSubmit: async (values) => {
+      console.log(values);
+      try {
+        if (isUpdate) {
+         await updatePlace(center.id, values);
+        }
+        else {
+          await registerPlace(values.name, values.address, values.zone);
+        }
+        loadZones()
+        onClose();
+      } catch (error) {
+        console.error("Error registrando el centro:", error);
+      }
+    },
+  });
+  const handleClose = () => {
     formik.resetForm();
     onClose();
   };
 
+  const { zones, loadZones } = votingCentersStore();
 
+  useEffect(() => {
+    if (zones.length === 0)
+       loadZones();
+  }, []);
 
-    return (
-        <>
-        <Modal open={open} onClose={() => {}} disableEscapeKeyDown>
+  return (
+    <>
+      <Modal open={open} onClose={() => {}} disableEscapeKeyDown>
         <Container
           maxWidth="xs"
           sx={{
@@ -92,7 +108,7 @@ const CenterRegisterForm = ({open,onClose, center}:CenterRegisterProps) => {
             variant="h6"
             sx={{ textAlign: "center", marginBottom: 2, fontWeight: "bold" }}
           >
-            Registro de Votantes
+            Registro de Centro de Votacion
           </Typography>
 
           <form onSubmit={formik.handleSubmit}>
@@ -126,9 +142,7 @@ const CenterRegisterForm = ({open,onClose, center}:CenterRegisterProps) => {
               onChange={formik.handleChange}
               value={formik.values.address}
               helperText={formik.touched.address && formik.errors.address}
-              error={
-                formik.touched.address && Boolean(formik.errors.address)
-              }
+              error={formik.touched.address && Boolean(formik.errors.address)}
               slotProps={{
                 input: {
                   startAdornment: (
@@ -139,42 +153,37 @@ const CenterRegisterForm = ({open,onClose, center}:CenterRegisterProps) => {
                 },
               }}
             />
-            <TextField
-              label="Número de Mesas"
-                name="numberOfTable"
-                type="number"
+            <InputLabel sx={{ pt: 1 }}>Zona</InputLabel>
+            <Select
+              name="zone"
+              value={formik.values.zone}
+              label="zones"
+              onChange={formik.handleChange}
               fullWidth
               variant="standard"
-              sx={{ mt: 2 }}
-              onChange={formik.handleChange}
-              value={formik.values.numberOfTable}
-              helperText={formik.touched.numberOfTable && formik.errors.numberOfTable}
-              error={formik.touched.numberOfTable && Boolean(formik.errors.numberOfTable)}
-              slotProps={{
-                input: {
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <TableRestaurantIcon />
-                    </InputAdornment>
-                  ),
-                },
-              }}
-            />
+              error={formik.touched.zone && Boolean(formik.errors.zone)}
+            >
+              {zones.map((zone) => (
+                <MenuItem key={zone.id} value={zone.id}>
+                  {zone.zone}
+                </MenuItem>
+              ))}
+            </Select>
 
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                fullWidth
-                sx={{ mt: 3 }}
-              >
-                {isUpdate? "Guardar": "Registrar Centro"}
-              </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              sx={{ mt: 3 }}
+            >
+              {isUpdate ? "Guardar" : "Registrar Centro"}
+            </Button>
           </form>
         </Container>
       </Modal>
-        </>
-    );
-}
+    </>
+  );
+};
 
 export default CenterRegisterForm;
