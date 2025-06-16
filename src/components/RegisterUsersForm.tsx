@@ -7,42 +7,18 @@ import {
   TextField,
   Typography,
   IconButton,
+  Avatar,
+  Box,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import BadgeIcon from "@mui/icons-material/Badge";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import * as Yup from "yup";
-import { registerUser } from "../services/Auth";
-import { useFormik } from "formik";
 import { CameraModal } from "./CameraModal";
-import { useEffect, useState } from "react";
-import { getPlaces } from "../services/Places";
 import PersonIcon from "@mui/icons-material/Person";
 import GroupIcon from "@mui/icons-material/Group";
 import PlaceIcon from "@mui/icons-material/Place";
-
-const userSchema = Yup.object({
-  ci: Yup.string()
-    .min(5, "El CI no puede tener menos de 5 dígitos")
-    .max(10, "El CI no puede tener más de 10 dígitos")
-    .matches(/^\d+$/, "Solo se permiten números")
-    .required("CI Requerido"),
-  birthDate: Yup.date()
-    .required("La fecha de nacimiento es requerida")
-    .max(
-      new Date(new Date().setFullYear(new Date().getFullYear() - 18)),
-      "Debes ser mayor de 18 años para votar"
-    ),
-  name: Yup.string()
-    .min(2, "El nombre debe tener al menos 2 caracteres")
-    .max(25, "El nombre no puede tener más de 25 caracteres")
-    .required("Nombre requerido"),
-  lastName: Yup.string()
-    .min(2, "El apellido debe tener al menos 2 caracteres")
-    .max(25, "El apellido no puede tener más de 25 caracteres")
-    .required("Apellido requerido"),
-  place: Yup.string().required("Lugar de votación requerido"),
-});
+import { useCitizenRegistry } from "../hooks/useCitizenRegistry";
+import { SnackBarWithAlert } from "./SnackBarWithAlert";
 
 interface RegisterUsersProps {
   open: boolean;
@@ -50,75 +26,38 @@ interface RegisterUsersProps {
 }
 
 export const RegisterUsers = ({ open, onClose }: RegisterUsersProps) => {
-  const [openCameraModal, setOpenCameraModal] = useState(false);
-  const [isPhotoTaken, setIsPhotoTaken] = useState(false);
-  const [places, setPlaces] = useState<string[]>([]);
-
-  const fetchPlaces = async () => {
-    try {
-      const response = await getPlaces();
-      setPlaces(response);
-    } catch (error) {
-      console.error("Error fetching places:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchPlaces();
-  }, []);
-
-  const formik = useFormik({
-    initialValues: {
-      ci: "",
-      birthDate: "",
-      name: "",
-      lastName: "",
-      place: "",
-    },
-    validationSchema: userSchema,
-    onSubmit: async (values) => {
-      try {
-        const idPlace = parseInt(values.place, 10);
-        const user = await registerUser(
-          values.ci,
-          values.birthDate,
-          values.name,
-          values.lastName,
-          idPlace
-        );
-        handleClose();
-      } catch (error) {
-        console.error("Error al registrar el usuario:", error);
-      }
-    },
-  });
-
-  const openCamera = () => setOpenCameraModal(true);
-
-  const closeModalCamera = () => {
-    setOpenCameraModal(false);
-    setIsPhotoTaken(true);
-  };
-
-  const handleClose = () => {
-    formik.resetForm();
-    setIsPhotoTaken(false);
-    onClose();
-  };
-
+  const {
+    openCameraModal,
+    closeModalCamera,
+    handleClose,
+    formik,
+    isPhotoTaken,
+    places,
+    openCamera,
+    captureImageCamera,
+    errorMessage,
+    showError,
+    closeSnackbar
+  } = useCitizenRegistry(onClose);
   return (
     <>
-      <CameraModal open={openCameraModal} onClose={closeModalCamera} />
-
+      <CameraModal
+        open={openCameraModal}
+        onClose={closeModalCamera}
+        onCapture={captureImageCamera}
+      />
+      <SnackBarWithAlert open={showError} handleClose={closeSnackbar} message={errorMessage} severity="error" ></SnackBarWithAlert>
       <Modal open={open} onClose={() => {}} disableEscapeKeyDown>
         <Container
           maxWidth="xs"
           sx={{
-            marginTop: 8,
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
             backgroundColor: "#fff",
             borderRadius: 2,
             boxShadow: 24,
-            position: "relative",
             padding: 4,
           }}
         >
@@ -143,6 +82,12 @@ export const RegisterUsers = ({ open, onClose }: RegisterUsersProps) => {
           </Typography>
 
           <form onSubmit={formik.handleSubmit}>
+            <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
+              <Avatar
+                src={formik.values.userPhoto}
+                sx={{ width: 120, height: 120 }}
+              />
+            </Box>
             <TextField
               label="Carnet de Identidad"
               name="ci"

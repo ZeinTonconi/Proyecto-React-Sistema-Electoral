@@ -4,8 +4,9 @@ import { Modal, Box, Button, Typography } from '@mui/material';
 interface CameraModalProps {
   open: boolean;
   onClose: () => void;
+  onCapture: (base64Image: string) => void;
 }
-export const CameraModal = ({ open, onClose }: CameraModalProps) => {
+export const CameraModal = ({ open, onClose, onCapture }: CameraModalProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -35,9 +36,19 @@ export const CameraModal = ({ open, onClose }: CameraModalProps) => {
   };
 
   const handleCapture = () => {
-    stopCamera();
-    onClose();
-  };
+  const video = videoRef.current;
+  const canvas = canvasRef.current;
+  if (video && canvas) {
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const imageBase64 = canvas.toDataURL('image/png');
+      onCapture(imageBase64);
+    }
+  }
+  stopCamera();
+  onClose();
+};
 
   return (
       <Modal open={open} onClose={onClose}>
