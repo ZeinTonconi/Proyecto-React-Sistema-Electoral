@@ -248,12 +248,37 @@
       "zone": "2",
       "votingTables": [
         {
-          "start": "Mendoza",
-          "end": "Mendozt",
+          "start": "Aguirre",
+          "end": "Céspedes",
           "noTable": 1,
           "id": 1
+        },
+        {
+          "start": "Choque",
+          "end": "Gutiérrez",
+          "noTable": 2,
+          "id": 2
+        },
+        {
+          "start": "Huanca",
+          "end": "Mendoza",
+          "noTable": 3,
+          "id": 3
+        },
+                {
+          "start": "Mendieta",
+          "end": "Quispe",
+          "noTable": 4,
+          "id": 4
+        },
+        {
+          "start": "Rojas",
+          "end": "Zambrana",
+          "noTable": 5,
+          "id": 5
         }
       ]
+
     },
     {
       "zoneId": "1",
@@ -264,12 +289,37 @@
       "zone": "1",
       "votingTables": [
         {
-          "start": "Mendoza",
-          "end": "Mendozax",
+          "start": "Aguirre",
+          "end": "Cortez",
           "noTable": 1,
+          "id": 1
+        },
+        {
+          "start": "Cuéllar",
+          "end": "Flores",
+          "noTable": 2,
           "id": 2
+        },
+        {
+          "start": "García",
+          "end": "Loayza",
+          "noTable": 3,
+          "id": 3
+        },
+        {
+          "start": "Mamani",
+          "end": "Quispe",
+          "noTable": 4,
+          "id": 4
+        },
+        {
+          "start": "Rojas",
+          "end": "Zárate",
+          "noTable": 5,
+          "id": 5
         }
       ]
+
     },
     {
       "id": "3",

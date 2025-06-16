@@ -54,7 +54,7 @@ function LoginPage() {
         <Card sx={{ height: "100%", width: "100%", boxShadow: 3 }}>
           <CardContent sx={{ height: "100%" }}>
             <Typography variant="h5" component="div">
-              Nro de Mesa: {votingTable.noTable}
+              Número de Mesa: {votingTable.noTable}
             </Typography>
           </CardContent>
         </Card>

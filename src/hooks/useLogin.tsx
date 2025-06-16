@@ -29,16 +29,16 @@ export const useLogin = () => {
   };
 
   const closeModal = () => {
-    login(isAdmin);
     setOpenCameraModal(false);
-    goToDashboard();
   };
-
+  
   const capturePhoto = () => {
     setOpenVerificationModal(true);
     setTimeout(() => {
       setOpenVerificationModal(false);
-    }, 7000);
+      login(isAdmin);
+      goToDashboard();
+    }, 5000);
   };
 
   const today = new Date();
