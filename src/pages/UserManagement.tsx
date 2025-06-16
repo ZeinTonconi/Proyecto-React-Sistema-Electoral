@@ -3,6 +3,7 @@ import RegisterUsers from "../components/RegisterUsersForm";
 import { useEffect, useState } from "react";
 import UsersList from "../components/UsersList";
 import { useUserStore } from "../store/userStore";
+import { t } from "i18next";
 
 
 function UserManagement() {
@@ -27,12 +28,12 @@ function UserManagement() {
           sx={{ borderRadius: 2 }}
           onClick={handleOpenRegisterUser}
         >
-          Agregar Usuario
+          {t("userManagement.addUser")}
         </Button>
       </Box>
       <RegisterUsers open={openRegisterUser} onClose={handleCloseRegisterUser} />
-      <Typography variant="h5" gutterBottom >
-        Usuarios
+      <Typography variant="h4" gutterBottom >
+        {t("userManagement.title")}
       </Typography>
       <UsersList users={users} />
     </Container>

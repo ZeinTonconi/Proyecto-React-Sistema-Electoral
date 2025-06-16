@@ -23,8 +23,7 @@ export const Photo = ({ open, photoUrl, onClose }: PhotoProps) => {
           width: 400,
           textAlign: "center",
         }}
-      >
-        {/* Botón de cerrar */}
+      >¿
         <IconButton
           onClick={onClose}
           sx={{ position: "absolute", top: 8, right: 8 }}

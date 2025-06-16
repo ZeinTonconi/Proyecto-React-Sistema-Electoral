@@ -3,30 +3,31 @@ import { useEffect, useState } from "react";
 import { getPlaces } from "../services/Places";
 import { registerUser } from "../services/Auth";
 import { useFormik } from "formik";
+import { t } from "i18next";
 
 export const useCitizenRegistry = (onClose: () => void) => {
   const userSchema = Yup.object({
     ci: Yup.string()
-      .min(5, "El CI no puede tener menos de 5 dígitos")
-      .max(10, "El CI no puede tener más de 10 dígitos")
-      .matches(/^\d+$/, "Solo se permiten números")
-      .required("CI Requerido"),
+      .min(5, t("citizenRegister.ci_min_length"))
+      .max(10, t("citizenRegister.ci_max_length"))
+      .matches(/^\d+$/, t("citizenRegister.ci_numeric"))
+      .required(t("citizenRegister.required_ci")),
     birthDate: Yup.date()
-      .required("La fecha de nacimiento es requerida")
+      .required(t("citizenRegister.required_birth_date"))
       .max(
         new Date(new Date().setFullYear(new Date().getFullYear() - 18)),
-        "Debes ser mayor de 18 años para votar"
+        t("citizenRegister.birth_date_max")
       ),
     name: Yup.string()
-      .min(2, "El nombre debe tener al menos 2 caracteres")
-      .max(25, "El nombre no puede tener más de 25 caracteres")
-      .required("Nombre requerido"),
+      .min(2, t("citizenRegister.name_min_length"))
+      .max(25, t("citizenRegister.name_max_length"))
+      .required(t("citizenRegister.required_name")),
     lastName: Yup.string()
-      .min(2, "El apellido debe tener al menos 2 caracteres")
-      .max(25, "El apellido no puede tener más de 25 caracteres")
-      .required("Apellido requerido"),
-    place: Yup.string().required("Lugar de votación requerido"),
-    userPhoto: Yup.string().required("Foto de usuario requerida"),
+      .min(2, t("citizenRegister.last_name_min_length"))
+      .max(25, t("citizenRegister.last_name_max_length"))
+      .required(t("citizenRegister.required_last_name")),
+    place: Yup.string().required(t("citizenRegister.required_place")),
+    userPhoto: Yup.string().required(t("citizenRegister.required_user_photo")),
   });
 
   const [openCameraModal, setOpenCameraModal] = useState(false);
@@ -72,7 +73,7 @@ export const useCitizenRegistry = (onClose: () => void) => {
         handleClose();
       } catch (error) {
         setErrorMessage(
-          "Error al registrar el usuario: " + (error as Error).message
+          t("citizenRegister.error_in_register") + (error as Error).message
         );
         setShowError(true);
       }

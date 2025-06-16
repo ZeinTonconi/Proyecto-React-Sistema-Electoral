@@ -10,7 +10,7 @@ import { getTableService } from "../services/Places";
 
 export const useLogin = () => {
   const [openCameraModal, setOpenCameraModal] = useState(false);
-
+  const [openVerificationModal, setOpenVerificationModal] = useState(false);
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const [snackBarVoted, setSnackBarVoted] = useState(false);
   const [snackBarSucces, setSnackBarSucces] = useState(false);
@@ -30,6 +30,13 @@ export const useLogin = () => {
   const closeModal = () => {
     setOpenCameraModal(false);
     goToDashboard();
+  };
+
+  const capturePhoto = () => {
+    setOpenVerificationModal(true);
+    setTimeout(() => {
+      setOpenVerificationModal(false);
+    }, 7000);
   };
 
   const today = new Date();
@@ -65,8 +72,7 @@ export const useLogin = () => {
         .max(eighteenYearsAgo, "Debes ser mayor de 18 años para votar"),
       adminPassword: isAdmin
         ? Yup.string()
-           
-            .required("La contraseña es requerida")
+          .required("La contraseña es requerida")
         : Yup.string(),
     }),
     onSubmit: async (values) => {
@@ -93,7 +99,7 @@ export const useLogin = () => {
               (user < votingTable.start || user > votingTable.end)
             ) {
               setSnackBarWrongTable(true);
-              return
+              return;
             }
             login(user[0], false);
             setUser(user[0]);
@@ -148,5 +154,7 @@ export const useLogin = () => {
     snackBarSuccesAdmin,
     votingTable,
     snackBarWrongTable,
+    capturePhoto,
+    openVerificationModal
   };
 };

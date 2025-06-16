@@ -10,9 +10,9 @@ import { useState, type ChangeEvent } from "react";
 import type { User } from "../interfaces/userInterface";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import { Photo } from "./Photo";
-
+import { t } from "i18next";
 
 interface Column {
   id: "nombre" | "apellido" | "ci" | "rol" | "centroVotacion" | "voto" | "foto";
@@ -20,21 +20,6 @@ interface Column {
   minWidth?: number;
   align?: "right" | "left" | "center";
 }
-
-const columns: Column[] = [
-  { id: "nombre", label: "Nombre", minWidth: 120, align: "left" },
-  { id: "apellido", label: "Apellido", minWidth: 120, align: "left" },
-  { id: "ci", label: "C.I.", minWidth: 120, align: "left" },
-  { id: "rol", label: "Rol", minWidth: 100, align: "left" },
-  {
-    id: "centroVotacion",
-    label: "Centro de Votación",
-    minWidth: 100,
-    align: "left",
-  },
-  { id: "voto", label: "Votó", minWidth: 100, align: "left" },
-  { id: "foto", label: "Ver foto", minWidth: 100, align: "left" },
-];
 
 interface UsersListProps {
   users: User[];
@@ -46,6 +31,36 @@ export default function UsersList({ users }: UsersListProps) {
   const [openPhotoModal, setOpenPhotoModal] = useState(false);
   const [selectedUserPhoto, setSelectedUserPhoto] = useState<string>("");
 
+  const columns: Column[] = [
+    { id: "nombre", label: t("dashboard.name"), minWidth: 120, align: "left" },
+    {
+      id: "apellido",
+      label: t("dashboard.lastName"),
+      minWidth: 120,
+      align: "left",
+    },
+    { id: "ci", label: t("dashboard.ci"), minWidth: 120, align: "left" },
+    {
+      id: "rol",
+      label: t("userManagement.role"),
+      minWidth: 100,
+      align: "left",
+    },
+    {
+      id: "centroVotacion",
+      label: t("userManagement.votingPlace"),
+      minWidth: 100,
+      align: "left",
+    },
+    { id: "voto", label: t("dashboard.voted"), minWidth: 100, align: "left" },
+    {
+      id: "foto",
+      label: t("userManagement.userPhoto"),
+      minWidth: 100,
+      align: "left",
+    },
+  ];
+
   const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);
   };
@@ -55,18 +70,21 @@ export default function UsersList({ users }: UsersListProps) {
     setPage(0);
   };
 
-
-    const openPhotoHandler = (userPhoto: string) => {
-        setSelectedUserPhoto(userPhoto);
-        setOpenPhotoModal(true);
-    };
-    const closePhotoHandler = () => {
-        setOpenPhotoModal(false);
-    };
+  const openPhotoHandler = (userPhoto: string) => {
+    setSelectedUserPhoto(userPhoto);
+    setOpenPhotoModal(true);
+  };
+  const closePhotoHandler = () => {
+    setOpenPhotoModal(false);
+  };
 
   return (
     <>
-    <Photo open={openPhotoModal} photoUrl={selectedUserPhoto} onClose={closePhotoHandler}></Photo>
+      <Photo
+        open={openPhotoModal}
+        photoUrl={selectedUserPhoto}
+        onClose={closePhotoHandler}
+      ></Photo>
       <Paper sx={{ width: "100%", overflow: "visible", marginTop: 2 }}>
         <TableContainer
           sx={{
@@ -101,16 +119,20 @@ export default function UsersList({ users }: UsersListProps) {
                     <TableCell align="left">{user.role}</TableCell>
                     <TableCell align="left">{user.numberPlace}</TableCell>
                     <TableCell align="left">
-                      {user.hasVoted ? "Sí" : "No"}
+                      {user.hasVoted
+                        ? t("userManagement.yes")
+                        : t("userManagement.no")}
                     </TableCell>
                     <TableCell align="center">
                       <Box
                         sx={{
                           display: "flex",
-                          gap: { xs: 0.5, sm: 1 }
+                          gap: { xs: 0.5, sm: 1 },
                         }}
                       >
-                        <IconButton onClick={() => openPhotoHandler(user.userPhoto)}>
+                        <IconButton
+                          onClick={() => openPhotoHandler(user.userPhoto)}
+                        >
                           <CameraAltIcon color="info" />
                         </IconButton>
                       </Box>

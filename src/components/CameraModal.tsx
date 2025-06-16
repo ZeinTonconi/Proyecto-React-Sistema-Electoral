@@ -1,11 +1,13 @@
 import { useRef, useEffect } from 'react';
 import { Modal, Box, Button, Typography } from '@mui/material';
+import { t } from 'i18next';
 
 interface CameraModalProps {
   open: boolean;
   onClose: () => void;
   onCapture: (base64Image: string) => void;
 }
+
 export const CameraModal = ({ open, onClose, onCapture }: CameraModalProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -63,11 +65,11 @@ export const CameraModal = ({ open, onClose, onCapture }: CameraModalProps) => {
           borderRadius: 2,
           textAlign: 'center'
         }}>
-          <Typography variant="h6">Verificación facial</Typography>
+          <Typography variant="h6">{t("cameraModal.title")}</Typography>
           <video ref={videoRef} width="300" height="200" />
           <canvas ref={canvasRef} width="300" height="200" style={{ display: 'none' }} />
           <Button variant="contained" fullWidth sx={{ mt: 2 }} onClick={handleCapture}>
-            Tomar Foto
+            {t("cameraModal.captureButton")}
           </Button>
         </Box>
       </Modal>

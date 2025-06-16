@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import UserCard from "../components/UserCard";
 import { getPlaceById } from "../services/Places";
 import { useAuthStore } from "../store/authStore";
-
+import { t } from "i18next";
 export default function Dashboard() {
   const user = useAuthStore((state) => state.user);
   const [placeName, setPlaceName] = useState("");
@@ -13,25 +13,25 @@ export default function Dashboard() {
         const data = await getPlaceById(user.placeId);
         setPlaceName(data[0]?.name || "");
       } catch (error) {
-        console.error("Error al cargar el recinto", error);
+        console.error(t("dashboard.error_place"), error);
       }
     };
     fetchPlace();
   }, [user]);
 
   const labelAndData = [
-    { label: "Nombre(s)", data: user?.name || "" },
-    { label: "Apellido(s)", data: user?.lastName || "" },
-    { label: "Carnet de Identidad", data: String(user?.ci || "") },
-    { label: "Recinto", data: placeName },
-    { label: "Mesa", data: String(user?.numberPlace || "") },
-    { label: "Fecha de Nacimiento", data: String(user?.birthDate || "") },
-    { label: "Estado de Voto", data: user?.hasVoted ? "Votó" : "No votó" },
+    { label: t("dashboard.name"), data: user?.name || "" },
+    { label: t("dashboard.lastName"), data: user?.lastName || "" },
+    { label: t("dashboard.ci"), data: String(user?.ci || "") },
+    { label: t("dashboard.place"), data: placeName },
+    { label: t("dashboard.numberPlace"), data: String(user?.numberPlace || "") },
+    { label: t("dashboard.birthDate"), data: String(user?.birthDate || "") },
+    { label: t("dashboard.hasVoted"), data: user?.hasVoted ? t("dashboard.voted") : t("dashboard.notVoted") },
   ];
 
   return (
     <>
-      <h1 style={{ marginBlock: 0 }}>Inicio</h1>
+      <h1 style={{ marginBlock: 0 }}>{t("dashboard.title")}</h1>
       <UserCard
         labelAndData={labelAndData}
         addPhoto={true}
