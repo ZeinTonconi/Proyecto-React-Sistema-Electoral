@@ -1,10 +1,10 @@
   import { useState, useEffect } from "react";
   import UserCard from "../components/UserCard";
   import { getPlaceById } from "../services/Places";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuthStore } from "../store/authStore";
 
   export default function Dashboard() {
-    const {user} = useAuth()
+    const {user} = useAuthStore(state => state)
     const [placeName, setPlaceName] = useState("");
 
     useEffect(() => {

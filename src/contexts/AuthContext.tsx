@@ -1,13 +1,11 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
-import type { User } from "../interfaces/userInterface";
-import { clearStorage, getStorage, setStorage } from "../helpers/LocalStorage";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { useAuthStore } from "../store/authStore";
 
 interface AuthContextType {
-  user: User;
   isAuth: boolean;
-  login: (user: User, isAdmin: boolean) => void;
+  login: (loginIsAdmin: boolean) => void;
   logout: () => void;
-  isAdmin: boolean
+  isAdmin: boolean;
 }
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -15,28 +13,28 @@ const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User>({} as User);
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
-  const login = (user: User, isAdmin: boolean) => {
-    
-    setStorage("user", user);
-    setStorage("token", user.token);
 
-    setUser(user);
+  const {user} = useAuthStore( state => state)
+
+  useEffect(() => {
+    if(user)
+      login(user.role === "admin")
+  }, [])
+
+  const login = (loginIsAdmin: boolean) => {
     setIsAuth(true);
-    setIsAdmin(isAdmin)
+    setIsAdmin(loginIsAdmin);
   };
 
   const logout = () => {
-    clearStorage();
-    setUser({} as User);
     setIsAuth(false);
-    setIsAdmin(false)
+    setIsAdmin(false);
   };
 
   return (
-    <AuthContext.Provider value={{ user, isAuth, login, logout, isAdmin }}>
+    <AuthContext.Provider value={{ isAuth, isAdmin, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

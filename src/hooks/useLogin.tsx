@@ -16,11 +16,11 @@ export const useLogin = () => {
   const [snackBarSucces, setSnackBarSucces] = useState(false);
   const [snackBarSuccesAdmin, setSnackBarSuccesAdmin] = useState(false);
   const [showAdminPass, setShowAdminPass] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
   const { login, logout } = useAuth();
-
-  // const { setUser, setToken, setIsAdmin, isAdmin } = useAuthStore(
-  //   (state) => state
-  // );
+  const { setUser, setToken } = useAuthStore(
+    (state) => state
+  );
 
   const navigate = useNavigate();
 
@@ -29,6 +29,7 @@ export const useLogin = () => {
   };
 
   const closeModal = () => {
+    login(isAdmin);
     setOpenCameraModal(false);
     goToDashboard();
   };
@@ -79,7 +80,9 @@ export const useLogin = () => {
               setSnackBarSuccesAdmin(true);
               const admin = await getAdmin(values.ci, values.adminPassword);
               if (admin.length > 0) {
-                login(admin[0], true);
+                setIsAdmin(true)
+                setUser(user[0])
+                setToken(user[0].token)
                 setOpenCameraModal(true);
               } else {
                 setOpenSnackBar(true);
@@ -94,7 +97,9 @@ export const useLogin = () => {
               setSnackBarWrongTable(true);
               return
             }
-            login(user[0], false);
+            setIsAdmin(false)
+            setUser(user[0]);
+            setToken(user[0].token);
             if (user[0].hasVoted) {
               setSnackBarVoted(true);
               logout();
