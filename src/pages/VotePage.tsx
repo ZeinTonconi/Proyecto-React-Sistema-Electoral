@@ -3,7 +3,7 @@ import CandidateCard from "../components/CandidateCard";
 import { useEffect, useState } from "react";
 import { getCandidateService } from "../services/CandidateService";
 import { ConfirmActionDialog } from "../components/ConfirmActionDialog";
-import { useVotingBallot } from "../hooks/useVotingBallot"; // ruta según organización
+import { useVotingBallot } from "../hooks/useVotingBallot";
 
 function VotePage() {
   const [candidates, setCandidates] = useState<any[]>([]);

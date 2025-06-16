@@ -9,16 +9,19 @@ import {
   Divider,
 } from "@mui/material";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
+import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
 import HomeFilledIcon from "@mui/icons-material/HomeFilled";
 import HowToVoteIcon from "@mui/icons-material/HowToVote";
 import DomainIcon from '@mui/icons-material/Domain';
 import PollIcon from '@mui/icons-material/Poll';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 import { Link, useLocation } from "react-router-dom";
-import { getStorage, clearStorage } from "../helpers/LocalStorage";
 import { useAuthStore } from "../store/authStore";
 import type { User } from "../interfaces/userInterface";
+import { useAuth } from "../contexts/AuthContext";
+import { t } from "i18next";
 
 const drawerWidth = 240;
 
@@ -34,8 +37,7 @@ const Sidebar = ({
   isMobile,
 }: SidebarProps) => {
 
-  const user = getStorage('user')
-  const admin = getStorage('isAdmin')
+  const {user, isAdmin: admin, logout} = useAuth()
   const location = useLocation();
   const {setUser, setToken, setIsAdmin } = useAuthStore((state) => state)
 
@@ -53,7 +55,7 @@ const Sidebar = ({
             <ListItemIcon>
               <HomeFilledIcon />
             </ListItemIcon>
-            <ListItemText primary="Inicio" />
+            <ListItemText primary={t("sidebar.home")}/>
           </ListItemButton>
         </ListItem>
 
@@ -66,7 +68,7 @@ const Sidebar = ({
             <ListItemIcon>
               <HowToVoteIcon />
             </ListItemIcon>
-            <ListItemText primary="Ir a votar" />
+            <ListItemText primary={t("sidebar.go_to_vote")} />
           </ListItemButton>
         </ListItem>}
 
@@ -79,7 +81,7 @@ const Sidebar = ({
             <ListItemIcon>
               <ManageAccountsIcon />
             </ListItemIcon>
-            <ListItemText primary="Administración de usuarios" />
+            <ListItemText primary={t("sidebar.user_management")} />
           </ListItemButton>
         </ListItem>}
 
@@ -92,7 +94,7 @@ const Sidebar = ({
             <ListItemIcon>
               <PollIcon />
             </ListItemIcon>
-            <ListItemText primary="Resultados de la votación" />
+            <ListItemText primary={t("sidebar.voting_management")} />
           </ListItemButton>
         </ListItem>
       
@@ -105,7 +107,7 @@ const Sidebar = ({
             <ListItemIcon>
               <DomainIcon />
             </ListItemIcon>
-            <ListItemText primary="Gestión de Centros de Votación" />
+            <ListItemText primary={t("sidebar.center_management")} />
           </ListItemButton>
         </ListItem>}
 
@@ -118,21 +120,47 @@ const Sidebar = ({
             <ListItemIcon>
               <PersonAddIcon />
             </ListItemIcon>
-            <ListItemText primary="Registrar Candidato" />
+            <ListItemText primary={t("sidebar.register_candidate")} />
           </ListItemButton>
         </ListItem>}
+        {admin && <ListItem disablePadding>
+          <ListItemButton
+            component={Link}
+            to="/admin/candidate-management"
+            selected={location.pathname === "/admin/candidate-management"}
+          >
+            <ListItemIcon>
+              <ListAltIcon />
+            </ListItemIcon>
+            <ListItemText primary={t("sidebar.candidate_management")} />
+          </ListItemButton>
+        </ListItem>}
+        {admin && <ListItem disablePadding>
+          <ListItemButton
+            component={Link}
+            to="/admin/tables-management"
+            selected={location.pathname === "/admin/tables-management"}
+          >
+            <ListItemIcon>
+              <TableRestaurantIcon />
+            </ListItemIcon>
+            <ListItemText primary={t("sidebar.table_management")} />
+          </ListItemButton>
+        </ListItem>}
+
+        
 
         <ListItem disablePadding>
           <ListItemButton
             component={Link}
             to="/"
             selected={location.pathname === "/"}
-            onClick={()=>{clearStorage(); setUser({} as User); setIsAdmin(false); setToken("");}}
+            onClick={()=>{logout(); setUser({} as User); setIsAdmin(false); setToken("");}}
           >
             <ListItemIcon>
               <MeetingRoomIcon />
             </ListItemIcon>
-            <ListItemText primary="Cerrar Sesión" />
+            <ListItemText primary={t("sidebar.logout")} />
           </ListItemButton>
         </ListItem>
       </List>

@@ -10,7 +10,6 @@ interface authStoreInterface{
     setToken: (token: string) => void;
     setIsAdmin: (isAdmin: boolean) => void;
     resetAuth: () => void;
-    
 }
 
 export const useAuthStore = create<authStoreInterface>()(
