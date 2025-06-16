@@ -8,6 +8,7 @@ import VotingManagement from "../pages/VotingManagement";
 import ProtectedRoutes from "../guards/ProtectedRoutes";
 import CenterManagement from "../pages/CenterManagement";
 import RegisterCandidate from "../pages/RegisterCandidate";
+import CandidateManagement from "../pages/CandidateManagement";
 import VoteConfirmationPage from "../pages/VoteConfirmationPage";
 import { useAuthStore } from "../store/authStore";
 
@@ -83,6 +84,16 @@ const RoutesApp = () => {
             element={
               localStorage.getItem("isAdmin") === "true" ? (
                 <RegisterCandidate />
+              ) : (
+                <Navigate to="/dashboard" />
+              )
+            }
+          />
+          <Route
+            path="candidate-management"
+            element={
+              localStorage.getItem("isAdmin") === "true" ? (
+                <CandidateManagement />
               ) : (
                 <Navigate to="/dashboard" />
               )
