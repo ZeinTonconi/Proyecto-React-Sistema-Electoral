@@ -9,16 +9,18 @@ import {
   Divider,
 } from "@mui/material";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
+import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
 import HomeFilledIcon from "@mui/icons-material/HomeFilled";
 import HowToVoteIcon from "@mui/icons-material/HowToVote";
 import DomainIcon from '@mui/icons-material/Domain';
 import PollIcon from '@mui/icons-material/Poll';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 import { Link, useLocation } from "react-router-dom";
-import { getStorage, clearStorage } from "../helpers/LocalStorage";
 import { useAuthStore } from "../store/authStore";
 import type { User } from "../interfaces/userInterface";
+import { useAuth } from "../contexts/AuthContext";
 
 const drawerWidth = 240;
 
@@ -34,8 +36,7 @@ const Sidebar = ({
   isMobile,
 }: SidebarProps) => {
 
-  const user = getStorage('user')
-  const admin = getStorage('isAdmin')
+  const {user, isAdmin: admin, logout} = useAuth()
   const location = useLocation();
   const {setUser, setToken, setIsAdmin } = useAuthStore((state) => state)
 
@@ -121,13 +122,39 @@ const Sidebar = ({
             <ListItemText primary="Registrar Candidato" />
           </ListItemButton>
         </ListItem>}
+        {admin && <ListItem disablePadding>
+          <ListItemButton
+            component={Link}
+            to="/admin/candidate-management"
+            selected={location.pathname === "/admin/candidate-management"}
+          >
+            <ListItemIcon>
+              <ListAltIcon />
+            </ListItemIcon>
+            <ListItemText primary="Administración de Candidatos" />
+          </ListItemButton>
+        </ListItem>}
+        {admin && <ListItem disablePadding>
+          <ListItemButton
+            component={Link}
+            to="/admin/tables-management"
+            selected={location.pathname === "/admin/tables-management"}
+          >
+            <ListItemIcon>
+              <TableRestaurantIcon />
+            </ListItemIcon>
+            <ListItemText primary="Administrar mesas" />
+          </ListItemButton>
+        </ListItem>}
+
+        
 
         <ListItem disablePadding>
           <ListItemButton
             component={Link}
             to="/"
             selected={location.pathname === "/"}
-            onClick={()=>{clearStorage(); setUser({} as User); setIsAdmin(false); setToken("");}}
+            onClick={()=>{logout(); setUser({} as User); setIsAdmin(false); setToken("");}}
           >
             <ListItemIcon>
               <MeetingRoomIcon />

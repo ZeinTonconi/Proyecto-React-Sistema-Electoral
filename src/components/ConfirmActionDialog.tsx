@@ -61,7 +61,7 @@ export const ConfirmActionDialog = ({
       >
         {!showError && !showSuccess && (
           <>
-            <DialogTitle id="alert-dialog-title">Estas seguro?</DialogTitle>
+            <DialogTitle id="alert-dialog-title">¿Estás seguro?</DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
                 {message}
